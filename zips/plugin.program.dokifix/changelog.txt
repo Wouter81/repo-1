@@ -1,0 +1,14 @@
+v1.0.4
+Kidstube.nl toegevoegd, Kids menu aangemaakt
+
+v1.0.3
+installatie fix, Autosub verwijderd, 123movies addon toegevoegd
+
+v1.0.2
+Addons toegevoegd KUD, KidsTime, Youtube Music en RadioTunes en auto-subtitles verwijderd
+
+v1.0.1
+bug fixes
+
+v1.0
+NLVBMC release
