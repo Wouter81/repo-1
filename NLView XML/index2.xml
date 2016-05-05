@@ -6,7 +6,7 @@
 <channel>
 <name>Muziek</name>
 <thumbnail>http://ignoreme</thumbnail>
-<fanart>http://ignoreme</fanart>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.xml</externallink>
 </channel>
