@@ -4,5 +4,5 @@
 	<title>DutchMusic</title>
 	<link>http://ignoreme</link>\
 	<jsonrpc>plugin://plugin.video.DutchMusic</jsonrpc>
-	<thumbnail>http://ignoreme</thumbnail>
+	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
 <item>

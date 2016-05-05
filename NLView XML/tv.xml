@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<item>
+	<title>NL IPTV by ArmoGuy</title>
+	<link>http://ignoreme</link>\
+	<jsonrpc>plugin://plugin.video.nliptv</jsonrpc>
+	<thumbnail>https://raw.githubusercontent.com/armoguy/armoguy/master/plugin.video.nliptv/icon.png</thumbnail>
+<item>

@@ -11,11 +11,19 @@
 </channel>
 
 <channel>
-<name>TEST</name>
+<name>TV</name>
 <thumbnail>http://ignoreme</thumbnail>
 <fanart>http://ignoreme</fanart>
 <link></link>
-<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/test.xml</externallink>
+<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.xml</externallink>
+</channel>
+
+<channel>
+<name>Muziek</name>
+<thumbnail>http://ignoreme</thumbnail>
+<fanart>http://ignoreme</fanart>
+<link></link>
+<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.xml</externallink>
 </channel>
 
 </channels>
