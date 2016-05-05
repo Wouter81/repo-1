@@ -5,11 +5,13 @@
 	<link>http://ignoreme</link>\
 	<jsonrpc>plugin://plugin.video.DutchMusic</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
+	<fanart>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.jpg</fanart>
 <item>
 	
 <item>
 	<title>Chris Valentine</title>
 	<link>http://ignoreme</link>\
 	<jsonrpc>plugin://plugin.audio.youtube.chrisvalentine</jsonrpc>
-	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
+	<thumbnail>https://github.com/Project-Galaxy/repo/raw/master/plugin.audio.youtube.chrisvalentine/icon.png</thumbnail>
+	<fanart>https://github.com/Project-Galaxy/repo/blob/master/plugin.audio.youtube.chrisvalentine/fanart.jpg</fanart>
 <item>
