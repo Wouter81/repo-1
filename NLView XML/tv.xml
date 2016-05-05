@@ -5,4 +5,11 @@
 	<link>http://ignoreme</link>\
 	<jsonrpc>plugin://plugin.video.nliptv</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/armoguy/armoguy/master/plugin.video.nliptv/icon.png</thumbnail>
+</item>
+	
 <item>
+	<title>NPO</title>
+	<link>http://ignoreme</link>
+	<externallink>http://pastebin.com/raw/fa14ps6z</externallink>
+	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
+</item>	
