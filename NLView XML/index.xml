@@ -1,4 +1,3 @@
-<layoutype>thumbnail</layoutype>
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <channels>
@@ -9,6 +8,14 @@
 <fanart>http://ignoreme</fanart>
 <link></link>
 <externallink>http://pastebin.com/raw/MTUAtkyd</externallink>
+</channel>
+
+<channel>
+<name>TEST</name>
+<thumbnail>http://ignoreme</thumbnail>
+<fanart>http://ignoreme</fanart>
+<link></link>
+<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/test.xml</externallink>
 </channel>
 
 </channels>
