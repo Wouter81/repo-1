@@ -6,3 +6,10 @@
 	<jsonrpc>plugin://plugin.video.DutchMusic</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
 <item>
+	
+<item>
+	<title>Chris Valentine</title>
+	<link>http://ignoreme</link>\
+	<jsonrpc>plugin://plugin.audio.youtube.chrisvalentine</jsonrpc>
+	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
+<item>
