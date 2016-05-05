@@ -21,7 +21,6 @@ import customConversions as cc
 from utils import decryptionUtils as crypt
 from utils import datetimeUtils as dt
 from utils import rowbalance as rb
-from utils import getsaw as gs
 
 from utils.fileUtils import findInSubdirectory, getFileContent, getFileExtension
 from utils.scrapingUtils import findVideoFrameLink, findContentRefreshLink, findRTMP, findJS, findPHP, getHostName, findEmbedPHPLink
@@ -548,6 +547,9 @@ class Parser(object):
 
             elif command == 'convTimestamp':
                 src = cc.convTimestamp(params, src)
+                
+            elif command == 'convDateUtil':
+                src = cc.convDateUtil(params, src)
 
             elif command == 'select':
                 src = cc.select(params, src)
@@ -657,10 +659,7 @@ class Parser(object):
                 src = dt.getUnixTimestamp()
                 
             elif command == 'rowbalance':
-                src = rb.get(src)
-
-            elif command == 'getsaw':
-                src = gs.compose(src)
+                src = rb.get()
 
             elif command == 'urlMerge':
                 src = cc.urlMerge(params, src)
