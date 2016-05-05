@@ -6,7 +6,7 @@
 <channel>
 <name>SportCenterHD</name>
 <thumbnail>http://ignoreme</thumbnail>
-<fanart>http://ignoreme</fanart>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>http://pastebin.com/raw/MTUAtkyd</externallink>
 </channel>
@@ -14,7 +14,7 @@
 <channel>
 <name>TV</name>
 <thumbnail>http://ignoreme</thumbnail>
-<fanart>http://ignoreme</fanart>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.xml</externallink>
 </channel>
