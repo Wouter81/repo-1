@@ -13,3 +13,11 @@
 	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
 	<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <item>	
+
+<item>
+	<title>Salts HD lite by XvBMC</title>
+	<link>http://ignoreme</link>
+	<jsonrpc>plugin.video.saltshd.lite</jsonrpc>
+	<thumbnail>https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/plugin.video.saltshd.lite/icon.png</thumbnail>
+	<fanart>https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/plugin.video.saltshd.lite/fanart.jpg</fanart>
+<item>
