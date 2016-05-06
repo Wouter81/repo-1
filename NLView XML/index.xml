@@ -5,7 +5,7 @@
 
 <channel>
 <name>TV</name>
-<thumbnail>http://ignoreme</thumbnail>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.xml</externallink>
