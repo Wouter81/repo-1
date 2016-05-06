@@ -222,12 +222,11 @@ def getLinks():
                 lng=lng.split('>')
                 qty=lng[-2].split('<')[0]
                 lng= lng[-1]
-            if len(lng)>0:
-                lng=Colored("" +lng+"","lime")
-            if len(qty)>1:
-                qty=Colored("" +qty+"","lime")				
-                
-            
+            if len(qty)>0:
+                qty=Colored("" +qty+"","lime")
+            if len(tm)>1:
+                tm=Colored("" +tm+"","lime")				
+				
             if not lnk.startswith("http"):
                 lnk='http://www.sport365.live'+lnk
             #print lnk
@@ -436,4 +435,4 @@ def select365(url):
 
     except:
         traceback.print_exc(file=sys.stdout)
-    return retUtl
+    return retUt
