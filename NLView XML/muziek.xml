@@ -5,7 +5,7 @@
 	<link>http://ignoreme</link>
 	<jsonrpc>plugin://plugin.video.DutchMusic</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/icon.png</thumbnail>
-	<fanart>https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.jpg</fanart>
+	<fanart>https://raw.githubusercontent.com/doki1/repo/master/repository.dutchmusic/fanart.JPG</fanart>
 <item>
 	
 <item>
@@ -13,7 +13,7 @@
 	<link>http://ignoreme</link>
 	<jsonrpc>plugin://plugin.audio.youtube.chrisvalentine</jsonrpc>
 	<thumbnail>https://github.com/Project-Galaxy/repo/raw/master/plugin.audio.youtube.chrisvalentine/icon.png</thumbnail>
-	<fanart>https://github.com/Project-Galaxy/repo/blob/master/plugin.audio.youtube.chrisvalentine/fanart.jpg</fanart>
+	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.audio.youtube.chrisvalentine/fanart.jpg</fanart>
 <item>
 
 <item>
