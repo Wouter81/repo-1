@@ -63,6 +63,11 @@ item_info_from=@PARAM1@
 item_info_convert=getInfo('%s','.*?\W(\w+)\s*=\s*["']+(\w+)["']+.*?sw\s*=\s*["'\+]+\w+["'\+]+\w+["'\+]+\w+["'\+]+\1','@REFERER@','junk|s24')
 item_info_build=%s
 
+item_info_name=g_s25
+item_info_from=@PARAM1@
+item_info_convert=getInfo('%s','.*?sw=[\'"]{1,2}([^'";]+)','@REFERER@','s25')
+item_info_build=%s
+
 item_info_name=get_url
 item_info_from=@PARAM1@
 item_info_convert=getInfo('%s','.*?src\s*=\s*["'](http://[\w\.]*?sawlive.tv/[^"']+)["']','@REFERER@')
@@ -74,7 +79,7 @@ item_info_convert=ifEmpty('%s','','/%s')
 item_info_build=%s
 
 item_info_name=tmpUrl
-item_info_from=get_url+s21+s22+s23+s24+ps2
+item_info_from=get_url+s21+s22+s23+s24+s25+ps2
 item_info_build=%s
 
 item_info_name=tmp
