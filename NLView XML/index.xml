@@ -11,4 +11,12 @@
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.xml</externallink>
 </channel>
 
+<channel>
+<name>test</name>
+<thumbnail>http://ignoreme</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+<link></link>
+<externallink>http://pastebin.com/raw/Qi035YqN</externallink>
+</channel>
+
 </channels>
