@@ -9,9 +9,9 @@
 <item>
 
 <item>
-	<title>live tv</title>
+	<title>live tv1</title>
 	<link>http://ignoreme</link>\
-	<jsonrpc>plugin://plugin.video.castaway/?mode=open_live_sport&amp;site=livetv&quot</jsonrpc>
+	<jsonrpc>plugin://plugin.video.castaway/?mode=open_live_sport</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/icon.png</thumbnail>
 	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/fanart.jpg</fanart>
 <item>
