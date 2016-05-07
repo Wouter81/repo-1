@@ -9,9 +9,9 @@
 <item>
 
 <item>
-	<title>DOKI Club TV</title>
+	<title>live tv</title>
 	<link>http://ignoreme</link>\
-	<jsonrpc>plugin://plugin.video.SportsDevil/?url=livesports%252Flivetv.ru.cfg&amp;mode=1</jsonrpc>
+	<jsonrpc>plugin://plugin.video.castaway/?mode=open_live_sport&amp;site=livetv&quot</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/icon.png</thumbnail>
 	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/fanart.jpg</fanart>
 <item>
