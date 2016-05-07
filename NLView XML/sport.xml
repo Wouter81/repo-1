@@ -7,3 +7,11 @@
 	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/icon.png</thumbnail>
 	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/fanart.jpg</fanart>
 <item>
+
+<item>
+	<title>DOKI Club TV</title>
+	<link>http://ignoreme</link>\
+	<jsonrpc>plugin://plugin.video.SportsDevil/?item=title%3dLiveTV.ru%26url%3dlivesports%252Flivetv.ru.cfg</jsonrpc>
+	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/icon.png</thumbnail>
+	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/fanart.jpg</fanart>
+<item>
