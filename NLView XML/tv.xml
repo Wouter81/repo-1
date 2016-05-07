@@ -5,6 +5,7 @@
 	<link>http://ignoreme</link>\
 	<jsonrpc>plugin://plugin.video.nliptv</jsonrpc>
 	<thumbnail>https://raw.githubusercontent.com/armoguy/armoguy/master/plugin.video.nliptv/icon.png</thumbnail>
+	<fanart>https://raw.githubusercontent.com/armoguy/armoguy/master/nliptv%20xmls/fanart.jpg</fanart>
 </item>
 	
 <item>
