@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <item>
+<title>Sky Sports F1</title>
+<link>http://149.202.207.8:8080/skf1/sallu/index.m3u8</link>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
 <title>Arena Sport 1</title>
 <sportsdevil>http://streamking.cc/player?channel=arena1&player=old1</sportsdevil>
 <referer>http://streamking.cc/</referer>
