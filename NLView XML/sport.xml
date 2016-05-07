@@ -7,3 +7,11 @@
 	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/icon.png</thumbnail>
 	<fanart>https://raw.githubusercontent.com/doki1/repo/master/plugin.video.clubtv/fanart.jpg</fanart>
 <item>
+
+<item>
+	<title>NPO</title>
+	<link>http://ignoreme</link>
+	<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.xml</externallink>
+	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+	<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>	
