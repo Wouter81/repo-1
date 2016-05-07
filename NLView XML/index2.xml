@@ -4,7 +4,7 @@
 
 <channel>
 <name>Muziek</name>
-<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.xml</externallink>
@@ -12,7 +12,7 @@
 
 <channel>
 <name>Films & Series</name>
-<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/films%20%26%20series.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/films%26series</externallink>
@@ -24,14 +24,6 @@
 <fanart>https://www.mupload.nl/img/xx6vdmztof7tc.jpg</fanart>
 <link></link>
 <externallink>http://pastebin.com/raw/MTUAtkyd</externallink>
-</channel>
-
-<channel>
-<name>test</name>
-<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/icon.png</thumbnail>
-<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
-<link></link>
-<externallink>http://pastebin.com/raw/TeBvm79C</externallink>
 </channel>
 
 </channels>
