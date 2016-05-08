@@ -187,6 +187,27 @@
   </extension>
 </addon>
 
+<!--suppress ALL -->
+<addon id="plugin.video.saltshd.lite" version="1.0.134a" name="Salts HD Lite" provider-name="tknorris">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+		<import addon="repository.xvbmc" version="3.0.1"/>
+        <import addon="script.module.urlresolver" version="3.0.0"/>
+        <import addon="script.module.myconnpy" version="1.1.6" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+     <extension point="xbmc.service" library="service.py" start="startup"/>
+    <extension point="xbmc.addon.metadata">
+        <summary>Stream video from many difference sources</summary>
+        <description>This is the mod version of Salts by Scott Marten.</description>
+        <platform>all</platform>
+        <website>http://tvaddons.ag/</website>
+		<forum>https://www.facebook.com/groups/XvBMCnederland/</forum>
+	</extension>
+</addon>
+
 <addon id="plugin.video.sportcenterhd"
        name="SportCenterHD"
        version="1.0.0"
@@ -676,6 +697,34 @@ Addons Included
 	</extension>
 </addon>
 
+<addon id="repository.xvbmc" name=" [COLOR lime][B]X[/B][/COLOR]vBMC Addon REPOsitory" version="3.0.1" provider-name="XvBMC Nederland">
+	<extension point="xbmc.addon.repository" name="XvBMC Addon Repo/Depot">
+		<dir>
+			<info compressed="false">https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/xvbmc-addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/xvbmc-addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/zips/</datadir>
+			<hashes>false</hashes>
+		</dir>
+			<info compressed="false">https://raw.github.com/XvBMC/repository.xvbmc/master/xvbmc-addons.xml</info>
+			<checksum>https://raw.github.com/XvBMC/repository.xvbmc/master/xvbmc-addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.github.com/XvBMC/repository.xvbmc/master/zips/</datadir>
+			<hashes>false</hashes>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">XvBMC The Netherlands Addon REPOsitory</summary>
+		<summary lang="nl">XvBMC Nederland Addon REPOsitory</summary>
+		<description lang="en">XvBMC The Netherlands Addon Repository | XvBMC-NL Addon Depot  |  be sure to check out our FB-page: https://www.facebook.com/groups/XvBMCnederland/ !!! USE AT YOUR OWN RISK !!!</description>
+		<description lang="nl">XvBMC Nederland Addon Repository | XvBMC-NL Addon Depot  |  en volg zeker ook onze Facebook pagina: https://www.facebook.com/groups/XvBMCnederland/ !!! USE AT YOUR OWN RISK !!!</description>
+		<disclaimer lang="en">The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with its content. Please Read: https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/LICENSE ...just because you can  ;)  !!! USE-AT-YOUR-OWN-RISK !!!</disclaimer>
+		<disclaimer lang="nl">The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with its content. Please Read: https://raw.githubusercontent.com/XvBMC/repository.xvbmc/master/LICENSE ...just because you can  ;)  !!! USE-AT-YOUR-OWN-RISK !!!</disclaimer>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.fb.com/groups/XvBMCnederland/</forum>
+		<website>https://www.fb.com/groups/XvBMCnederland/</website>
+		<source>https://archive.org/download/repository.xvbmc/</source>
+	</extension>
+</addon>
+
 <addon id="script.dokionderhoud"
        name="[COLOR lime]D[/COLOR]OKI Onderhoud"
        version="0.0.1"
@@ -699,6 +748,37 @@ Addons Included
     <forum></forum>
     <website>www.DOKITV.nl</website>
   </extension>
+</addon>
+
+<addon id="script.module.myconnpy"
+       name="MySQL Connector/Python"
+       version="1.1.7"
+       provider-name="MySQL">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.module" library="lib"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">MySQL Connector/Python</summary>
+        <description lang="en">MySQL Connector/Python is implementing the MySQL Client/Server protocol completely in Python. This means you don't have to compile anything or MySQL (client library) doesn't even have to be installed on the machine.</description>
+        <license>GPLv2</license>
+        <platform>all</platform>
+        <website>http://dev.mysql.com/doc/connector-python/en/index.html</website>
+        <source>http://dev.mysql.com/downloads/connector/python/</source>
+    </extension>
+</addon>
+
+<addon id="script.module.urlresolver" name="URLResolver" version="3.0.3" provider-name="Eldorado">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.python.pluginsource" library="lib/default.py" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Resolve common video host URL's to be playable in XBMC/Kodi.</summary>
+		<description lang="en">Resolve common video host URL's to be playable in XBMC/Kodi, simplify addon development of video plugins requiring multi video hosts.</description>
+	</extension>
 </addon>
 
 <addon id="service.autosubs"
