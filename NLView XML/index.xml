@@ -4,8 +4,8 @@
 <channels>
 
 <channel>
-<name>TV</name>
-<thumbnail>[B]https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.png[/B]</thumbnail>
+<name>[B]TV[/B]</name>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
 <externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tv.xml</externallink>
