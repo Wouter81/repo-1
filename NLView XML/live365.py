@@ -429,7 +429,7 @@ def select365(url):
             if len(curl)==1:
                 return links[0][1]
             dialog = xbmcgui.Dialog()
-            index = dialog.select('Choose your link', available_source)
+            index = dialog.select('Kies een link', available_source)
             if index > -1:
                 return links[index][1]    
 
