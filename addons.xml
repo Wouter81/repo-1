@@ -127,6 +127,37 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.DutchMusic"
+       name="DutchMusic"
+       version="1.0.2"
+       provider-name="DutchMusic">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.t0mm0.common" version="2.1.1"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="1.9.5"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" version="5.1.20.4"/>
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+    <import addon="script.common.plugin.cache" version="2.5.5"/>
+    <import addon="script.module.metahandler" version="2.9.0"/>
+
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Add-on met Nederlandstalige muziek.</summary>
+    <description lang="en">Add-on met Nederlandstalige muziek.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.MoneySports"
        name="MoneySports"
        version="4.0.1"

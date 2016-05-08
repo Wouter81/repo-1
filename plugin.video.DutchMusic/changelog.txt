@@ -1,0 +1,12 @@
+[B]V1.0.1[/B]
+- Release
+[B]V1.0.2[/B]
+- Categorie Hitlijsten toegevoegd
+- Oranje Top 30 verplaatst van Websites naar Hitlijsten
+- Sterren NL Top 20 toegevoegd
+- Unity NL Top 25 toegevoegd
+- RADIONL Top 1500 toegevoegd
+- Karaoke toegevoegd
+- Menuindeling veranderd
+- Zoekfunctie veranderd
+- Sterren NL fix
