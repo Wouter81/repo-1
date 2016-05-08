@@ -3,7 +3,7 @@
 <channels>
 
 <channel>
-<name>Muziek</name>
+<name>[B]Muziek[/B]</name>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
@@ -11,7 +11,7 @@
 </channel>
 
 <channel>
-<name>Films & Series</name>
+<name>[B]Films & Series[/B]</name>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/films%20%26%20series.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 <link></link>
@@ -19,7 +19,7 @@
 </channel>
 
 <channel>
-<name>SportCenterHD</name>
+<name>[B]SportCenterHD[/B]</name>
 <thumbnail>https://pbs.twimg.com/profile_images/722102364883324929/PscGuNqO.jpg</thumbnail>
 <fanart>https://www.mupload.nl/img/xx6vdmztof7tc.jpg</fanart>
 <link></link>
