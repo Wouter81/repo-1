@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <item>
-	<title>BVLS</title>
-	<link>http://ignoreme</link>
-	<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/voetbal.xml</externallink>
-	<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
-	<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
-</item>	
-
-<item>
 	<title>Sportkanalen</title>
 	<link>http://ignoreme</link>
 	<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.xml</externallink>
