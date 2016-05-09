@@ -3,61 +3,73 @@
 <item>
 <title>stream1</title>
 <bvls>http://bvls2016.sc/baz1.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream2</title>
 <bvls>http://bvls2016.sc/bvt2.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream3</title>
 <bvls>http://bvls2016.sc/baz3.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream4</title>
 <bvls>http://bvls2016.sc/bvt4.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream5</title>
 <bvls>http://bvls2016.sc/bmm5.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream6</title>
 <bvls>http://bvls2016.sc/baz6.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream7</title>
 <bvls>http://bvls2016.sc/bmm7.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream8</title>
 <bvls>http://bvls2016.sc/bva8.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream9</title>
 <bvls>http://bvls2016.sc/baz9.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream10</title>
 <bvls>http://bvls2016.sc/bt10.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream11</title>
 <bvls>http://bvls2016.sc/bv11.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 <item>
 <title>stream12</title>
 <bvls>http://bvls2016.sc/bvd12.php</bvls>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
 </item>
 
 </items>
