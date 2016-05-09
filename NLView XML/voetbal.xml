@@ -15,6 +15,12 @@
 </item>
 
 <item>
+<title> </title>
+<link>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/voetbal.xml</link>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
+</item>
+
+<item>
 <title>Stream 1 - BVLS2016.SC</title>
 <bvls>http://bvls2016.sc/baz1.php</bvls>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png</thumbnail>
