@@ -1,63 +1,63 @@
 <items>
 
 <item>
-<bvls>stream1</bvls>
-<url>http://bvls2016.sc/baz1.php</url>
+<title>stream1</title>
+<bvls>http://bvls2016.sc/baz1.php</bvls>
 </item>
 
 <item>
-<bvls>stream2</bvls>
-<url>http://bvls2016.sc/bvt2.php</url>
+<title>stream2</title>
+<bvls>http://bvls2016.sc/bvt2.php</bvls>
 </item>
 
 <item>
-<bvls>stream3</bvls>
-<url>http://bvls2016.sc/baz3.php</url>
+<title>stream3</title>
+<bvls>http://bvls2016.sc/baz3.php</bvls>
 </item>
 
 <item>
-<bvls>stream4</bvls>
-<url>http://bvls2016.sc/bvt4.php</url>
+<title>stream4</title>
+<bvls>http://bvls2016.sc/bvt4.php</bvls>
 </item>
 
 <item>
-<bvls>stream5</bvls>
-<url>http://bvls2016.sc/bmm5.php</url>
+<title>stream5</title>
+<bvls>http://bvls2016.sc/bmm5.php</bvls>
 </item>
 
 <item>
-<bvls>stream6</bvls>
-<url>http://bvls2016.sc/baz6.php</url>
+<title>stream6</title>
+<bvls>http://bvls2016.sc/baz6.php</bvls>
 </item>
 
 <item>
-<bvls>stream7</bvls>
-<url>http://bvls2016.sc/bmm7.php</url>
+<title>stream7</title>
+<bvls>http://bvls2016.sc/bmm7.php</bvls>
 </item>
 
 <item>
-<bvls>stream8</bvls>
-<url>http://bvls2016.sc/bva8.php</url>
+<title>stream8</title>
+<bvls>http://bvls2016.sc/bva8.php</bvls>
 </item>
 
 <item>
-<bvls>stream9</bvls>
-<url>http://bvls2016.sc/baz9.php</url>
+<title>stream9</title>
+<bvls>http://bvls2016.sc/baz9.php</bvls>
 </item>
 
 <item>
-<bvls>stream10</bvls>
-<url>http://bvls2016.sc/bt10.php</url>
+<title>stream10</title>
+<bvls>http://bvls2016.sc/bt10.php</bvls>
 </item>
 
 <item>
-<bvls>stream11</bvls>
-<url>http://bvls2016.sc/bv11.php</url>
+<title>stream11</title>
+<bvls>http://bvls2016.sc/bv11.php</bvls>
 </item>
 
 <item>
-<bvls>stream12</bvls>
-<url>http://bvls2016.sc/bvd12.php</url>
+<title>stream12</title>
+<bvls>http://bvls2016.sc/bvd12.php</url>
 </item>
 
 </items>
