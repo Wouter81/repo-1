@@ -3,14 +3,6 @@
 <channels>
 
 <channel>
-<name>[B]Muziek[/B]</name>
-<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png</thumbnail>
-<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
-<link></link>
-<externallink>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.xml</externallink>
-</channel>
-
-<channel>
 <name>[B]Films & Series[/B]</name>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/films%20%26%20series.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
