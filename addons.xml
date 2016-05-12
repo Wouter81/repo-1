@@ -282,9 +282,9 @@
 </addon>
 
 <addon id="plugin.video.sportcenterhd"
-       name="PCFit IPTV"
-       version="1.0.1"
-       provider-name="PCFit IPTV">
+       name="SportCenterHD"
+       version="1.0.0"
+       provider-name="SportCenterHD">
   <requires>
     <import addon="script.module.beautifulsoup" />
     <import addon="script.module.simple.downloader" />
@@ -300,8 +300,8 @@
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">PCFit IPTV</summary>
-    <description lang="en">Wij zijn NIET de eigenaar van de streams die in PCFit IPTV zijn te vinden.
+    <summary lang="en">SportCenterHD</summary>
+    <description lang="en">Wij zijn NIET de eigenaar van de streams die in SportCenterHD zijn te vinden.
 Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
     <platform>all</platform>
   </extension>

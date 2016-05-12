@@ -42,7 +42,7 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
        return response
    https_response = http_response
 
-NLVBase = 'aHR0cDovL3Bhc3RlYmluLmNvbS9yYXcvUlJNQWF3M1c='
+NLVBase = 'aHR0cDovL3Bhc3RlYmluLmNvbS9yYXcvalVZeVlGa1g='
 sourceSitebvls = 'http://bvls2016.sc'      
 
 addon = xbmcaddon.Addon('plugin.video.sportcenterhd')
