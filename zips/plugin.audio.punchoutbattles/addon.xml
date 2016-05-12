@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.audio.punchoutbattles" name="PunchOUT Battles" version="1.0.0" provider-name="DOKI">
+<addon id="plugin.audio.punchoutbattles" name="PunchOUT Battles" version="1.0.1" provider-name="DOKI">
 	<requires>
 		<import addon="plugin.video.youtube" version="4.0" optional="false"/>
-		<import addon="repository.doki" version="1.0.1"/>
+		<import addon="repository.dokinl" version="1.0.2"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>audio</provides>
