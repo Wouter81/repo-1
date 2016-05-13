@@ -499,11 +499,11 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
   </extension>
 </addon>
 
-<addon id="repository.build" name="DOKI TV BUILD Repository" version="1.1.0" provider-name="DOKITV.NL Crew">
+<addon id="repository.build" name="[B][COLOR lime]DOKI TV[/COLOR] [COLOR white]BUILD Repository[/COLOR][/B]" version="1.2.0" provider-name="DOKITV.NL Crew">
     <extension point="xbmc.addon.repository" name="DOKI TV Repository">
-        <info compressed="true">http://doki.netai.net/build/addons.xml</info>
-        <checksum>http://doki.netai.net/build/addons.xml.md5</checksum>
-        <datadir zip="true">http://doki.netai.net/build/</datadir>
+            <info compressed="false">https://raw.githubusercontent.com/doki1/build/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/doki1/build/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/doki1/build/master/zips/</datadir>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary>DOKI</summary>
