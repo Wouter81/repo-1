@@ -283,7 +283,7 @@
 
 <addon id="plugin.video.sportcenterhd"
        name="SportCenterHD"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="SportCenterHD">
   <requires>
     <import addon="script.module.beautifulsoup" />
