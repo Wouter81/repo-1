@@ -4,8 +4,6 @@ import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 import utils, sqlite3
 
 import re,urlparse,json
-from liveresolver.modules import client
-from BeautifulSoup import BeautifulSoup as bs
 import xbmcgui
 
 
