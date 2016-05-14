@@ -28,7 +28,7 @@ except:
 import SimpleDownloader as downloader
 import time
 import random
-import utils, xite, voetbalhighlights
+import utils, xite, voetbalhighlights, foxsports, ziggosporttotaal
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -270,9 +270,15 @@ def streamNpo(source):
 
 def findStream(page) :
     frameHtml = bitly.OPEN_URL2(page, sourceSitebvls, bitly.getUserAgent())
-    b64coded = bitly.getBaseEncodedString(frameHtml)
-    streamUrl = bitly.getStreamUrl(b64coded)
-    return streamUrl	
+    if 'window.atob' in frameHtml:
+        b64coded = bitly.getBaseEncodedString(frameHtml)
+        streamUrl = bitly.getStreamUrl(b64coded)
+    else:
+        liveresolvelink = re.compile('player.*?src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(frameHtml)[0]
+        import liveresolver
+        streamUrl = liveresolver.resolve(liveresolvelink)
+        xbmc.log(streamUrl)
+    return streamUrl
 
 def addon_log(string):
     if debug == 'true':
@@ -305,7 +311,7 @@ def NLVIndex():
     addDir('[B]Sport[/B]','',70,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport.png' ,  fanart,'','','','')
     addDir('[B]Muziek[/B]','',75,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png' ,  fanart,'','','','')
     getData(base64.b64decode(NLVBase2),'')
-    addDir('[B]DOKI Nieuws[/B]','News',46,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/nieuws.png',  fanart,'','','','',isItFolder=False)
+    addDir('[B]DOKI Nieuws[/B]','News',46,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/nieuws.png',  FANART,'','','','',isItFolder=False)
     addDir('[B]Informatie[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/informatie.png',fanart,'','','','',isItFolder=False)	
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
@@ -313,7 +319,9 @@ def indexsport():
     xbmc.executebuiltin("Container.SetViewMode(50)")
     addon_log("indexsport")
     addDir('Live Sport','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)
-    addDir('Voetbal Samenvattingen','http://footyroom.com/',223,'' ,  fanart,'','','','')
+    addDir('Voetbal Samenvattingen','http://footyroom.com/',223,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/samenvatting.png' ,  fanart,'','','','')
+    addDir('FOX Sports','http://www.foxsports.nl/video/',227,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fs.png' ,  fanart,'','','','')
+    addDir('Ziggo Sport Totaal','http://www.ziggosporttotaal.nl/video/',232,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/zst.png' ,  fanart,'','','','')
     #addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",)
     #addDir('Wiz1.net','',61,icon,fanart,"","","","","",)
     #addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)
@@ -321,6 +329,7 @@ def indexsport():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexlivesport():
+    xbmc.executebuiltin("Container.SetViewMode(500)")
     addon_log("indexlivesport")
     addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)	
     addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
@@ -331,6 +340,7 @@ def indexlivesport():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexbvls():
+    xbmc.executebuiltin("Container.SetViewMode(500)")
     addon_log("indexbvls")
     getData(base64.b64decode(BvlsBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -339,7 +349,7 @@ def indexmuziek():
     xbmc.executebuiltin("Container.SetViewMode(50)")
     addon_log("indexmuziek")
     getData(base64.b64decode(MuziekBase),'')
-    addDir('XITE','http://xite.nl/videos/1',221,'' ,  fanart,'','','','')
+    addDir('XITE','http://xite.nl/videos/1',221,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/xite.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -2364,6 +2374,7 @@ params=get_params()
 url=None
 name=None
 mode=None
+page=None
 iconimage=None
 fanart=FANART
 playlist=None
@@ -2384,6 +2395,10 @@ except:
     pass
 try:
     fanart=urllib.unquote_plus(params["fanart"])
+except:
+    pass
+try:
+    page=int(params["page"])
 except:
     pass
 try:
@@ -2561,5 +2576,18 @@ elif mode == 223: voetbalhighlights.Main()
 elif mode == 224: voetbalhighlights.List(url)
 elif mode == 225: voetbalhighlights.Search(url)
 elif mode == 226: voetbalhighlights.Playvid(url, name)
+elif mode == 227: foxsports.Main()
+elif mode == 228: foxsports.List(url, page)
+elif mode == 229: foxsports.SearchList(url)
+elif mode == 230: foxsports.Search(url)
+elif mode == 231: foxsports.Playvid(url, name)
+elif mode == 232: ziggosporttotaal.Main()
+elif mode == 233: ziggosporttotaal.List(url)
+elif mode == 234: ziggosporttotaal.SearchList(url)
+elif mode == 235: ziggosporttotaal.Search(url)
+elif mode == 236: ziggosporttotaal.Playvid(url, name)
+elif mode == 237: foxsports.MainSamenvattingen()
+elif mode == 238: foxsports.MainDoelpunten()
+elif mode == 239: foxsports.MainInterviews()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
