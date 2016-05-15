@@ -305,7 +305,6 @@ def makeRequest(url, headers=None):
 
 
 def NLVIndex():
-    xbmc.executebuiltin("Container.SetViewMode(500)")
     addon_log("NLVIndex")
     getData(base64.b64decode(NLVBase),'')
     addDir('[B]Sport[/B]','',70,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport.png' ,  fanart,'','','','')
@@ -316,7 +315,6 @@ def NLVIndex():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexsport():
-    xbmc.executebuiltin("Container.SetViewMode(50)")
     addon_log("indexsport")
     addDir('Live Sport','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)
     addDir('Voetbal Samenvattingen','http://footyroom.com/',223,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/samenvatting.png' ,  fanart,'','','','')
@@ -329,7 +327,6 @@ def indexsport():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexlivesport():
-    xbmc.executebuiltin("Container.SetViewMode(500)")
     addon_log("indexlivesport")
     addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)	
     addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
@@ -340,13 +337,11 @@ def indexlivesport():
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexbvls():
-    xbmc.executebuiltin("Container.SetViewMode(500)")
     addon_log("indexbvls")
     getData(base64.b64decode(BvlsBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexmuziek():
-    xbmc.executebuiltin("Container.SetViewMode(50)")
     addon_log("indexmuziek")
     getData(base64.b64decode(MuziekBase),'')
     addDir('XITE','http://xite.nl/videos/1',221,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/xite.png' ,  fanart,'','','','')
