@@ -144,6 +144,9 @@ def cleantext(text):
     text = text.replace("&#39;","'")
     text = text.replace('&#233;','é')
     text = text.replace('&#252;','ü')
+    text = text.replace('&nbsp;',' ')
+    text = text.replace('&iacute;','í')
+    text = text.replace('&acute;','´')
     return text
 
 

@@ -28,7 +28,7 @@ except:
 import SimpleDownloader as downloader
 import time
 import random
-import utils, xite, voetbalhighlights, foxsports, ziggosporttotaal
+import utils, xite, voetbalhighlights, foxsports, ziggosporttotaal, streamfoot, tpsoccerstreams
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -56,8 +56,8 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
        return response
    https_response = http_response
 
-NLVBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Rva2kxL3JlcG8vbWFzdGVyL05MVmlldyUyMFhNTC9pbmRleC54bWw='
-NLVBase2  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Rva2kxL3JlcG8vbWFzdGVyL05MVmlldyUyMFhNTC9pbmRleDIueG1s'
+NLVBase  ='aHR0cDovL2JpdC5seS8yM1VlUDVh'
+NLVBase2  ='aHR0cDovL2JpdC5seS8xcW1HT2dS'
 SportBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Rva2kxL3JlcG8vbWFzdGVyL05MVmlldyUyMFhNTC9zcG9ydC54bWw='
 LiveSportBase  ='aHR0cDovL3htbC5kb2tpdHYubmwvbGl2ZXNwb3J0LnhtbA=='
 BvlsBase  ='aHR0cDovL3htbC5kb2tpdHYubmwvdm9ldGJhbC54bWw='
@@ -331,7 +331,8 @@ def indexlivesport():
     addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)	
     addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
     addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",)
-    #addDir('Streamsarena.eu','',76,icon,fanart,"","","","","",)
+    addDir('TPSoccer.net','',76,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","","",)
+    addDir('Stream-foot.tv','',240,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/s-f.png',fanart,"","","","","",)
     addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)			
     getData(base64.b64decode(LiveSportBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -369,7 +370,7 @@ def getlive9Schedule():
         tekstregel = '[COLOR lime]' + tijd + '[/COLOR]' + ' - ' + sport + ' - ' + wedstrijd
         url = url.replace("t/live","t/lives")
         addDir(tekstregel, url, 60,icon,fanart,"","","","",isItFolder=False)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))	
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))    
     
 
 def getWizSchedule():
@@ -380,10 +381,12 @@ def getWizSchedule():
         addDir(tekstregel, url, 60,icon,fanart,"","","","","",isItFolder=False)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
+    
 def getgoatSchedule():
-    goatpage = getHtml('http://goatd.net/')
+    goatsport=''
+    goatpage = bitly.OPEN_URL2('http://goatd.net/','http://goatd.net/',bitly.getUserAgent())
     match = re.compile(r'<b>ET</b></td>\s+<td[^<]+><img src="([^"]+)".*?href="([^"]+)"[^>]+>([^<]+)<.*?<b>([^<]+)<.*?<b>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(goatpage)
-    for img, url, wedstrijd, tijd, tijdzone in match:
+    for img, url, wedstrijd, tijd, zone in match:
         try:
             sport = re.compile('http://.*?/.*?/.*?/.*?/.*?/.*?/(.*?).gif', re.DOTALL | re.IGNORECASE).findall(img)
             if sport > 0 :
@@ -391,23 +394,28 @@ def getgoatSchedule():
                     goatsport = re.sub("[^A-Za-z]", "", goatsport) 
         except:
             pass
-	tekstregel = '' + '' + goatsport + ' - ' + '[COLOR lime]'+ tijd + '[/COLOR]' + ' - ' + wedstrijd
-	url = 'http://goatd.net/' + url
-	addDir(tekstregel, url, 60, 'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",isItFolder=False)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        url = 'http://goatd.net/' + url
+        addDir(''+goatsport+' '+'[COLOR lime]'+tijd+'[/COLOR]'' - '+ wedstrijd,url,60,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png' ,  FANART,'','','','')
+
+
+def striphtml(data):
+    p = re.compile(r'<.*?>')
+    return p.sub('', data)
     
 def getbvlsSchedule():
     bvlspage = getHtml('http://www.bvls2016.sc/')
-    datum = re.compile('<div class="date_time" id="date_time"><span id="next_mes" style="color: #000000; font-size: 24px;"><span style="text-decoration: underline;"><b>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(bvlspage)[0]
+    datum = re.compile('<div class="date_time" id="date_time">.*?<b>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(bvlspage)[0]
     addDir(datum,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","")
     
-    match = re.compile('<span class="time" style="color: #000000; font-family: sans-serif; font-size: 15px;">(.*?)<HR', re.DOTALL | re.IGNORECASE).findall(bvlspage)
+    match = re.compile(r'(<p>(?:<b>)?<span class="time".*?</p>)\s+(?:<HR|<div)', re.DOTALL | re.IGNORECASE).findall(bvlspage)
     for wedstrijd in match:
-        eggs = re.compile('([^<]+)<', re.DOTALL | re.IGNORECASE).findall(wedstrijd)[0]
+        eggs = re.compile("(<p>.*?)<a", re.DOTALL | re.IGNORECASE).findall(wedstrijd)[0]
+        eggs = striphtml(eggs).replace('\n','')
         addDir(eggs,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
         try:
-            streams = re.compile("<a[^<]+<b>([^<]+)<", re.DOTALL | re.IGNORECASE).findall(wedstrijd)
+            streams = re.compile("<a[^>]+>(.*?)</a", re.DOTALL | re.IGNORECASE).findall(wedstrijd)
             for stream in streams:
+                stream = striphtml(stream)
                 tekstregel = '             [COLOR lime]' + stream + ' [/COLOR] '
                 addDir(tekstregel,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
         except: pass
@@ -421,6 +429,16 @@ def getbvlsSchedule():
 #        url = 'http://www.streamsarena.eu/player/player%s.html' % url
 #        addDir(tekstregel, url, 60,"","","","","","",isItFolder=False)
 #    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+def gettpsoccerSchedule():
+    tpsoccerpage = getHtml('http://www.bpro.site/p/guide.html')
+    match = re.compile(r'<div style="background:#2A5A8E;border:4px solid #ccc;padding:3px 3px;">(.*?)</div>', re.DOTALL | re.IGNORECASE).findall(tpsoccerpage)
+    for schema in match:
+        schema = striphtml(schema)
+        schema = utils.cleantext(schema).replace('&nbsp;','')
+        tekstregel = schema
+        addDir(tekstregel, 'http://www.tpsoccer.net/', 243,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","",isItFolder=True)
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
 #def getwizhdSchedule():
@@ -2420,7 +2438,10 @@ addon_log("Name: "+str(name))
 
 if mode is None:
     addon_log("Index")
-    NLVIndex()	
+    if not addon.getSetting('policy') == 'true':
+        Privacy_Policy()
+        addon.setSetting('policy','true')
+    NLVIndex()
 
 elif mode==1:
     addon_log("getData")
@@ -2561,8 +2582,8 @@ if mode==75:
 elif mode==73:
     getlive9Schedule()
     
-#elif mode==76:
-#    getarenaSchedule()
+elif mode==76:
+    gettpsoccerSchedule()
     
 elif mode == 220: xite.Main()
 elif mode == 221: xite.List(url)
@@ -2584,5 +2605,10 @@ elif mode == 236: ziggosporttotaal.Playvid(url, name)
 elif mode == 237: foxsports.MainSamenvattingen()
 elif mode == 238: foxsports.MainDoelpunten()
 elif mode == 239: foxsports.MainInterviews()
+elif mode == 240: streamfoot.Main()
+elif mode == 241: streamfoot.List(url)
+elif mode == 242: tpsoccerstreams.Main()
+elif mode == 243: tpsoccerstreams.List(url)
+elif mode == 300: utils.playyt(url, name)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

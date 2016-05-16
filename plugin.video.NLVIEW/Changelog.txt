@@ -1,1 +1,7 @@
-1.0.0 We are back ! Greetz to AwesomeStreams.
+1.0.0 
+-We are back ! Greetz to AwesomeStreams.
+1.0.3 
+-Fix BVLS
+-Fix Goatd.net
+-Add TPSoccer.net
+-Add Stream-foot.net
