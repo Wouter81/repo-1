@@ -147,6 +147,7 @@ def cleantext(text):
     text = text.replace('&nbsp;',' ')
     text = text.replace('&iacute;','í')
     text = text.replace('&acute;','´')
+    text = text.replace('&bull;','-')
     return text
 
 

@@ -119,7 +119,7 @@ def Colored(text = '', colorid = '', isBold = False):
 def AddSports365Channels(url=None):
     errored=True
     import live365
-    addDir(Colored("Alle tijden zijn lokaal.",'lime') ,"" ,0 ,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)		#name,url,mode,icon
+    addDir(Colored("Alle tijden zijn lokaal.",'lime') ,"" ,0 ,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)        #name,url,mode,icon
     videos=live365.getLinks()
     for nm,link,active in videos:
         if active:
@@ -148,10 +148,10 @@ def playSports365(url):
             dialog = xbmcgui.Dialog()
             ok = dialog.ok('XBMC', 'No Links, so updated files dyamically, try again, just in case!')           
             print 'Updated files'
-    return	
+    return    
     
 def RefreshResources(resources):
-#	print Fromurl
+#    print Fromurl
     pDialog = xbmcgui.DialogProgress()
     ret = pDialog.create('XBMC', 'checking Updates...')
     totalFile=len(resources)
@@ -311,7 +311,7 @@ def NLVIndex():
     addDir('[B]Muziek[/B]','',75,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png' ,  fanart,'','','','')
     getData(base64.b64decode(NLVBase2),'')
     addDir('[B]DOKI Nieuws[/B]','News',46,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/nieuws.png',  FANART,'','','','',isItFolder=False)
-    addDir('[B]Informatie[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/informatie.png',fanart,'','','','',isItFolder=False)	
+    addDir('[B]Informatie[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/informatie.png',fanart,'','','','',isItFolder=False)    
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexsport():
@@ -328,12 +328,12 @@ def indexsport():
     
 def indexlivesport():
     addon_log("indexlivesport")
-    addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)	
+    addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)    
     addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
     addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",)
     addDir('TPSoccer.net','',76,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","","",)
     addDir('Stream-foot.tv','',240,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/s-f.png',fanart,"","","","","",)
-    addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)			
+    addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)            
     getData(base64.b64decode(LiveSportBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
@@ -432,10 +432,10 @@ def getbvlsSchedule():
 
 def gettpsoccerSchedule():
     tpsoccerpage = getHtml('http://www.bpro.site/p/guide.html')
-    match = re.compile(r'<div style="background:#2A5A8E;border:4px solid #ccc;padding:3px 3px;">(.*?)</div>', re.DOTALL | re.IGNORECASE).findall(tpsoccerpage)
+    match = re.compile(r'<div style="background:#115e8a;border:3px solid #ccc;padding:4px 4px;">(.*?)</span></strong></span></span></div>', re.DOTALL | re.IGNORECASE).findall(tpsoccerpage)
     for schema in match:
         schema = striphtml(schema)
-        schema = utils.cleantext(schema).replace('&nbsp;','')
+        schema = utils.cleantext(schema).replace('&nbsp;','').replace('&bull;','-')
         tekstregel = schema
         addDir(tekstregel, 'http://www.tpsoccer.net/', 243,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","",isItFolder=True)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -453,7 +453,7 @@ def gettpsoccerSchedule():
 #            pass    
 #        tekstregel = '[COLOR lime]' + tijd + '[/COLOR]' + ' - ' + wedstrijd
 #        addDir(tekstregel, url, 60,"","","","","","",isItFolder=False)
-#    xbmcplugin.endOfDirectory(int(sys.argv[1]))		
+#    xbmcplugin.endOfDirectory(int(sys.argv[1]))        
 
 def getHtml(url, referer=None, hdr=None, data=None):
     USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
@@ -469,7 +469,7 @@ def getHtml(url, referer=None, hdr=None, data=None):
     response = urllib2.urlopen(req, timeout=60)
     data = response.read()    
     response.close()
-    return data    	
+    return data        
     
 def News():
     text = ''
@@ -567,7 +567,7 @@ def getData(url,fanart):
     #print type(soup)
     if isinstance(soup,BeautifulSOAP):
         if len(soup('layoutype')) < 1:
-            SetViewLayout = "List"	    
+            SetViewLayout = "List"        
 
         if len(soup('channels')) > 0:
             channels = soup('channel')
@@ -768,7 +768,7 @@ def FindFirstPattern(text,pattern):
 
 def regex_get_all(text, start_with, end_with):
     r = re.findall("(?i)(" + start_with + "[\S\s]+?" + end_with + ")", text)
-    return r				
+    return r                
 
 def regex_from_to(text, from_string, to_string, excluding=True):
     if excluding:
@@ -861,7 +861,7 @@ def getItems(items,fanart):
                     for i in item('npo'):
                         if not i.string is None:
                             npo = streamNpo(i.string)
-                    url.append(npo)	
+                    url.append(npo)    
                 elif len(item('bvls')) >0:
                     for i in item('bvls'):
                         if not i.string == None:
@@ -875,7 +875,7 @@ def getItems(items,fanart):
                                 color = 'none'
                             name='[COLOR '+color+']' + title + '[/COLOR]' 
                             bvls = streamUrl
-                            url.append(bvls)													
+                            url.append(bvls)                                                    
                 elif len(item('ytch')) >0:
                     for i in item('ytch'):
                         thumbnail = item('thumbnail')[0].string
@@ -1029,7 +1029,7 @@ def getItems(items,fanart):
                         addDir(name.encode('utf-8'),ext_url[0],53,thumbnail,fanart,desc,genre,date,None,'source')
                     elif url[0].find('sublink') > 0:
                         addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,regexs,'','','')
-                        addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')				
+                        addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')                
                     else: 
                         addLink(url[0],name.encode('utf-8', 'ignore'),thumbnail,fanart,desc,genre,date,True,None,regexs,total)
 
@@ -1115,7 +1115,7 @@ def parse_regex(reg_item):
                             if not regexs[i('name')[0].string]['cookiejar']:
                                 regexs[i('name')[0].string]['cookiejar']=''
                         except:
-                            addon_log("Regex: -- Not a cookieJar")							
+                            addon_log("Regex: -- Not a cookieJar")                            
                         try:
                             regexs[i('name')[0].string]['setcookie'] = i('setcookie')[0].string
                         except:
@@ -1132,7 +1132,7 @@ def parse_regex(reg_item):
                         #try:
                         #    regexs[i('name')[0].string]['ignorecache'] = i('ignorecache')[0].string
                         #except:
-                        #    addon_log("Regex: -- no ignorecache")			
+                        #    addon_log("Regex: -- no ignorecache")            
 
                     regexs = urllib.quote(repr(regexs))
                     return regexs
@@ -1508,7 +1508,7 @@ def get_packed_iphonetv_url(page_data):
     s=page_data
     while 'geh(' in s:
         if s.startswith('lol('): s=s[5:-1]
-#		print 's is ',s
+#        print 's is ',s
         s=re.compile('"(.*?)"').findall(s)[0]
         s=  base64.b64decode(s)
         s=urllib.unquote(s)
