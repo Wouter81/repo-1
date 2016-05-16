@@ -2,8 +2,24 @@
 
 <item>
 <title>Sky Sports 1</title>
+<sportsdevil>http://mamahd.com/front_embed_996.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>Sky Sports 1</title>
 <sportsdevil>http://www.ibrodtv.net/embed.php?chan=tv21&width=640&height=480</sportsdevil>
 <referer>http://www.ibrodtv.net/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>Sky Sports 2</title>
+<sportsdevil>http://mamahd.com/front_embed_1007.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
@@ -18,8 +34,24 @@
 
 <item>
 <title>Sky Sports 3</title>
+<sportsdevil>http://mamahd.com/front_embed_922.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>Sky Sports 3</title>
 <sportsdevil>http://www.ibrodtv.net/embed.php?chan=tv23&width=640&height=480</sportsdevil>
 <referer>http://www.ibrodtv.net/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>Sky Sports 4</title>
+<sportsdevil>http://mamahd.com/front_embed_923.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
@@ -34,8 +66,16 @@
 
 <item>
 <title>Sky Sports 5</title>
-<sportsdevil>http://www.ibrodtv.net/embed.php?chan=tv25&width=640&height=480</sportsdevil>
-<referer>http://www.ibrodtv.net/</referer>
+<sportsdevil>http://mamahd.com/front_embed_925.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>Sky Sports F1</title>
+<sportsdevil>http://mamahd.com/front_embed_997.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
@@ -47,6 +87,23 @@
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
+
+<item>
+<title>BT Sport 1</title>
+<sportsdevil>http://mamahd.com/front_embed_929.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
+<title>BT Sport 2</title>
+<sportsdevil>http://mamahd.com/front_embed_927.html</sportsdevil>
+<referer>http://mamahd.com/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
 
 <item>
 <title>Arena Sport 1</title>
