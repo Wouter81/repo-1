@@ -73,6 +73,14 @@
 </item>
 
 <item>
+<title>Sky Sports 5</title>
+<sportsdevil>http://www.ibrodtv.net/embed.php?chan=tv25&width=640&height=480</sportsdevil>
+<referer>http://www.ibrodtv.net/</referer>
+<thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
+<fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
+</item>
+
+<item>
 <title>Sky Sports F1</title>
 <sportsdevil>http://mamahd.com/front_embed_997.html</sportsdevil>
 <referer>http://mamahd.com/</referer>
