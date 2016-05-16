@@ -123,42 +123,42 @@
 
 <item>
 <title>CTH Stadium 1</title>
-<f4m>http://149.202.207.8:8080/cth1-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</f4m>
+<link>http://149.202.207.8:8080/cth1-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
 
 <item>
 <title>CTH Stadium 2</title>
-<f4m>http://149.202.207.8:8080/cth2-14May/sallu/index.m3u8</f4m>
+<link>http://149.202.207.8:8080/cth2-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
 
 <item>
 <title>CTH Stadium 3</title>
-<f4m>http://149.202.207.8:8080/cth3-14May/sallu/index.m3u8</f4m>
+<link>http://149.202.207.8:8080/cth3-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
 
 <item>
 <title>CTH Stadium 4</title>
-<f4m>http://149.202.207.8:8080/cth4-14May/sallu/index.m3u8</f4m>
+<link>http://149.202.207.8:8080/cth4-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
 
 <item>
 <title>CTH Stadium 5</title>
-<f4m>http://149.202.207.8:8080/cth5-14May/sallu/index.m3u8</f4m>
+<link>http://149.202.207.8:8080/cth5-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
 
 <item>
 <title>CTH Stadium 6</title>
-<f4m>http://149.202.207.8:8080/cth6-14May/sallu/index.m3u8</f4m>
+<link>http://149.202.207.8:8080/cth6-14May/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
@@ -229,7 +229,7 @@
 
 <item>
 <title>WWE Network</title>
-<link>http://149.202.207.8:8080/wwe/sallu/index.m3u8</link>
+<link>http://149.202.207.8:8080/wwe/sallu/index.m3u8|User-Agent=AppleCoreMedia/1.0.0.13A452 (iPhone; U; CPU OS 9_0_2 like Mac OS X; en_gb)</link>
 <thumbnail>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/Sportkanalen.png</thumbnail>
 <fanart>https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fanart.jpg</fanart>
 </item>
