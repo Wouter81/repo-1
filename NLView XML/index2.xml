@@ -1,0 +1,22 @@
+<layoutype>thumbnail</layoutype>
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<channels>
+
+<channel>
+<name>[B]SportCenterHD[/B]</name>
+<thumbnail>https://pbs.twimg.com/profile_images/722102364883324929/PscGuNqO.jpg</thumbnail>
+<fanart>https://www.mupload.nl/img/imebx5tyjhd.jpg</fanart>
+<link></link>
+<externallink>http://pastebin.com/raw/jUYyYFkX</externallink>
+</channel>
+
+<channel>
+<name>[B]Shadow Streams[/B]</name>
+<thumbnail>https://www.mupload.nl/img/sqh9uuoukvhcl.jpg</thumbnail>
+<fanart>https://www.mupload.nl/img/vhateodreq8hj.png</fanart>
+<link></link>
+<externallink>http://pastebin.com/raw/ZPDxEgv6</externallink>
+</channel>
+
+</channels>
