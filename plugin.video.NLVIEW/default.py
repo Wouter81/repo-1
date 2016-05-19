@@ -56,12 +56,12 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
        return response
    https_response = http_response
 
-NLVBase  ='aHR0cDovL2JpdC5seS8yM1VlUDVh'
-NLVBase2  ='aHR0cDovL2JpdC5seS8xcW1HT2dS'
-SportBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Rva2kxL3JlcG8vbWFzdGVyL05MVmlldyUyMFhNTC9zcG9ydC54bWw='
-LiveSportBase  ='aHR0cDovL3htbC5kb2tpdHYubmwvbGl2ZXNwb3J0LnhtbA=='
-BvlsBase  ='aHR0cDovL3htbC5kb2tpdHYubmwvdm9ldGJhbC54bWw='
-MuziekBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Rva2kxL3JlcG8vbWFzdGVyL05MVmlldyUyMFhNTC9tdXppZWsueG1s'
+NLVBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL05MVmlld0plcm9lbi9OTFZpZXctUmVwb3NpdG9yeS9tYXN0ZXIvTkxWaWV3JTIwWE1ML2luZGV4LnhtbA=='
+NLVBase2  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL05MVmlld0plcm9lbi9OTFZpZXctUmVwb3NpdG9yeS9tYXN0ZXIvTkxWaWV3JTIwWE1ML2luZGV4Mi54bWw='
+SportBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL05MVmlld0plcm9lbi9OTFZpZXctUmVwb3NpdG9yeS9tYXN0ZXIvTkxWaWV3JTIwWE1ML3Nwb3J0LnhtbA=='
+LiveSportBase  ='aHR0cDovL3Bhc3RlYmluLmNvbS9yYXcvMWNhenNuN3Q='
+BvlsBase  ='aHR0cDovL3Bhc3RlYmluLmNvbS9yYXcvelhrbjY0aUw='
+MuziekBase  ='aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL05MVmlld0plcm9lbi9OTFZpZXctUmVwb3NpdG9yeS9tYXN0ZXIvTkxWaWV3JTIwWE1ML211emllay54bWw='
 
 
 
@@ -119,17 +119,17 @@ def Colored(text = '', colorid = '', isBold = False):
 def AddSports365Channels(url=None):
     errored=True
     import live365
-    addDir(Colored("Alle tijden zijn lokaal.",'lime') ,"" ,0 ,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)        #name,url,mode,icon
+    addDir(Colored("Alle tijden zijn lokaal.",'lime') ,"" ,0 ,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)        #name,url,mode,icon
     videos=live365.getLinks()
     for nm,link,active in videos:
         if active:
            
-            addDir(Colored(nm  ,'none') ,link,48 ,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)
+            addDir(Colored(nm  ,'none') ,link,48 ,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)
         else:
-            addDir("[COLOR red][B]X[/B] [/COLOR]"+Colored(nm ,'none') ,"",0 ,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)
+            addDir("[COLOR red][B]X[/B] [/COLOR]"+Colored(nm ,'none') ,"",0 ,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport365.png',fanart,"","","","","",isItFolder=False)
         errored=False
     if errored:
-       if RefreshResources([('live365.py','https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/live365.py')]):
+       if RefreshResources([('live365.py','https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/live365.py')]):
             dialog = xbmcgui.Dialog()
             ok = dialog.ok('XBMC', 'No Links, so updated files dyamically, try again, just in case!')           
             print 'Updated files'
@@ -144,7 +144,7 @@ def playSports365(url):
     #    print   "playing stream name: " + str(name) 
         xbmc.Player(  ).play( urlToPlay, listitem)  
     else:
-       if RefreshResources([('live365.py','https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/live365.py')]):
+       if RefreshResources([('live365.py','https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/live365.py')]):
             dialog = xbmcgui.Dialog()
             ok = dialog.ok('XBMC', 'No Links, so updated files dyamically, try again, just in case!')           
             print 'Updated files'
@@ -307,33 +307,33 @@ def makeRequest(url, headers=None):
 def NLVIndex():
     addon_log("NLVIndex")
     getData(base64.b64decode(NLVBase),'')
-    addDir('[B]Sport[/B]','',70,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport.png' ,  fanart,'','','','')
-    addDir('[B]Muziek[/B]','',75,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/muziek.png' ,  fanart,'','','','')
+    addDir('[B]Sport[/B]','',70,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport.png' ,  fanart,'','','','')
+    addDir('[B]Muziek[/B]','',75,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/muziek.png' ,  fanart,'','','','')
     getData(base64.b64decode(NLVBase2),'')
-    addDir('[B]DOKI Nieuws[/B]','News',46,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/nieuws.png',  FANART,'','','','',isItFolder=False)
-    addDir('[B]Informatie[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/informatie.png',fanart,'','','','',isItFolder=False)    
+    addDir('[B]Nieuws[/B]','News',46,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/nieuws.png',  FANART,'','','','',isItFolder=False)
+    addDir('[B]Informatie[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/informatie.png',fanart,'','','','',isItFolder=False)    
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexsport():
     addon_log("indexsport")
-    addDir('Live Sport','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)
-    addDir('Voetbal Samenvattingen','http://footyroom.com/',223,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/samenvatting.png' ,  fanart,'','','','')
-    addDir('FOX Sports','http://www.foxsports.nl/video/',227,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/fs.png' ,  fanart,'','','','')
-    addDir('Ziggo Sport Totaal','http://www.ziggosporttotaal.nl/video/',232,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/zst.png' ,  fanart,'','','','')
-    #addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",)
+    addDir('Live Sport','',72,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/livesport.png',fanart,"","","","","",)
+    addDir('Voetbal Samenvattingen','http://footyroom.com/',223,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/samenvatting.png' ,  fanart,'','','','')
+    addDir('FOX Sports','http://www.foxsports.nl/video/',227,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/fs.png' ,  fanart,'','','','')
+    addDir('Ziggo Sport Totaal','http://www.ziggosporttotaal.nl/video/',232,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/zst.png' ,  fanart,'','','','')
+    #addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport365.png',fanart,"","","","","",)
     #addDir('Wiz1.net','',61,icon,fanart,"","","","","",)
-    #addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)
+    #addDir('Goatd.net','',62,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/goatd.png',fanart,"","","","","",)
     getData(base64.b64decode(SportBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexlivesport():
     addon_log("indexlivesport")
-    addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/livesport.png',fanart,"","","","","",)    
-    addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
-    addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/sport365.png',fanart,"","","","","",)
-    addDir('TPSoccer.net','',76,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","","",)
-    addDir('Stream-foot.tv','',240,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/s-f.png',fanart,"","","","","",)
-    addDir('Goatd.net','',62,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png',fanart,"","","","","",)            
+    addDir('[COLOR lime][B]########## Extra Streams ##########[/B][/COLOR]','',72,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/livesport.png',fanart,"","","","","",)    
+    addDir('BVLS2016.sc','',63,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/bvls.png',fanart,"","","","","",)
+    addDir('Sport365 - From ZemTV','',47,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/sport365.png',fanart,"","","","","",)
+    addDir('TPSoccer.net','',76,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/tp.png',fanart,"","","","","",)
+    addDir('Stream-foot.tv','',240,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/s-f.png',fanart,"","","","","",)
+    addDir('Goatd.net','',62,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/goatd.png',fanart,"","","","","",)            
     getData(base64.b64decode(LiveSportBase),'')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
@@ -345,7 +345,7 @@ def indexbvls():
 def indexmuziek():
     addon_log("indexmuziek")
     getData(base64.b64decode(MuziekBase),'')
-    addDir('XITE','http://xite.nl/videos/1',221,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/xite.png' ,  fanart,'','','','')
+    addDir('XITE','http://xite.nl/videos/1',221,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/xite.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -395,7 +395,7 @@ def getgoatSchedule():
         except:
             pass
         url = 'http://goatd.net/' + url
-        addDir(''+goatsport+' '+'[COLOR lime]'+tijd+'[/COLOR]'' - '+ wedstrijd,url,60,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/goatd.png' ,  FANART,'','','','')
+        addDir(''+goatsport+' '+'[COLOR lime]'+tijd+'[/COLOR]'' - '+ wedstrijd,url,60,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/goatd.png' ,  FANART,'','','','')
 
 
 def striphtml(data):
@@ -405,19 +405,19 @@ def striphtml(data):
 def getbvlsSchedule():
     bvlspage = getHtml('http://www.bvls2016.sc/')
     datum = re.compile('<div class="date_time" id="date_time">.*?<b>([^<]+)<', re.DOTALL | re.IGNORECASE).findall(bvlspage)[0]
-    addDir(datum,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","")
+    addDir(datum,'',74,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/bvls.png',fanart,"","","","","")
     
     match = re.compile(r'(<p>(?:<b>)?<span class="time".*?</p>)\s+(?:<HR|<div)', re.DOTALL | re.IGNORECASE).findall(bvlspage)
     for wedstrijd in match:
         eggs = re.compile("(<p>.*?)<a", re.DOTALL | re.IGNORECASE).findall(wedstrijd)[0]
         eggs = striphtml(eggs).replace('\n','')
-        addDir(eggs,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
+        addDir(eggs,'',74,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/bvls.png',fanart,"","","","","",)
         try:
             streams = re.compile("<a[^>]+>(.*?)</a", re.DOTALL | re.IGNORECASE).findall(wedstrijd)
             for stream in streams:
                 stream = striphtml(stream)
                 tekstregel = '             [COLOR lime]' + stream + ' [/COLOR] '
-                addDir(tekstregel,'',74,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/bvls.png',fanart,"","","","","",)
+                addDir(tekstregel,'',74,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/bvls.png',fanart,"","","","","",)
         except: pass
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
@@ -437,7 +437,7 @@ def gettpsoccerSchedule():
         schema = striphtml(schema)
         schema = utils.cleantext(schema).replace('&nbsp;','').replace('&bull;','-')
         tekstregel = schema
-        addDir(tekstregel, 'http://www.tpsoccer.net/', 243,'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/tp.png',fanart,"","","","",isItFolder=True)
+        addDir(tekstregel, 'http://www.tpsoccer.net/', 243,'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/tp.png',fanart,"","","","",isItFolder=True)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -473,7 +473,7 @@ def getHtml(url, referer=None, hdr=None, data=None):
     
 def News():
     text = ''
-    twit = 'https://raw.githubusercontent.com/doki1/dokitvnl/master/DOKI%20Tools%20XML/DOKINieuws.xml'
+    twit = 'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/Nieuws.xml'
     req = urllib2.Request(twit)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
@@ -489,13 +489,13 @@ def News():
         status = status.replace('&amp;','')
         dte = '[COLOR lime][B]'+dte+'[/B][/COLOR]'
         text = text+dte+'\n'+status+'\n'+'\n'
-    showText('[COLOR lime][B]DOKI Nieuws[/B][/COLOR]', text)
+    showText('[COLOR lime][B]Nieuws[/B][/COLOR]', text)
 
 
 
 def Privacy_Policy():
     text = ''
-    twit = 'https://raw.githubusercontent.com/doki1/repo/master/NLView%20XML/informatie.xml'
+    twit = 'https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/NLView%20XML/informatie.xml'
     req = urllib2.Request(twit)
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
     response = urllib2.urlopen(req)
@@ -2438,9 +2438,9 @@ addon_log("Name: "+str(name))
 
 if mode is None:
     addon_log("Index")
-    if not addon.getSetting('policy') == 'true':
+    if not addon.getSetting('policy1.0.5') == 'true':
         Privacy_Policy()
-        addon.setSetting('policy','true')
+        addon.setSetting('policy1.0.5','true')
     NLVIndex()
 
 elif mode==1:
