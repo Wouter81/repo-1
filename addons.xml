@@ -714,7 +714,7 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 </extension>
 </addon>
 
-    <addon id="repository.NLVIEW" name="[B][COLOR lime]NL[/COLOR]OKI[COLOR white]View[/COLOR][/B]" version="1.0.0" provider-name="NLView">
+    <addon id="repository.NLVIEW" name="[B][COLOR lime]NL[/COLOR][COLOR white]View[/COLOR][/B]" version="1.0.1" provider-name="NLView">
         <requires>
             <import addon="xbmc.addon" version="12.0.0"/>
         </requires>
