@@ -72,6 +72,26 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.brettus.streams" name="[COLOR white]B[/COLOR][COLOR dodgerblue]rettus [/COLOR][COLOR white]S[/COLOR][COLOR dodgerblue]treams[/COLOR]" version="1.0.3" provider-name="Biggy_Ozz">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+		<import addon="script.module.pyxbmct" version="1.1.4" />
+		<import addon="script.module.urlresolver" version="3.0.0"/>
+		<import addon="script.module.liveresolver" version="0.1.24"/>
+		<import addon="plugin.video.youtube" optional="true" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Brettus-Streams</summary>
+		<description lang="en">Brettus-Streams</description>
+		<platform>all</platform>
+		<forum>Brettus-Streams</forum>
+		<website>Brettus-Streams</website>
+	</extension>
+</addon>
+
 <addon id="plugin.video.clubtv"
 	name="Doki Club TV"
 	version="1.0.6"
@@ -215,37 +235,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.NJMSoccer"
-       name="NJM-Soccer"
-       version="3.0.9"
-       provider-name="Ares Team">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.t0mm0.common" version="2.0.0"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.simple.downloader" version="0.9.4"/>
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" version="3.0.0"/>
-    <import addon="script.module.urlresolver" optional="true"/>
-    <import addon="script.module.simplejson" />
-    <import addon="script.common.plugin.cache" version="2.5.2"/>
-    <import addon="script.module.metahandler" version="2.5.1"/>
-
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en"> Join us at http://ares-project.com/community/</summary>
-    <description lang="en">Special Thank you to Hakamac for his code, and to Ares Team,Shadow Crew and Mettle Kettle for their support.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.NLVIEW"
        name="[COLOR lime][B]NL[/B][/COLOR]View"
        version="1.0.5"
@@ -276,79 +265,6 @@
     <summary lang="en">Streams voor XBMC / KODI!</summary>
     <description lang="en">Special greetz to AwesomeStreams!
 Special greetz to DOKI!</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<!--suppress ALL -->
-<addon id="plugin.video.saltshd.lite" version="1.0.134a" name="Salts HD Lite" provider-name="tknorris">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-		<import addon="repository.xvbmc" version="3.0.1"/>
-        <import addon="script.module.urlresolver" version="3.0.0"/>
-        <import addon="script.module.myconnpy" version="1.1.6" />
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-     <extension point="xbmc.service" library="service.py" start="startup"/>
-    <extension point="xbmc.addon.metadata">
-        <summary>Stream video from many difference sources</summary>
-        <description>This is the mod version of Salts by Scott Marten.</description>
-        <platform>all</platform>
-        <website>http://tvaddons.ag/</website>
-		<forum>https://www.facebook.com/groups/XvBMCnederland/</forum>
-	</extension>
-</addon>
-
-<addon id="plugin.video.sportcenterhd"
-       name="SportCenterHD"
-       version="1.0.1"
-       provider-name="SportCenterHD">
-  <requires>
-    <import addon="script.module.beautifulsoup" />
-    <import addon="script.module.simple.downloader" />
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.simple.downloader" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.simplejson" />
-    <import addon="script.common.plugin.cache" />
-    <import addon="script.module.metahandler" />
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">SportCenterHD</summary>
-    <description lang="en">Wij zijn NIET de eigenaar van de streams die in SportCenterHD zijn te vinden.
-Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon
-  id="plugin.video.SportsDevil"
-  version="ZNL2016.2016.2016.05.16.NL1"
-  name="SportsDevil"
-  provider-name="MaxMustermann, Al101, Hubbab3, Sattekop">
-  <requires>
-   <import addon="xbmc.python" version="2.14.0"/>
-   <import addon="script.module.simplejson" />
-   <import addon="script.module.six" />
-   <import addon="script.module.requests" />
-   <import addon="script.module.livestreamer" />
-   <import addon="script.module.pydevd" version="4.4.0" optional="true"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Play videos of different sports streaming sites</summary>
-    <description>Play videos of different sports streaming sites</description>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <platform>all</platform>
   </extension>
 </addon>
@@ -519,6 +435,19 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 	</extension>
 </addon>
 
+<addon id="repository.Cosmixrepo" name="Cosmix Repo" version="1.0" provider-name="Cosmix">
+	<extension point="xbmc.addon.repository" name="Cosmixrepo">
+		<info compressed="false">http://cosmix.net23.net/repo/Plugins/addons.xml</info>
+		<checksum>http://cosmix.net23.net/repo/Plugins/addons.xml.md5</checksum>
+		<datadir zip="true">http://cosmix.net23.net/repo/Plugins/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Cosmix Repo</summary>
+		<description>Cosmix Repo</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
     <addon id="repository.dokinl" name="[B][COLOR lime]D[/COLOR]OKI[COLOR lime]TV[/COLOR].NL [COLOR lime]R[/COLOR]epository[/B]" version="1.0.2" provider-name="DOKITV.NL">
         <requires>
             <import addon="xbmc.addon" version="12.0.0"/>
@@ -547,6 +476,25 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 		<summary>DutchMusic Repository</summary>
 		<description>Dit is de repository voor de DutchMusic add-on</description>
 		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.entertainmentrepo" name="The Entertainment Repository" version="1.5" provider-name="Mr Entertainment">
+	<extension point="xbmc.addon.repository" name="Entertainment Addons Repository">
+        <dir>
+	      <info compressed="false">https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/addons.xml</info>
+	      <checksum>https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/addons.xml.md5</checksum>
+	      <datadir zip="true">https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/zips</datadir>
+        </dir>
+        <info compressed="false">https://raw.githubusercontent.com/TheYid/My-Repo/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/TheYid/My-Repo/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/TheYid/My-Repo/master/zips</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary></summary>
+		<description>Download and install addons by Mr Entertainment</description>
+		<disclaimer>By using this, you take reponsibility for anything that happens. Some parts of this addon may not be legal in your country - please check with your local laws before installing. I take no responsibility for any problems this plugin might in any way shape or form. This is project is for a LEARNING EXPERIANCE.</disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -701,6 +649,24 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 	<extension point="xbmc.addon.metadata">
 		<summary>Install My Addons</summary>
 		<description>Download and install addons from podgod!</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.rayw1986" name="RayW1986 Repo" version="2.1.0" provider-name="RayW1986">
+	<extension point="xbmc.addon.repository" name="RayW1986 Repository">
+		<dir>
+			<info compressed="false">http://raw.github.com/RayW1986/repository.rayw1986/master/addons.xml</info>
+			<checksum>http://raw.github.com/RayW1986/repository.rayw1986/master/addons.xml.md5</checksum>
+			<datadir zip="true">http://raw.github.com/RayW1986/repository.rayw1986/master/zips</datadir>
+		</dir>
+		<info compressed="false">https://offshoregit.com/rayw1986/rayw1986-repo/addons.xml</info>
+		<checksum>https://offshoregit.com/rayw1986/rayw1986-repo/addons.xml.md5</checksum>
+		<datadir zip="true">https://offshoregit.com/rayw1986/rayw1986-repo/zips</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>RayW1986's Repository</summary>
+		<description>Download and install add-ons from RayW1986's Repository.</description>
 		<platform>all</platform>
 	</extension>
 </addon>
