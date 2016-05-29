@@ -72,20 +72,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.program.dokifix" name="DOKI Fix" version="1.0.0" provider-name="DOKI">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en"></summary>
-    <description lang="en"></description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.clubtv"
 	name="Doki Club TV"
 	version="1.0.6"
@@ -398,7 +384,7 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
     </extension>
 </addon>
 
-<addon id="plugin.video.youtube" name="YouTube" version="5.1.20.4" provider-name="bromix">
+<addon id="plugin.video.youtube" name="YouTube" version="5.2.2" provider-name="h0d3nt3uf3l, jdf76, bromix">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -407,13 +393,13 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 	</extension>
 	<extension point="xbmc.addon.metadata">
         <summary lang="en">Plugin for YouTube</summary>
-        <description lang="en">YouTube is a one of the biggest video-sharing websites of the world.</description>
+        <description lang="en">YouTube is one of the biggest video-sharing websites of the world.</description>
 		<summary lang="de">Plugin für YouTube</summary>
-        <description lang="de">YouTube ist ein eines der größten Video-Sharing-Websites der Welt.</description>
+        <description lang="de">YouTube ist eines der größten Video-Sharing-Websites der Welt.</description>
         <summary lang="pl">Wtyczka YouTube</summary>
         <description lang="pl">YouTube jest jednym z największych na świecie serwisów udostępniania wideo.</description>
 		<summary lang="hu">Kiegészítő  a YouTube-hoz</summary>
-        <description lang="hu">A YouTube a világ egyik legnagyobb videómegosztó weboldala.</description>
+        <description lang="hu">A YouTube világ egyik legnagyobb videómegosztó weboldala.</description>
         <summary lang="es">Plugin para YouTube</summary>
         <description lang="es">YouTube es un uno de los mayores sitios web de intercambio de vídeos del mundo.</description>
         <summary lang="ru">Видеодополнение YouTube</summary>
@@ -424,14 +410,16 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
         <description lang="zh">「Youtube」是全世界最大的影片分享網站</description>
         <summary lang="bg">Добавка за YouTube</summary>
         <description lang="bg">YouTube е един от най-големите уеб сайтове за споделяне на видео в целия свят.</description>
+		<summary lang="el">Πρόσθετο YouTube</summary>
+        <description lang="el">Το YouTube είναι μία από τις μεγαλύτερες ιστοσελίδες διαμοιρασμού βίντεο στον κόσμο.</description>
 		<disclaimer lang="en"></disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=200735</forum>
+		<forum>http://forum.kodi.tv/showthread.php?tid=267160</forum>
 		<website>http://www.youtube.com</website>
-		<email>bromix at gmx dot net</email>
-		<source>https://github.com/bromix/plugin.video.youtube</source>
+		<email>ytplugin at datanet dot ws</email>
+		<source>https://github.com/Kolifanes/plugin.video.youtube</source>
 	</extension>
 </addon>
 
@@ -467,20 +455,6 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 	</extension>
 </addon>
 
-<addon id="repository.addonscriptorde-beta" name="AddonScriptorDE's Testing Repo" version="1.0.1" provider-name="AddonScriptorDE">
-	<extension point="xbmc.addon.repository" name="AddonScriptorDE's Testing Repo">
-		<info compressed="false">http://addonscriptorde-beta-repo.googlecode.com/svn/trunk/addons.xml</info>
-		<checksum>http://addonscriptorde-beta-repo.googlecode.com/svn/trunk/addons.xml.md5</checksum>
-		<datadir zip="false">http://addonscriptorde-beta-repo.googlecode.com/svn/trunk/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Add-ons and updates that are not (yet) available via the xbmc.org repo</summary>
-		<description>Add-ons and updates that are not (yet) available via the xbmc.org repo</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.aresproject" name="AresProject" version="0.0.1" provider-name="Ares Team">
 	<extension point="xbmc.addon.repository" name="Simple Kodi">
 		<info compressed="false">http://repo.ares-project.com/plugins/addons.xml</info>
@@ -490,20 +464,6 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 	<extension point="xbmc.addon.metadata">
 		<summary>AresProject.</summary>
 		<description>Ares-Project Addons Source. Visit Us At http://ares-project.com/community/</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.awesome" name="Awesome repo" version="0.0.1" provider-name="Awesome">
-	<extension point="xbmc.addon.repository" name="Awesome repo">
-		<info compressed="false">http://raw.github.com/AwesomeStreams/AwesomeStreams/master/addons.xml</info>
-		<checksum>http://raw.github.com/AwesomeStreams/AwesomeStreams/master/addons.xml.md5</checksum>
-		<datadir zip="true">http://raw.github.com/AwesomeStreams/AwesomeStreams/master</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>The Official Awesome repository</summary>
-		<description>This repository contains addons with live IPTV streams.</description>
-		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -795,52 +755,6 @@ Alle inhoud is copyright van hun respectievelijke eigenaars.</description>
 		<disclaimer>By using this, you take reponsibility for anything that happens.  Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing. I take no responsibility for any problems this plugin might in any way, form, shape or size cause. This is project is for a LEARNING EXPERIANCE.</disclaimer>
 		<platform>all</platform>
 	</extension>
-</addon>
-
-<addon id="repository.tknorris.beta" name="tknorris Beta Testing Repository" version="1.0.5" provider-name="tknorris">
-    <extension point="xbmc.addon.repository" name="tknorris beta testing repository">
-	    <dir>
-	        <info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
-	        <checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
-	        <datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
-	    </dir>
-        <dir>
-            <info compressed="false">http://github.com/norris-addons/tknorris-beta-repo/raw/master/addons.xml</info>
-            <checksum>http://github.com/norris-addons/tknorris-beta-repo/raw/master/addons.xml.md5</checksum>
-            <datadir zip="true">http://github.com/norris-addons/tknorris-beta-repo/raw/master/zips/</datadir>
-        </dir>
-        <info compressed="false">http://github.com/tknorris/tknorris-beta-repo/raw/master/addons.xml</info>
-        <checksum>http://github.com/tknorris/tknorris-beta-repo/raw/master/addons.xml.md5</checksum>
-        <datadir zip="true">http://github.com/tknorris/tknorris-beta-repo/raw/master/zips/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>This is used ONLY for beta testing</summary>
-        <description>Beta testing only!!!
-DO NOT INSTALL UNLESS YOU WISH TO PARTICIPATE IN BETA TESTING
-
-Addons Included
-    - 1Channel (Beta)
-    - 1Channel Thempak
-    - SALTS (Beta)
-    - SALTS Themepak
-    - Trakt (Beta)
-    - Trakt List Manager (Alpha)
-        </description>
-        <platform>all</platform>
-    </extension>
-</addon>
-
-<addon id="repository.xbmc-israel" name=".[COLOR blue]XBMC Israeli [/COLOR][COLOR white] Streaming Sites[/COLOR]" version="1.0.4" provider-name="cubicle-vdo">
-    <extension point="xbmc.addon.repository" name="XBMC Israeli streaming repo for streaming sites">
-        <info compressed="false">https://raw.githubusercontent.com/cubicle-vdo/xbmc-israel/master/addons.xml</info>
-        <checksum>https://raw.githubusercontent.com/cubicle-vdo/xbmc-israel/master/addons.xml.md5</checksum>
-        <datadir zip="true">https://raw.githubusercontent.com/cubicle-vdo/xbmc-israel/master/repo</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>XBMC Israeli Streaming Sites</summary>
-        <description>Download and install addons for XBMC Israeli streaming repo for streaming sites</description>
-        <platform>all</platform>
-    </extension>
 </addon>
 
 <addon id="repository.xbmchub" name="TVADDONS.ag Addon Repository" version="1.0.6" provider-name="tvaddons.ag">
@@ -1223,30 +1137,6 @@ Addons Included
         <website/>
         <email/>
         <source>https://github.com/cflannagan/service.subtitles.addic7ed</source>
-    </extension>
-</addon>
-
-<addon id="service.subtitles.nlondertitels"
-       name="nlondertitels.com"
-       version="1.0.3"
-       provider-name="Amelandbor">
-    <requires>
-        <import addon="xbmc.python" version="2.14.0"/>
-        <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    </requires>
-    <extension point="xbmc.subtitle.module"
-               library="service.py"/>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Get subtitles from nlondertitels.com</summary>
-        <description lang="en">Get subtitles from nlondertitels.com</description>
-        <disclaimer lang="en"/>
-        <platform>all</platform>
-        <language/>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <forum>http://forum.kodi.tv/showthread.php?tid=209783</forum>
-        <website/>
-        <email/>
-        <source>https://github.com/Amelandbor/service.subtitles.nlondertitels</source>
     </extension>
 </addon>
 
