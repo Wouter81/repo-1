@@ -151,7 +151,7 @@ def cleantext(text):
     return text
 
 
-def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add'):
+def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add', fanart=None):
     if fav == 'add': favtext = "Add to"
     elif fav == 'del': favtext = "Remove from"
     u = (sys.argv[0] +
@@ -179,8 +179,10 @@ def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add'):
         liz.setInfo(type="Video", infoLabels={"Title": name})
     else:
         liz.setInfo(type="Video", infoLabels={"Title": name, "plot": desc, "plotoutline": desc})
-    liz.addContextMenuItems([('[COLOR hotpink]Download Video[/COLOR]', 'xbmc.RunPlugin('+dwnld+')'),
-    ('[COLOR hotpink]' + favtext + ' favorites[/COLOR]', 'xbmc.RunPlugin('+favorite+')')])
+    if fanart:
+        liz.setArt({'fanart': fanart})
+    liz.addContextMenuItems([('[COLOR lime]Download Video[/COLOR]', 'xbmc.RunPlugin('+dwnld+')'),
+    ('[COLOR lime]' + favtext + ' favorites[/COLOR]', 'xbmc.RunPlugin('+favorite+')')])
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=False)
     return ok
     
@@ -190,14 +192,14 @@ def playyt(url, name):
     liz.setInfo( type="Video", infoLabels={ "Title": name } )
     xbmc.Player().play(url, liz, False)
 
-def addDir(name, url, mode, iconimage, page=None, channel=None, section=None, keyword='', Folder=True):
+def addDir(name, url, mode, iconimage, page=None, channel=None, section=None, keyword='', Folder=True, fanart=None):
     if url.startswith("plugin://"):
         u = url
     else:
         u = (sys.argv[0] +
              "?url=" + urllib.quote_plus(url) +
              "&mode=" + str(mode) +
-             "&p2=" + str(page) +
+             "&page=" + str(page) +
              "&channel=" + str(channel) +
              "&section=" + str(section) +
              "&keyword=" + urllib.quote_plus(keyword) +
@@ -205,6 +207,8 @@ def addDir(name, url, mode, iconimage, page=None, channel=None, section=None, ke
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setArt({'thumb': iconimage, 'icon': iconimage})
+    if fanart:
+        liz.setArt({'fanart': fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name})
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=Folder)
     return ok

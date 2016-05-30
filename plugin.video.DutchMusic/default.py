@@ -26,7 +26,7 @@ import SimpleDownloader as downloader
 import time
 import requests
 from lib.utils import *
-import utils, tvoranje, hart, sterren, oranjetop30, unitynltop25, sterrentop20, radionltop1500, karaoke, youtubezoeken
+import utils, tvoranje, hart, oranjetop30, unitynltop25, radionltop1500, karaoke, youtubezoeken, hollandshitforum, sterren, Artiesten
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -56,6 +56,8 @@ DMBase1 = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNd
 DMBase2 = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL2luZGV4cmFkaW90di54bWw='
 KaraokeBase = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL2thcmFva2VpbmRleC54bWw='
 SterrenNLBase = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL3N0ZXJyZW5ubG11emlla2ZlZXN0LnhtbA=='
+SterrenNLTop20Base = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL3N0ZXJyZW50b3AyMC54bWw='
+DutchMusicPlaylistBase = 'aHR0cDovL2JpdC5seS9kdXRjaG11c2lj'
 
 addon = xbmcaddon.Addon('plugin.video.DutchMusic')
 addon_version = addon.getAddonInfo('version')
@@ -122,21 +124,21 @@ def makeRequest(url, headers=None):
 def DMIndex():
     addon_log("DMIndex")
     xbmc.executebuiltin("Container.SetViewMode(500)")
-#   YouTube - Websites - Radio & Video - Hitlijsten - Karaoke - Muziek zoeken
-    addDir('[B]YouTube[/B]','',73,os.path.join(utils.imgDir, 'youtube.png') , fanart,'','','','')
-    addDir('[B]Websites[/B]','',74,os.path.join(utils.imgDir, 'websites.png') , fanart,'','','','')
-    addDir('[B]Radio & Video[/B]','',72,os.path.join(utils.imgDir, 'radio-video.png') , fanart,'','','','')
-    addDir('[B]Hitlijsten[/B]','',75,os.path.join(utils.imgDir, 'hitlijsten.png') , fanart,'','','','')
-    addDir('[B]Karaoke[/B]','',76,os.path.join(utils.imgDir, 'karaoke.png') , fanart,'','','','')
-    addDir('[B]Muziek zoeken[/B]','',246,os.path.join(utils.imgDir, 'zoeken.png') ,  fanart,'','','','')
-    #addDir('[B]Muziek zoeken[/B]','http://sterren.avrotros.nl/zoeken/?tx_solr%5Bq%5D=',233,os.path.join(utils.imgDir, 'zoeken.png') , fanart,'','','','')
+    addDir('[B]DutchMusic Playlist - Autoplay[/B]','',78,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube-playlist.png' , fanart,'','','','')
+    addDir('[B]YouTube[/B]','',73,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube.png' , fanart,'','','','')
+    addDir('[B]Websites[/B]','',74,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/websites.png' , fanart,'','','','')
+    addDir('[B]Radio & Video[/B]','',72,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radio-video.png' , fanart,'','','','')
+    addDir('[B]Hitlijsten[/B]','',75,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hitlijsten.png' , fanart,'','','','')
+    addDir('[B]Karaoke[/B]','',76,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/karaoke.png' , fanart,'','','','')
+    addDir('[B]Artiesten[/B]','http://www.radionl.fm/artiesten/',249,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/artiesten.png' ,  fanart,'','','','')
+    addDir('[B]Muziek zoeken[/B]','',246,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/zoeken.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexoranjetop30():
     addon_log("indexoranjetop30")
     getData(base64.b64decode(DMBase),'')
     addDir('','',70,icon ,  fanart,'','','','')
-    addDir('Bekijk de lijst','http://www.oranjetop30.nl/',235,os.path.join(utils.imgDir, 'oranje-top30.png') ,  fanart,'','','','')
+    addDir('Bekijk de lijst','http://www.oranjetop30.nl/',235,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexradiotv():
@@ -147,29 +149,42 @@ def indexradiotv():
 def indexyoutube():
     addon_log("indexyoutube")
     getData(base64.b64decode(DMBase1),'')
+    addDir('[B]Tutorial: DutchMusic Playlist afspelen[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube-playlist.png',fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexwebsites():
     addon_log("indexwebsites")
-    addDir('[B]Sterren NL[/B]','http://sterren.avrotros.nl/video-s/',229,os.path.join(utils.imgDir, 'sterren-nl.png') ,  fanart,'','','','')
+    addDir('[B]Sterren NL[/B]','http://sterren.nl/',77,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
+    addDir('[B]Hart voor Muziek[/B]','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276',227,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hart-voor-muziek.png' ,  fanart,'','','','')
+    addDir('[B]TV Oranje[/B]','http://www.tvoranje.nl/?p=84&p2=1',220,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png' ,  fanart,'','','','')
+    addDir('[B]Hollandse Hits Forum - Nieuwe Releases[/B]','http://www.hollandsehitsforum.nl/index.php?option=com_content&view=category&layout=blog&id=168&Itemid=40',248,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/HHF.png' ,  fanart,'','','','')
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+def indexsterrennl():
+    addon_log("indexsterrennl")
     getData(base64.b64decode(SterrenNLBase),'')
-    addDir('[B]Hart voor Muziek[/B]','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276',227,os.path.join(utils.imgDir, 'hart-voor-muziek.png') ,  fanart,'','','','')
-    addDir('[B]TV Oranje[/B]','http://www.tvoranje.nl/?p=84&p2=1',220,os.path.join(utils.imgDir, 'tvoranje.png') ,  fanart,'','','','')
+    addDir('[B]Sterren NL Uitzendingen[/B]','http://sterren.nl/',229,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexhitlijsten():
     addon_log("indexhitlijsten")
     xbmc.executebuiltin("Container.SetViewMode(500)")
-    addDir('[B]Oranje Top 30[/B]','',70,os.path.join(utils.imgDir, 'oranje-top30.png') ,  fanart,'','','','')
-    addDir('[B]Sterren NL Top 20[/B]','http://sterren.avrotros.nl/programma-s/radio-pips/sterrennl-top-20/de-lijst/',239,os.path.join(utils.imgDir, 'sterren-nl-top20.png') ,  fanart,'','','','')
-    addDir('[B]RADIONL Top 1500[/B]','http://www.radionl.fm/top1500/',240,os.path.join(utils.imgDir, 'radionl-top-1500.png') ,  fanart,'','','','')
-    addDir('[B]Unity NL Top 25[/B]','http://www.unity.nu/Programmas/UnityNL',237,os.path.join(utils.imgDir, 'unity-nl.png') ,  fanart,'','','','')  
+    addDir('[B]Oranje Top 30[/B]','',70,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png' ,  fanart,'','','','')
+    getData(base64.b64decode(SterrenNLTop20Base),'')
+    addDir('[B]RADIONL Top 1500[/B]','http://www.radionl.fm/top1500/',240,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radionl-top-1500.png' ,  fanart,'','','','')
+    addDir('[B]Unity NL Top 25[/B]','http://www.unity.nu/Programmas/UnityNL',237,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png' ,  fanart,'','','','')  
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexkaraoke():
     addon_log("indexkaraoke")
-    addDir('[B]Zoeken[/B]','',244,os.path.join(utils.imgDir, 'karaoke.png') ,  fanart,'','','','')
+    addDir('[B]Zoeken[/B]','',244,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/karaoke.png' ,  fanart,'','','','')
     getData(base64.b64decode(KaraokeBase),'')
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+def indexdutchmusicplaylist():
+    addon_log("indexdutchmusicplaylist")
+    getData(base64.b64decode(DutchMusicPlaylistBase),'')
+    addDir('[B]Tutorial: DutchMusic Playlist afspelen[/B]','Privacy Policy',45,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube-playlist.png',fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -179,6 +194,43 @@ def ONELIST(page):
     npage = page + 1
     utils.addDir('[COLOR hotpink]Volgende Pagina ('+ str(npage) +')[/COLOR]','',5,'',npage)
     xbmcplugin.endOfDirectory(utils.addon_handle)
+    
+def Privacy_Policy():
+    text = ''
+    twit = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/xml/Hoekanjededutchmusicplaylistafspelen.xml'
+    req = urllib2.Request(twit)
+    req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+    response = urllib2.urlopen(req)
+    link=response.read()
+    response.close()
+    match=re.compile("<title>(.+?)</title><pubDate>(.+?)</pubDate>",re.DOTALL).findall(link)
+    for status, dte in match:
+        try:
+                status = status.decode('ascii', 'ignore')
+        except:
+                status = status.decode('utf-8','ignore')
+        dte = dte[:-15]
+        status = status.replace('&amp;','')
+        dte = '[COLOR lime][B]'+dte+'[/B][/COLOR]'
+        text = text+dte+'\n'+status+'\n'+'\n'
+    showText('[COLOR orange][B]DutchMusic Playlist - Autoplay[/B][/COLOR]', text)
+
+def showText(heading, text):
+    intid = 10147
+    xbmc.executebuiltin('ActivateWindow(%d)' % intid)
+    xbmc.sleep(100)
+    win = xbmcgui.Window(intid)
+    retry = 50
+    while retry > 0:
+        try:
+            xbmc.sleep(10)
+            retry -= 1
+            win.getControl(1).setLabel(heading)
+            win.getControl(5).setText(text)
+            return
+        except:
+            pass
+
     
 
 def getParams():
@@ -900,22 +952,26 @@ def getItems(items,fanart):
                 elif len(item('ytch')) >0:
                     for i in item('ytch'):
                         thumbnail = item('thumbnail')[0].string
+                        fanArt = item('fanart')[0].string
                         title = item('title')[0].string
                         plugintools.add_item( 
                         #action="", 
                         title=title,
                         url="plugin://plugin.video.youtube/channel/"+i.string+"/",
                         thumbnail= thumbnail,
+                        fanart=fanArt,
                         folder=True )
                 elif len(item('ytlist')) >0:
                     for i in item('ytlist'):
                         thumbnail = item('thumbnail')[0].string
+                        fanArt = item('fanart')[0].string
                         title = item('title')[0].string
                         plugintools.add_item( 
                         #action="", 
                         title=title,
                         url="plugin://plugin.video.youtube/user/"+i.string+"/",
                         thumbnail= thumbnail,
+                        fanart=fanArt,
                         folder=True )
                 elif len(item('utube')) >0:
                     for i in item('utube'):
@@ -1045,9 +1101,9 @@ def getItems(items,fanart):
                         addLink('', name.encode('utf-8', 'ignore'),thumbnail,fanArt,desc,genre,date,True,playlist,regexs,total)
                 else:
                     if isXMLSource:
-                    	addDir(name.encode('utf-8'),ext_url[0].encode('utf-8'),1,thumbnail,fanart,desc,genre,date,None,'source')
+                    	addDir(name.encode('utf-8'),ext_url[0].encode('utf-8'),1,thumbnail,fanArt,desc,genre,date,None,'source')
                     elif isJsonrpc:
-                        addDir(name.encode('utf-8'),ext_url[0],53,thumbnail,fanart,desc,genre,date,None,'source')
+                        addDir(name.encode('utf-8'),ext_url[0],53,thumbnail,fanArt,desc,genre,date,None,'source')
                     elif url[0].find('sublink') > 0:
                         addDir(name.encode('utf-8'),url[0],30,thumbnail,fanArt,desc,regexs,'','','')
                         #addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')				
@@ -2438,7 +2494,7 @@ def addLink(url,name,iconimage,fanart,description,genre,date,showcontext,playlis
         liz.setInfo(type="Video", infoLabels={ "Title": name, "Plot": description, "Genre": genre, "dateadded": date })
         liz.setProperty("Fanart_Image", fanart)
         
-        if (not play_list) and not any(x in url for x in g_ignoreSetResolved):#  (not url.startswith('plugin://plugin.video.f4mTester')):
+        if (not play_list) and not any(x in url for x in g_ignoreSetResolved) or not url.startswith("plugin://plugin.video.DutchMusic"):#  (not url.startswith('plugin://plugin.video.f4mTester')):
             if regexs:
                 if '$pyFunction:playmedia(' not in urllib.unquote_plus(regexs) and 'notplayable' not in urllib.unquote_plus(regexs)  :
                     #print 'setting isplayable',url, urllib.unquote_plus(regexs),url
@@ -2733,6 +2789,9 @@ elif mode==40:
     SearchChannels()
     SetViewThumbnail()
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+elif mode==45:
+    Privacy_Policy()
     	
 elif mode==53:
     addon_log("Requesting JSON-RPC Items")
@@ -2765,6 +2824,14 @@ if mode==75:
 if mode==76:
     addon_log("indexkaraoke")
     indexkaraoke()
+    
+if mode==77:
+    addon_log("indexsterrennl")
+    indexsterrennl()
+    
+if mode==78:
+    addon_log("indexdutchmusicplaylist")
+    indexdutchmusicplaylist()
 
 elif mode == 220: tvoranje.Main()
 elif mode == 221: tvoranje.List(url, page)
@@ -2773,10 +2840,9 @@ elif mode == 226: hart.Main()
 elif mode == 227: hart.List(url, page)
 elif mode == 228: hart.Playvid(url, name)
 elif mode == 229: sterren.Main()
-elif mode == 230: sterren.List(url, page)
-elif mode == 231: sterren.Playvid(url, name)
-elif mode == 232: sterren.ListSearch(url, page)
-elif mode == 233: sterren.Search(url)
+elif mode == 230: sterren.ListNpoGemist2(url)
+elif mode == 231: sterren.ListNpoGemist(url)
+elif mode == 232: sterren.Playvid(url, name)
 elif mode == 234: oranjetop30.Main()
 elif mode == 235: oranjetop30.List(url, page)
 elif mode == 236: unitynltop25.Main()
@@ -2789,4 +2855,11 @@ elif mode == 242: karaoke.Main()
 elif mode == 244: karaoke.Search()
 elif mode == 245: youtubezoeken.Main()
 elif mode == 246: youtubezoeken.Search()
+elif mode == 247: hollandshitforum.Main()
+elif mode == 248: hollandshitforum.List(url, page)
+elif mode == 249: Artiesten.Main()
+elif mode == 250: Artiesten.ListArtist(url)
+elif mode == 251: Artiesten.ListSong(name, url, iconimage)
+elif mode == 252: Artiesten.ListSearch(url)
+elif mode == 253: Artiesten.Search(url)
 elif mode == 300: utils.playyt(url, name)

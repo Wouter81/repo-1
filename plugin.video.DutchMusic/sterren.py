@@ -5,59 +5,33 @@ import utils
 
 
 def Main():
-    #utils.addDir('Zoeken','http://sterren.avrotros.nl/zoeken/?tx_solr%5Bq%5D=',233,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Nieuwste uitzendingen','http://sterren.avrotros.nl/video-s/meer-uitzendingen/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Nieuwste clips','http://sterren.avrotros.nl/video-s/nieuwe-videoclips-overzicht/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('De Zomer Voorbij','http://sterren.avrotros.nl/programma-s/tv-pips/de-zomer-voorbij/dezomervoorbij-tv-videos1/video-overzicht/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('De Winter Voorbij','http://sterren.avrotros.nl/programma-s/tv-pips/dewintervoorbij/dewintervoorbij-tv-videos/fragmenten/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Specials','http://sterren.avrotros.nl/video-s/video-specials/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('De Beste Zangers van Nederland','http://sterren.avrotros.nl/programma-s/tv-pips/de-beste-zangers-van-nl/debestezangersvannl-tv-videos/alle-video-s/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Sterrenparade clips','http://sterren.avrotros.nl/programma-s/tv-pips/sterrenparade/sterrenparade-tv-videos/overzicht-sterrenparade-clips/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    #utils.addDir('TROS Muziekfeest','http://sterren.avrotros.nl/programma-s/tv-pips/sterren-muziekfeest/sterrenmuziekfeest-tv-videos1/optredens-muziekfeest-op-het-plein/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Op Volle Toeren','http://sterren.avrotros.nl/video-s/meer-clips-op-volle-toeren/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')   
-    utils.addDir('Mega Piraten Festijn','http://sterren.avrotros.nl/programma-s/tv-pips/mpf/mpf-tv-videos/mega-piratenfestijn-video-overzicht/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'')
-    utils.addDir('Toppop','http://sterren.avrotros.nl/programma-s/tv-pips/toppop/toppop-tv-videos/overzicht/',230,os.path.join(utils.imgDir, 'sterren-nl.png'),'') 
+    utils.addDir('Beste Zangers','http://www.npo.nl/beste-zangers/AT_2033328/search?media_type=broadcast&start_date=&end_date=&start=0&rows=999999999',231,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+    utils.addDir('Sterren NL Muziekfeest','http://www.npo.nl/sterren-muziekfeest-op-het-plein/POMS_S_TROS_098898/search?media_type=broadcast&start_date=&end_date=&start=0&rows=999999999',230,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+    utils.addDir('Sterren NL Top 20','http://www.npo.nl/sterren-nl-top-20/AT_2044447/search?media_type=broadcast&start_date=&end_date=&start=0&rows=999999999',230,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+    utils.addDir('Sterren NL Specials','http://www.npo.nl/sterren-nl-special/AT_2048249/search?media_type=broadcast&start_date=&end_date=&start=0&rows=999999999',230,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     xbmcplugin.endOfDirectory(utils.addon_handle)
 
 
-def List(url, page=None):
+def ListNpoGemist(url):
     listhtml = utils.getHtml2(url)
-    match = re.compile('<a class="rounded-img" href="(.+?)">.+?<img src="(.+?)" alt=".+?" />.+?<span class="video-item-title" title="(.+?)">.+?<span class="video-item-subtitle" title="(.+?)">', re.DOTALL | re.IGNORECASE).findall(listhtml)
-    for videopage, img, name, name2 in match:
-        name = name + ' - ' + name2
-        videopage = "http://sterren.avrotros.nl" + videopage
-        utils.addDownLink(name, videopage, 231, img, '')
-    try:
-        page = page + 1
-        nextp=re.compile('href="([^"]+)">Vol', re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-        next = "http://sterren.avrotros.nl/" + nextp
-        utils.addDir('Volgende Pagina', next, 230,'', page)
-    except: pass
+    match = re.compile(r'<a href=".*?\d{4}/([^"]+)">.*?//(.*?)&quot;.*?<h4>\s+(.*?)\s+<span.*?<h5>([^<]+)</h5>', re.DOTALL | re.IGNORECASE).findall(listhtml)
+    for videopage, img, name, datum in match:
+        name = datum + ' - Beste Zangers: ' + name
+        img = "http://" + img
+        utils.addDownLink(name, videopage, 232, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     xbmcplugin.endOfDirectory(utils.addon_handle)
-
-
-def ListSearch(url, page=None):
+    
+def ListNpoGemist2(url):
     listhtml = utils.getHtml2(url)
-    match = re.compile('<li class="results-entry">(.*?)date', re.DOTALL | re.IGNORECASE).findall(listhtml)
-    for searchresult in match:
-        try: img = re.compile('img src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(searchresult)[0]
-        except: img = ""
-        match1 = re.compile('<h3><a href="([^"]+)">([^<]+)<').findall(searchresult)
-        videopage = match1[0][0]
-        name = match1[0][1].replace("&amp;","&").replace("&#039;","'").replace("&quot;"," ")
-        utils.addDownLink(name, videopage, 231, img, '')
-    try:
-        nextp=re.compile('<a href="(zoeken[^"]+)"><img src="/fileadmin/GFX/pagebrowser-button-next.png"', re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-        next = "http://sterren.avrotros.nl/" + nextp.replace("&amp;","&").replace(" ","%20")
-        utils.addDir('Volgende Pagina', next, 232,'', '')
-    except: pass
+    match = re.compile(r'<a href=".*?\d{4}/([^"]+)">.*?//(.*?)&quot;.*?<h4>\s+(.*?)\s+<span.*?<h5>([^<]+)</h5>', re.DOTALL | re.IGNORECASE).findall(listhtml)
+    for videopage, img, name, datum in match:
+        name = datum + ' - ' + name
+        img = "http://" + img
+        utils.addDownLink(name, videopage, 232, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     xbmcplugin.endOfDirectory(utils.addon_handle)
-
 
 def getJsContent(url):
-    listhtml = utils.getHtml(url,'')
-    jslink = re.compile("var currVideoId = '(.+?)';", re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
-    jslink = "http://e.omroep.nl/metadata/" + jslink
+    jslink = "http://e.omroep.nl/metadata/" + url
     jscontent = utils.getHtml(jslink,'')
     return jscontent
 
@@ -114,7 +88,7 @@ def __get_newtoken(token):
     # site change, token invalid, needs to be reordered. Thanks to rieter for figuring this out very quickly.
     first = -1
     last = -1
-    for i in range(5, len(token) - 5, 1):	
+    for i in range(5, len(token) - 5, 1):    
         if token[i].isdigit():
             if first < 0:
                 first = i                
@@ -130,13 +104,3 @@ def __get_newtoken(token):
     newtoken[last] = token[first]
     newtoken = ''.join(newtoken)    
     return newtoken
-
-def Search(url):
-    searchUrl = url
-    vq = utils._get_keyboard(heading="Zoeken naar...")
-    if (not vq): return False, 0
-    title = urllib.quote_plus(vq)
-    title = title.replace(' ','%20')
-    searchUrl = searchUrl + title + '&tx_solr%5Bfilter%5D%5B0%5D=type%3AVideo'
-    print "Searching URL: " + searchUrl
-    ListSearch(searchUrl)

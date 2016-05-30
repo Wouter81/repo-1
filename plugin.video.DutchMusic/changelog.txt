@@ -10,3 +10,9 @@
 - Menuindeling veranderd
 - Zoekfunctie veranderd
 - Sterren NL fix
+[B]V1.0.3[/B]
+- Sterren NL fix
+- Hollandse Hits Forum - Nieuwe Releases toegevoegd
+- Artiesten toegevoegd
+- DutchMusic Playlist op beginscherm gezet
+- Turorial - DutchMusic Playlist afspelen toegevoegd

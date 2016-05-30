@@ -18,7 +18,7 @@ def List(url, page=None):
         name = nummer + ' ' + artist + song
         url = artist + ' ' + song
         url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(url)
-        utils.addDir(name, url, '', os.path.join(utils.imgDir, 'oranje-top30.png'), '')
+        utils.addDir(name, url, '', 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png', '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 

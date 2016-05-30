@@ -16,12 +16,12 @@ def List(url, page=None):
         name = datum + ' ' + tijd + ' - ' + name
         img = "http://www.omroepbrabant.nl" + img
         videopage = "http://www.omroepbrabant.nl" + videopage
-        utils.addDownLink(name, videopage, 228, img, '')
+        utils.addDownLink(name, videopage, 228, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     try:
         page = page + 1
         nextp=re.compile('href="([^"]+)">Vol', re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
         next = "http://www.omroepbrabant.nl" + nextp.replace("&amp;","&")
-        utils.addDir('Volgende Pagina', next, 227,'', page)
+        utils.addDir('Volgende Pagina', next, 227,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hart-voor-muziek.png', page, fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
     except: pass
     xbmcplugin.endOfDirectory(utils.addon_handle)
 
