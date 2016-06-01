@@ -16,3 +16,5 @@
 - Artiesten toegevoegd
 - DutchMusic Playlist op beginscherm gezet
 - Turorial - DutchMusic Playlist afspelen toegevoegd
+[B]V1.0.4[/B]
+- Artiesten Fix
