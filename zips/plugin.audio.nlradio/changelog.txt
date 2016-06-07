@@ -1,4 +1,9 @@
 [B]Releasenotes V6.8.2 (6 januari 2016)[/B]
+Toegevoegd onder webradio: Verschillende streams Radio 10
+Toegevoegd onder webradio: Verschillende streams Radio 538
+Toegevoegd onder webradio: Verschillende streams Sky Radio
+
+[B]Releasenotes V6.8.2 (6 januari 2016)[/B]
 Kerst radiostations verplaatst naar Seizoenen > Kerst
 Toegevoegd onder Seizoenen: Carnaval
 Toegevoegd onder Seizoenen > Carnaval: Carnaval Radio
