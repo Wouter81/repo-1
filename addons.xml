@@ -22,7 +22,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.nlradio" name="NL Radio" version="6.8.3" provider-name="vDia Internet Applications">
+<addon id="plugin.audio.nlradio" name="NL Radio" version="6.8.4" provider-name="vDia Internet Applications">
 	<extension point="xbmc.python.pluginsource" library="start.py">
 		<provides>audio</provides>
 	</extension>

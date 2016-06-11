@@ -1,4 +1,21 @@
-[B]Releasenotes V6.8.2 (6 januari 2016)[/B]
+[B]Releasenotes V6.8.4 (9 juni 2016)[/B]
+Toegevoegd: --Webcams--
+Toegevoegd onder --Webcams--:
+Radio 1
+Radio 2
+3FM
+Radio 4
+Qmusic
+Radio Funx
+Radio NL
+Radio Veronica
+Radio538 TV
+Radio538
+Slam Studio
+Slam TV
+
+
+[B]Releasenotes V6.8.3 (6 juni 2016)[/B]
 Toegevoegd onder webradio: Verschillende streams Radio 10
 Toegevoegd onder webradio: Verschillende streams Radio 538
 Toegevoegd onder webradio: Verschillende streams Sky Radio
