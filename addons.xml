@@ -1153,7 +1153,7 @@ Special greetz to DOKI!</description>
 
 <addon id="service.subtitles.opensubtitles"
        name="OpenSubtitles.org"
-       version="5.0.14"
+       version="5.0.14B"
        provider-name="amet">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
