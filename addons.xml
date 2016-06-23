@@ -254,40 +254,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.NLVIEW"
-       name="[COLOR lime][B]NL[/B][/COLOR]View"
-       version="1.0.5"
-       provider-name="Team NLView">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="repository.NLVIEW" version="1.0.0"/>
-	<import addon="script.module.t0mm0.common" version="2.1.1"/>
-    <import addon="script.module.beautifulsoup" version="3.2.1"/>
-    <import addon="script.module.simple.downloader" version="1.9.5"/>
-    <import addon="script.module.beautifulsoup4" />
-    <import addon="script.module.requests" />
-    <import addon="script.module.httplib2" />
-    <import addon="script.module.youtube.dl" />
-    <import addon="plugin.video.youtube" />
-    <import addon="script.module.urlresolver" />
-    <import addon="script.module.simplejson" />
-    <import addon="script.common.plugin.cache" />
-    <import addon="script.module.metahandler" />
-    <import addon="script.module.liveresolver" />
-
-
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Streams voor XBMC / KODI!</summary>
-    <description lang="en">Special greetz to AwesomeStreams!
-Special greetz to DOKI!</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon
   id="plugin.video.SportsDevil"
   version="ZNL2016.2016.2016.06.20.NL1"
@@ -683,24 +649,6 @@ Special greetz to DOKI!</description>
 <description>Download and install addons by natko1412. For support visit XBMC thread on forum.hr</description>
 <platform>all</platform>
 </extension>
-</addon>
-
-    <addon id="repository.NLVIEW" name="[B][COLOR lime]NL[/COLOR][COLOR white]View[/COLOR][/B]" version="1.0.1" provider-name="NLView">
-        <requires>
-            <import addon="xbmc.addon" version="12.0.0"/>
-        </requires>
-        <extension point="xbmc.addon.repository" name="NLView Repository">
-            <info compressed="false">https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/addons.xml</info>
-            <checksum>https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/addons.xml.md5</checksum>
-            <datadir zip="true">https://raw.githubusercontent.com/NLViewJeroen/NLView-Repository/master/zips/</datadir>
-            <hashes>false</hashes>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-            <summary></summary>
-			<description></description>
-			<disclaimer></disclaimer>
-            <platform>all</platform>
-    </extension>
 </addon>
 
 <addon id="repository.podgod" name="podgod repo" version="1.7" provider-name="podgod">
