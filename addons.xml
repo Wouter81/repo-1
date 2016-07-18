@@ -22,7 +22,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.nlradio" name="NL Radio" version="6.8.4" provider-name="vDia Internet Applications">
+<addon id="plugin.audio.nlradio" name="NL Radio" version="6.8.6" provider-name="vDia Internet Applications &amp; PvdL">
 	<extension point="xbmc.python.pluginsource" library="start.py">
 		<provides>audio</provides>
 	</extension>
@@ -94,7 +94,7 @@
 
 <addon id="plugin.video.clubtv"
 	name="Doki Club TV"
-	version="1.0.6"
+	version="1.0.7"
 	provider-name="DOKITV.NL Crew">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
