@@ -18,7 +18,7 @@ def List(zoekwoord):
             for name, utube, img in match1:
                 url = utube
                 url = 'plugin://plugin.video.youtube/play/?video_id=' + urllib.quote_plus(url)
-                utils.addDownLink(name, url, 300, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+                utils.addDownLink(name, url, 300, img, '')
     xbmcplugin.endOfDirectory(utils.addon_handle)
  
 def Search():

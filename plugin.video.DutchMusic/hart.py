@@ -16,7 +16,7 @@ def List(url, page=None):
         name = datum + ' ' + tijd + ' - ' + name
         img = "http://www.omroepbrabant.nl" + img
         videopage = "http://www.omroepbrabant.nl" + videopage
-        utils.addDownLink(name, videopage, 228, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+        utils.addDownLink(name, videopage, 228, img, '')
     try:
         page = page + 1
         nextp=re.compile('href="([^"]+)">Vol', re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -30,6 +30,8 @@ def Playvid(url, name):
     xmllink = re.compile("clipXmlUrl=([^&]+)&", re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
     xmlcontent = utils.getHtml(xmllink,'')
     match = re.compile('MP4_HD".*?src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(xmlcontent)[-1]
+    dp = xbmcgui.DialogProgress()
+    dp.create("DutchMusic","Een ogenblik geduld.")  
     if match:
         videourl = match
         videourl = videourl.replace("&amp;","&")

@@ -16,7 +16,7 @@ def List(zoekwoord):
         if re.search(zoekwoord, name, re.DOTALL | re.IGNORECASE):
             url = utube
             url = 'plugin://plugin.video.youtube/play/?video_id=' + urllib.quote_plus(url)
-            utils.addDownLink(name, url, 300, 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/zoeken.png', '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+            utils.addDownLink(name, url, 300, 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/zoeken.png', '')
     xbmcplugin.endOfDirectory(utils.addon_handle)
  
 def Search():

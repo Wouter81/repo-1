@@ -6,11 +6,11 @@ import xbmc, xbmcplugin, xbmcgui, xbmcaddon, sqlite3
 from StringIO import StringIO
 import gzip
 
-__scriptname__ = "DutchMusic"
-__author__ = "DutchMusic"
-__scriptid__ = "plugin.video.DutchMusic"
-__credits__ = "DutchMusic"
-__version__ = "1.0.2"
+__scriptname__ = "DOKI Onderhoud"
+__author__ = "DOKI"
+__scriptid__ = "script.dokionderhoud"
+__credits__ = "DOKI"
+__version__ = "0.0.1"
 
 USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
 
@@ -73,7 +73,7 @@ favoritesdb = os.path.join(profileDir, 'favorites.db')
 
             
 def notify(header=None, msg='', duration=5000):
-    if header is None: header = 'DutchMusic'
+    if header is None: header = '[COLOR lime]D[/COLOR]OKI Onderhoud'
     builtin = "XBMC.Notification(%s,%s, %s, %s)" % (header, msg, duration, dmicon)
     xbmc.executebuiltin(builtin)
 
@@ -179,9 +179,8 @@ def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add', fanart
         liz.setInfo(type="Video", infoLabels={"Title": name})
     else:
         liz.setInfo(type="Video", infoLabels={"Title": name, "plot": desc, "plotoutline": desc})
-    if not fanart:
-        fanart = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG'
-    liz.setArt({'fanart': fanart})
+    if fanart:
+        liz.setArt({'fanart': fanart})
     liz.addContextMenuItems([('[COLOR lime]Download Video[/COLOR]', 'xbmc.RunPlugin('+dwnld+')'),
     ('[COLOR lime]' + favtext + ' favorites[/COLOR]', 'xbmc.RunPlugin('+favorite+')')])
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=False)

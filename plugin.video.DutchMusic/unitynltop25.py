@@ -5,7 +5,7 @@ import utils, sqlite3
 
 
 def Main():
-    utils.addDir('Unity NL Top 25','http://www.unity.nu/Programmas/UnityNL',237,'',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+    utils.addDir('Unity NL Top 25','http://www.unity.nu/Programmas/UnityNL',237,'')
     xbmcplugin.endOfDirectory(utils.addon_handle)
 
 
@@ -18,7 +18,7 @@ def List(url, page=None):
         name = nummer + '. ' + artist + ' - ' + song
         url = artist + ' ' + song
         url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(url)
-        utils.addDir(name, url, '', 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png', '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+        utils.addDir(name, url, '', 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png', '')
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 

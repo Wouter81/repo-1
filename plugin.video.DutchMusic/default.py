@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import urllib
 import urllib2
 import datetime
@@ -26,7 +28,7 @@ import SimpleDownloader as downloader
 import time
 import requests
 from lib.utils import *
-import utils, tvoranje, hart, oranjetop30, unitynltop25, radionltop1500, karaoke, youtubezoeken, hollandshitforum, sterren, Artiesten
+import utils, tvoranje, hart, oranjetop30, unitynltop25, radionltop1500, karaoke, youtubezoeken, hollandshitforum, sterren, Artiesten, oranjetop30uitzending, radionlagenda, truckerstop12, sterrennltop20, puurnltop20, nederlandmuziekland, unitynl, DutchMusicTop20
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -42,7 +44,7 @@ net = Net(user_agent='Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, li
 headers = {
     'Accept'    :   'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     }
-	
+    
 resolve_url=['180upload.com', 'allmyvideos.net', 'bestreams.net', 'clicknupload.com', 'cloudzilla.to', 'movshare.net', 'novamov.com', 'nowvideo.sx', 'videoweed.es', 'daclips.in', 'datemule.com', 'fastvideo.in', 'faststream.in', 'filehoot.com', 'filenuke.com', 'sharesix.com', 'docs.google.com', 'plus.google.com', 'picasaweb.google.com', 'gorillavid.com', 'gorillavid.in', 'grifthost.com', 'hugefiles.net', 'ipithos.to', 'ishared.eu', 'kingfiles.net', 'mail.ru', 'my.mail.ru', 'videoapi.my.mail.ru', 'mightyupload.com', 'mooshare.biz', 'movdivx.com', 'movpod.net', 'movpod.in', 'movreel.com', 'mrfile.me', 'nosvideo.com', 'openload.io', 'played.to', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'primeshare.tv', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'sharerepo.com', 'stagevu.com', 'streamcloud.eu', 'streamin.to', 'thefile.me', 'thevideo.me', 'tusfiles.net', 'uploadc.com', 'zalaa.com', 'uploadrocket.net', 'uptobox.com', 'v-vids.com', 'veehd.com', 'vidbull.com', 'videomega.tv', 'vidplay.net', 'vidspot.net', 'vidto.me', 'vidzi.tv', 'vimeo.com', 'vk.com', 'vodlocker.com', 'xfileload.com', 'xvidstage.com', 'zettahost.tv']
 g_ignoreSetResolved=['plugin.video.dramasonline','plugin.video.f4mTester','plugin.video.shahidmbcnet','plugin.video.SportsDevil','plugin.stream.vaughnlive.tv','plugin.video.ZemTV-shani']
 
@@ -65,6 +67,7 @@ profile = xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8'))
 home = xbmc.translatePath(addon.getAddonInfo('path').decode('utf-8'))
 favorites = os.path.join(profile, 'favorites')
 history = os.path.join(profile, 'history')
+dialog = xbmcgui.Dialog()
 
 REV = os.path.join(profile, 'list_revision')
 icon = os.path.join(home, 'icon.png')
@@ -72,7 +75,6 @@ FANART = os.path.join(home, 'fanart.jpg')
 source_file = os.path.join(profile, 'source_file')
 functions_dir = profile
 
-downloader = downloader.SimpleDownloader()
 debug = addon.getSetting('debug')
 if os.path.exists(favorites)==True:
     FAV = open(favorites).read()
@@ -120,11 +122,12 @@ def makeRequest(url, headers=None):
                 addon_log('Reason: %s' %e.reason)
                 xbmc.executebuiltin("XBMC.Notification(DutchMusic,We failed to reach a server. - "+str(e.reason)+",10000,"+icon+")")
 
-				
+                
 def DMIndex():
     addon_log("DMIndex")
     xbmc.executebuiltin("Container.SetViewMode(500)")
     addDir('[B]DutchMusic Playlist - Autoplay[/B]','',78,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube-playlist.png' , fanart,'','','','')
+    addDir('[B]RADIONL Agenda[/B]','',258,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radionl-agenda.png' , fanart,'','','','')
     addDir('[B]YouTube[/B]','',73,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/youtube.png' , fanart,'','','','')
     addDir('[B]Websites[/B]','',74,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/websites.png' , fanart,'','','','')
     addDir('[B]Radio & Video[/B]','',72,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radio-video.png' , fanart,'','','','')
@@ -132,12 +135,16 @@ def DMIndex():
     addDir('[B]Karaoke[/B]','',76,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/karaoke.png' , fanart,'','','','')
     addDir('[B]Artiesten[/B]','http://www.radionl.fm/artiesten/',249,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/artiesten.png' ,  fanart,'','','','')
     addDir('[B]Muziek zoeken[/B]','',246,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/zoeken.png' ,  fanart,'','','','')
+    addDir('[B]Contact[/B]','',100,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/contact.png' ,  fanart,'','','','', Folder=False)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexoranjetop30():
     addon_log("indexoranjetop30")
-    getData(base64.b64decode(DMBase),'')
+    addDir('[COLOR orange][B]Uitzending:[/B][/COLOR]','',70,icon ,  fanart,'','','','')
+    top30name, top30url = oranjetop30uitzending.List('http://www.oranjetop30.nl/')
+    utils.addDownLink(top30name,top30url,256,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png', '', fanart=fanart)
     addDir('','',70,icon ,  fanart,'','','','')
+    addDir('[COLOR orange][B]Lijst:[/B][/COLOR]','',70,icon ,  fanart,'','','','')
     addDir('Bekijk de lijst','http://www.oranjetop30.nl/',235,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
@@ -154,25 +161,25 @@ def indexyoutube():
     
 def indexwebsites():
     addon_log("indexwebsites")
-    addDir('[B]Sterren NL[/B]','http://sterren.nl/',77,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
-    addDir('[B]Hart voor Muziek[/B]','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276',227,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hart-voor-muziek.png' ,  fanart,'','','','')
+    addDir('[B]Sterren NL[/B]','http://sterren.nl/',229,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
+    addDir('[B]Hart voor Muziek[/B]','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1275',227,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hart-voor-muziek.png' ,  fanart,'','','','')
+    addDir('[B]Nederland Muziekland[/B]','http://www.sbs6.nl/',269,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/nederland-muziekland.png' ,  fanart,'','','','')
     addDir('[B]TV Oranje[/B]','http://www.tvoranje.nl/?p=84&p2=1',220,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png' ,  fanart,'','','','')
+    addDir('[B]Unity NL[/B]','http://www.unity.nu/Kijk-terug/',272,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png' ,  fanart,'','','','')
     addDir('[B]Hollandse Hits Forum - Nieuwe Releases[/B]','http://www.hollandsehitsforum.nl/index.php?option=com_content&view=category&layout=blog&id=168&Itemid=40',248,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/HHF.png' ,  fanart,'','','','')
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-    
-def indexsterrennl():
-    addon_log("indexsterrennl")
-    getData(base64.b64decode(SterrenNLBase),'')
-    addDir('[B]Sterren NL Uitzendingen[/B]','http://sterren.nl/',229,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexhitlijsten():
     addon_log("indexhitlijsten")
     xbmc.executebuiltin("Container.SetViewMode(500)")
+    addDir('[B]DutchMusic Top 20[/B]','http://dutchmusic.ml/',275,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/dutchmusic-top20.png' ,  fanart,'','','','')
     addDir('[B]Oranje Top 30[/B]','',70,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png' ,  fanart,'','','','')
-    getData(base64.b64decode(SterrenNLTop20Base),'')
+    #getData(base64.b64decode(SterrenNLTop20Base),'')
+    addDir('[B]Sterren NL Top 20[/B]','http://sterren-app.npo.nl/top-20/',264,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl-top20.png' ,  fanart,'','','','')
     addDir('[B]RADIONL Top 1500[/B]','http://www.radionl.fm/top1500/',240,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radionl-top-1500.png' ,  fanart,'','','','')
     addDir('[B]Unity NL Top 25[/B]','http://www.unity.nu/Programmas/UnityNL',237,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png' ,  fanart,'','','','')  
+    addDir('[B]Puur NL Top 20[/B]','http://puurnl.fm/top20/',268,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/puurnl-top20.png' ,  fanart,'','','','')  
+    addDir('[B]Truckers Top 12[/B]','http://www.truckerstop12.com/',263,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/truckers-top20.png' ,  fanart,'','','','')  
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexkaraoke():
@@ -194,6 +201,28 @@ def ONELIST(page):
     npage = page + 1
     utils.addDir('[COLOR hotpink]Volgende Pagina ('+ str(npage) +')[/COLOR]','',5,'',npage)
     xbmcplugin.endOfDirectory(utils.addon_handle)
+    
+def stuurbericht():
+    dialog.ok('Stuur een bericht','Vul in de volgende vensters je naam, e-mail adres en het bericht in.')
+    naam = utils._get_keyboard(heading='Naam')
+    if (not naam): 
+        utils.notify('Niet verzonden','Er is geen naam ingevuld.')
+        return False
+    email = utils._get_keyboard(heading='E-mail adres')
+    if (not email):
+        utils.notify('Niet verzonden','Er is geen e-mail adres ingevuld.')
+        return False
+    bericht = utils._get_keyboard(heading='Bericht')
+    if (not bericht):
+        utils.notify('Niet verzonden','Er is geen bericht ingevuld.')
+        return False
+    form_values = {}
+    form_values['bezoeker_naam'] = naam
+    form_values['bezoeker_email'] = email
+    form_values['bezoeker_bericht'] = bericht
+    result = utils.postHtml('http://dutchmusic.ml/versturen.php', form_data=form_values)
+    utils.notify('Bericht Verzonden','')
+    
     
 def Privacy_Policy():
     text = ''
@@ -297,15 +326,15 @@ def showText(heading, text):
     win = xbmcgui.Window(id)
     retry = 50
     while (retry > 0):
-	try:
-	    xbmc.sleep(10)
-	    retry -= 1
-	    win.getControl(1).setLabel(heading)
-	    win.getControl(5).setText(text)
-	    return
-	except:
-	    pass
-			
+        try:
+            xbmc.sleep(10)
+            retry -= 1
+            win.getControl(1).setLabel(heading)
+            win.getControl(5).setText(text)
+            return
+        except:
+            pass
+
 def getSources():
         if os.path.exists(favorites) == True:
             addDir('Favorites','url',4,os.path.join(home, 'resources', 'favorite.png'),FANART,'','','','')
@@ -533,7 +562,7 @@ def getData(url,fanart):
     #print type(soup)
     if isinstance(soup,BeautifulSOAP):
         if len(soup('layoutype')) > 0:
-            SetViewLayout = "Thumbnail"		    
+            SetViewLayout = "Thumbnail"            
 
         if len(soup('channels')) > 0:
             channels = soup('channel')
@@ -649,9 +678,9 @@ def parse_m3u(data):
                 addLink(url[0], channel_name,thumbnail,'','','','','',None,regexs,total)
                 continue
         addLink(stream_url, channel_name,thumbnail,'','','','','',None,'',total)
-		
+        
     xbmc.executebuiltin("Container.SetViewMode(50)")
-	
+    
 def getChannelItems(name,url,fanart):
         soup = getSoup(url)
         channel_list = soup.find('channel', attrs={'name' : name.decode('utf-8')})
@@ -756,7 +785,7 @@ def GetSublinks(name,url,iconimage,fanart):
              except:
                  pass
 
-				
+                
 def SearchChannels():
 #hakamac code
     KeyboardMessage = 'Name of channel show or movie'
@@ -767,7 +796,7 @@ def SearchChannels():
        Searchkey = keyboard.getText().replace('\n','').strip()
        if len(Searchkey) == 0: 
           xbmcgui.Dialog().ok('DutchMusic', 'Nothing Entered')
-          return	   
+          return       
     
     Searchkey = Searchkey.lower()
     List=[]
@@ -778,7 +807,7 @@ def SearchChannels():
     FoundMatch = 0
     progress = xbmcgui.DialogProgress()
     progress.create('DutchMusic Searching Please wait',' ')
-	
+    
     while FoundChannel <> ReadChannel:
         BaseSearch = List[ReadChannel].strip()
         print 'read this one from file list (' + str(ReadChannel) + ')'  
@@ -791,7 +820,7 @@ def SearchChannels():
             #time.sleep(1)
         except: 
             pass
-		
+        
         if len(PageSource) < 10:
             PageSource = ''
             PassedUrls = PassedUrls + 1
@@ -804,7 +833,7 @@ def SearchChannels():
 
         if progress.iscanceled():
            return
- 		
+         
         if len(PageSource) > 10:
             all_links = regex_get_all(PageSource, '<channel>', '</channel>')
             for a in all_links:
@@ -833,11 +862,11 @@ def SearchChannels():
                         addDir(name,vurl,30,thumbnail,fanart,'','','','')
                     else: 
                         addLink(str(vurl),name,thumbnail,fanart,'','','',True,None,'',1)
-						
+                        
     
     progress.close()
     xbmc.executebuiltin("Container.SetViewMode(50)")
-	
+    
 def Search_m3u(data,Searchkey):
     content = data.rstrip()
     match = re.compile(r'#EXTINF:(.+?),(.*?)[\n\r]+([^\n]+)').findall(content)
@@ -882,15 +911,15 @@ def FindFirstPattern(text,pattern):
         result = ""
 
     return result
-	
+    
 def regex_get_all(text, start_with, end_with):
     r = re.findall("(?i)(" + start_with + "[\S\s]+?" + end_with + ")", text)
-    return r				
+    return r                
 
 def regex_from_to(text, from_string, to_string, excluding=True):
     if excluding:
-	   try: r = re.search("(?i)" + from_string + "([\S\s]+?)" + to_string, text).group(1)
-	   except: r = ''
+       try: r = re.search("(?i)" + from_string + "([\S\s]+?)" + to_string, text).group(1)
+       except: r = ''
     else:
        try: r = re.search("(?i)(" + from_string + "[\S\s]+?" + to_string + ")", text).group(1)
        except: r = ''
@@ -1085,11 +1114,11 @@ def getItems(items,fanart):
                     alt = 0
                     playlist = []
                     for i in url:
-                    	if addon.getSetting('ask_playlist_items') == 'true':
-	                        if regexs:
-	                            playlist.append(i+'&regexs='+regexs)
-	                        elif  any(x in i for x in resolve_url) and  i.startswith('http'):
-	                            playlist.append(i+'&mode=19')                            
+                        if addon.getSetting('ask_playlist_items') == 'true':
+                            if regexs:
+                                playlist.append(i+'&regexs='+regexs)
+                            elif  any(x in i for x in resolve_url) and  i.startswith('http'):
+                                playlist.append(i+'&mode=19')                            
                         else:
                             playlist.append(i)
                     if addon.getSetting('add_playlist') == "false":                    
@@ -1101,12 +1130,12 @@ def getItems(items,fanart):
                         addLink('', name.encode('utf-8', 'ignore'),thumbnail,fanArt,desc,genre,date,True,playlist,regexs,total)
                 else:
                     if isXMLSource:
-                    	addDir(name.encode('utf-8'),ext_url[0].encode('utf-8'),1,thumbnail,fanArt,desc,genre,date,None,'source')
+                        addDir(name.encode('utf-8'),ext_url[0].encode('utf-8'),1,thumbnail,fanArt,desc,genre,date,None,'source')
                     elif isJsonrpc:
                         addDir(name.encode('utf-8'),ext_url[0],53,thumbnail,fanArt,desc,genre,date,None,'source')
                     elif url[0].find('sublink') > 0:
                         addDir(name.encode('utf-8'),url[0],30,thumbnail,fanArt,desc,regexs,'','','')
-                        #addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')				
+                        #addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')                
                     else: 
                         addLink(url[0],name.encode('utf-8', 'ignore'),thumbnail,fanArt,desc,genre,date,True,None,regexs,total)
 
@@ -1192,7 +1221,7 @@ def parse_regex(reg_item):
                             if not regexs[i('name')[0].string]['cookiejar']:
                                 regexs[i('name')[0].string]['cookiejar']=''
                         except:
-                            addon_log("Regex: -- Not a cookieJar")							
+                            addon_log("Regex: -- Not a cookieJar")                            
                         try:
                             regexs[i('name')[0].string]['setcookie'] = i('setcookie')[0].string
                         except:
@@ -1209,7 +1238,7 @@ def parse_regex(reg_item):
                         #try:
                         #    regexs[i('name')[0].string]['ignorecache'] = i('ignorecache')[0].string
                         #except:
-                        #    addon_log("Regex: -- no ignorecache")			
+                        #    addon_log("Regex: -- no ignorecache")            
 
                     regexs = urllib.quote(repr(regexs))
                     return regexs
@@ -1477,9 +1506,9 @@ def getRegexParsed(regexs, url,cookieJar=None,forCookieJarOnly=False,recursiveCa
         if recursiveCall: return url
         print 'final url',url
         if url=="": 
-        	return
+            return
         else:
-        	return url,setresolved
+            return url,setresolved
 
             
         
@@ -1581,22 +1610,22 @@ def SaveToFile(file_name,page_data,append=False):
         return ''
     
 def LoadFile(file_name):
-	f=open(file_name,'rb')
-	d=f.read()
-	f.close()
-	return d
+    f=open(file_name,'rb')
+    d=f.read()
+    f.close()
+    return d
     
 def get_packed_iphonetv_url(page_data):
-	import re,base64,urllib; 
-	s=page_data
-	while 'geh(' in s:
-		if s.startswith('lol('): s=s[5:-1]    
-#		print 's is ',s
-		s=re.compile('"(.*?)"').findall(s)[0]; 
-		s=  base64.b64decode(s); 
-		s=urllib.unquote(s); 
-	print s
-	return s
+    import re,base64,urllib; 
+    s=page_data
+    while 'geh(' in s:
+        if s.startswith('lol('): s=s[5:-1]    
+#        print 's is ',s
+        s=re.compile('"(.*?)"').findall(s)[0]; 
+        s=  base64.b64decode(s); 
+        s=urllib.unquote(s); 
+    print s
+    return s
 
 def get_ferrari_url(page_data):
     print 'get_dag_url2',page_data
@@ -1860,7 +1889,7 @@ def __itoa(num, radix):
         result = "0123456789abcdefghijklmnopqrstuvwxyz"[num % radix] + result
         num /= radix
     return result
-	
+    
 def __itoaNew(cc, a):
     aa="" if cc < a else __itoaNew(int(cc / a),a) 
     cc = (cc % a)
@@ -1879,26 +1908,26 @@ def getCookiesString(cookieJar):
 
 
 def saveCookieJar(cookieJar,COOKIEFILE):
-	try:
-		complete_path=os.path.join(profile,COOKIEFILE)
-		cookieJar.save(complete_path,ignore_discard=True)
-	except: pass
+    try:
+        complete_path=os.path.join(profile,COOKIEFILE)
+        cookieJar.save(complete_path,ignore_discard=True)
+    except: pass
 
 def getCookieJar(COOKIEFILE):
 
-	cookieJar=None
-	if COOKIEFILE:
-		try:
-			complete_path=os.path.join(profile,COOKIEFILE)
-			cookieJar = cookielib.LWPCookieJar()
-			cookieJar.load(complete_path,ignore_discard=True)
-		except: 
-			cookieJar=None
-	
-	if not cookieJar:
-		cookieJar = cookielib.LWPCookieJar()
-	
-	return cookieJar
+    cookieJar=None
+    if COOKIEFILE:
+        try:
+            complete_path=os.path.join(profile,COOKIEFILE)
+            cookieJar = cookielib.LWPCookieJar()
+            cookieJar.load(complete_path,ignore_discard=True)
+        except: 
+            cookieJar=None
+    
+    if not cookieJar:
+        cookieJar = cookielib.LWPCookieJar()
+    
+    return cookieJar
     
 def doEval(fun_call,page_data,Cookie_Jar):
     ret_val=''
@@ -1921,78 +1950,78 @@ def doEval(fun_call,page_data,Cookie_Jar):
     return str(ret_val)
     
 def processRecaptcha(url):
-	html_text=getUrl(url)
-	recapChallenge=""
-	solution=""
-	cap_reg="<script.*?src=\"(.*?recap.*?)\""
-	match =re.findall(cap_reg, html_text)
-	captcha=False
-	captcha_reload_response_chall=None
-	solution=None
-	
-	if match and len(match)>0: #new shiny captcha!
-		captcha_url=match[0]
-		captcha=True
-		
-		cap_chall_reg='challenge.*?\'(.*?)\''
-		cap_image_reg='\'(.*?)\''
-		captcha_script=getUrl(captcha_url)
-		recapChallenge=re.findall(cap_chall_reg, captcha_script)[0]
-		captcha_reload='http://www.google.com/recaptcha/api/reload?c=';
-		captcha_k=captcha_url.split('k=')[1]
-		captcha_reload+=recapChallenge+'&k='+captcha_k+'&captcha_k=1&type=image&lang=en-GB'
-		captcha_reload_js=getUrl(captcha_reload)
-		captcha_reload_response_chall=re.findall(cap_image_reg, captcha_reload_js)[0]
-		captcha_image_url='http://www.google.com/recaptcha/api/image?c='+captcha_reload_response_chall
-		if not captcha_image_url.startswith("http"):
-			captcha_image_url='http://www.google.com/recaptcha/api/'+captcha_image_url
-		import random
-		n=random.randrange(100,1000,5)
-		local_captcha = os.path.join(profile,str(n) +"captcha.img" )
-		localFile = open(local_captcha, "wb")
-		localFile.write(getUrl(captcha_image_url))
-		localFile.close()
-		solver = InputWindow(captcha=local_captcha)
-		solution = solver.get()
-		os.remove(local_captcha)
-	return captcha_reload_response_chall ,solution
+    html_text=getUrl(url)
+    recapChallenge=""
+    solution=""
+    cap_reg="<script.*?src=\"(.*?recap.*?)\""
+    match =re.findall(cap_reg, html_text)
+    captcha=False
+    captcha_reload_response_chall=None
+    solution=None
+    
+    if match and len(match)>0: #new shiny captcha!
+        captcha_url=match[0]
+        captcha=True
+        
+        cap_chall_reg='challenge.*?\'(.*?)\''
+        cap_image_reg='\'(.*?)\''
+        captcha_script=getUrl(captcha_url)
+        recapChallenge=re.findall(cap_chall_reg, captcha_script)[0]
+        captcha_reload='http://www.google.com/recaptcha/api/reload?c=';
+        captcha_k=captcha_url.split('k=')[1]
+        captcha_reload+=recapChallenge+'&k='+captcha_k+'&captcha_k=1&type=image&lang=en-GB'
+        captcha_reload_js=getUrl(captcha_reload)
+        captcha_reload_response_chall=re.findall(cap_image_reg, captcha_reload_js)[0]
+        captcha_image_url='http://www.google.com/recaptcha/api/image?c='+captcha_reload_response_chall
+        if not captcha_image_url.startswith("http"):
+            captcha_image_url='http://www.google.com/recaptcha/api/'+captcha_image_url
+        import random
+        n=random.randrange(100,1000,5)
+        local_captcha = os.path.join(profile,str(n) +"captcha.img" )
+        localFile = open(local_captcha, "wb")
+        localFile.write(getUrl(captcha_image_url))
+        localFile.close()
+        solver = InputWindow(captcha=local_captcha)
+        solution = solver.get()
+        os.remove(local_captcha)
+    return captcha_reload_response_chall ,solution
 
 def getUrl(url, cookieJar=None,post=None, timeout=20, headers=None):
 
 
-	cookie_handler = urllib2.HTTPCookieProcessor(cookieJar)
-	opener = urllib2.build_opener(cookie_handler, urllib2.HTTPBasicAuthHandler(), urllib2.HTTPHandler())
-	#opener = urllib2.install_opener(opener)
-	req = urllib2.Request(url)
-	req.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36')
-	if headers:
-		for h,hv in headers:
-			req.add_header(h,hv)
+    cookie_handler = urllib2.HTTPCookieProcessor(cookieJar)
+    opener = urllib2.build_opener(cookie_handler, urllib2.HTTPBasicAuthHandler(), urllib2.HTTPHandler())
+    #opener = urllib2.install_opener(opener)
+    req = urllib2.Request(url)
+    req.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36')
+    if headers:
+        for h,hv in headers:
+            req.add_header(h,hv)
 
-	response = opener.open(req,post,timeout=timeout)
-	link=response.read()
-	response.close()
-	return link;
+    response = opener.open(req,post,timeout=timeout)
+    link=response.read()
+    response.close()
+    return link;
 
 def get_decode(str,reg=None):
-	if reg:
-		str=re.findall(reg, str)[0]
-	s1 = urllib.unquote(str[0: len(str)-1]);
-	t = '';
-	for i in range( len(s1)):
-		t += chr(ord(s1[i]) - s1[len(s1)-1]);
-	t=urllib.unquote(t)
-	print t
-	return t
+    if reg:
+        str=re.findall(reg, str)[0]
+    s1 = urllib.unquote(str[0: len(str)-1]);
+    t = '';
+    for i in range( len(s1)):
+        t += chr(ord(s1[i]) - s1[len(s1)-1]);
+    t=urllib.unquote(t)
+    print t
+    return t
 
 def javascriptUnEscape(str):
-	js=re.findall('unescape\(\'(.*?)\'',str)
-	print 'js',js
-	if (not js==None) and len(js)>0:
-		for j in js:
-			#print urllib.unquote(j)
-			str=str.replace(j ,urllib.unquote(j))
-	return str
+    js=re.findall('unescape\(\'(.*?)\'',str)
+    print 'js',js
+    if (not js==None) and len(js)>0:
+        for j in js:
+            #print urllib.unquote(j)
+            str=str.replace(j ,urllib.unquote(j))
+    return str
 
 iid=0
 def askCaptcha(m,html_page, cookieJar):
@@ -2227,7 +2256,7 @@ def download_file(name, url):
             addSource(os.path.join(addon.getSetting('save_location'), name))
 
 
-def addDir(name,url,mode,iconimage,fanart,description,genre,date,credits,showcontext=False):
+def addDir(name,url,mode,iconimage,fanart,description,genre,date,credits,showcontext=False,Folder=True):
         
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&fanart="+urllib.quote_plus(fanart)
         ok=True
@@ -2249,12 +2278,12 @@ def addDir(name,url,mode,iconimage,fanart,description,genre,date,credits,showcon
             elif showcontext == 'fav':
                 contextMenu.append(('Remove from DutchMusic Favorites','XBMC.RunPlugin(%s?mode=6&name=%s)'
                                     %(sys.argv[0], urllib.quote_plus(name))))
-									
+                                    
             if not name in FAV:
                 contextMenu.append(('Add to DutchMusic Favorites','XBMC.RunPlugin(%s?mode=5&name=%s&url=%s&iconimage=%s&fanart=%s&fav_mode=%s)'
                          %(sys.argv[0], urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), urllib.quote_plus(fanart), mode)))
             liz.addContextMenuItems(contextMenu)
-        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=Folder)
 
         return ok
 def ytdl_download(url,title,media_type='video'):
@@ -2324,7 +2353,7 @@ def search(site_name,search_term=None):
                 thumbnail ='http://img.youtube.com/vi/'+search_res[item]['url']+'/0.jpg'
                 addLink(url, name,thumbnail,'','','','','',None,'',total)
             except Exception:
-            	addon_log( 'This item is ignored::')
+                addon_log( 'This item is ignored::')
         page_data = site_name +':'+ search_term + '\n'
         SaveToFile(os.path.join(profile,'history'),page_data,append=True)
     elif 'dmotion' in site_name:
@@ -2388,8 +2417,8 @@ def SetViewThumbnail():
         xbmc.executebuiltin('Container.SetViewMode(511)') 
     else:
         xbmc.executebuiltin('Container.SetViewMode(500)')
-	
-	
+    
+    
 def pluginquerybyJSON(url):
     json_query = uni('{"jsonrpc":"2.0","method":"Files.GetDirectory","params":{"directory":"%s","media":"video","properties":["thumbnail","title","year","dateadded","fanart","rating","season","episode","studio"]},"id":1}') %url
 
@@ -2646,7 +2675,7 @@ addon_log("Name: "+str(name))
 
 if mode==None:
     addon_log("Index")
-    DMIndex()	
+    DMIndex()    
 
 elif mode==1:
     addon_log("getData")
@@ -2757,8 +2786,8 @@ elif mode==18:
     stream_url=youtubedl.single_YD(url)
     playsetresolved(stream_url,name,iconimage)
 elif mode==19:
-	addon_log("Genesiscommonresolvers")
-	playsetresolved (urlsolver(url),name,iconimage,True)	
+    addon_log("Genesiscommonresolvers")
+    playsetresolved (urlsolver(url),name,iconimage,True)    
 
 elif mode==21:
     addon_log("download current file using youtube-dl service")
@@ -2784,7 +2813,7 @@ elif mode==27:
     xbmc.Player().play(pulsarIMDB) 
 elif mode==30:
     GetSublinks(name,url,iconimage,fanart)
-	
+    
 elif mode==40:
     SearchChannels()
     SetViewThumbnail()
@@ -2792,46 +2821,45 @@ elif mode==40:
     
 elif mode==45:
     Privacy_Policy()
-    	
+        
 elif mode==53:
     addon_log("Requesting JSON-RPC Items")
     pluginquerybyJSON(url)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-if mode==70:
+elif mode==70:
     addon_log("indexoranjetop30")
     indexoranjetop30()
 
-if mode==71:
+elif mode==71:
     DMIndex()
     
-if mode==72:
+elif mode==72:
     addon_log("indexradiotv")
     indexradiotv()
 
-if mode==73:
+elif mode==73:
     addon_log("indexyoutube")
     indexyoutube()
     
-if mode==74:
+elif mode==74:
     addon_log("indexwebsites")
     indexwebsites()
     
-if mode==75:
+elif mode==75:
     addon_log("indexhitlijsten")
     indexhitlijsten()
 
-if mode==76:
+elif mode==76:
     addon_log("indexkaraoke")
     indexkaraoke()
     
-if mode==77:
-    addon_log("indexsterrennl")
-    indexsterrennl()
-    
-if mode==78:
+elif mode==78:
     addon_log("indexdutchmusicplaylist")
     indexdutchmusicplaylist()
+    
+elif mode==100:
+    stuurbericht()
 
 elif mode == 220: tvoranje.Main()
 elif mode == 221: tvoranje.List(url, page)
@@ -2843,6 +2871,7 @@ elif mode == 229: sterren.Main()
 elif mode == 230: sterren.ListNpoGemist2(url)
 elif mode == 231: sterren.ListNpoGemist(url)
 elif mode == 232: sterren.Playvid(url, name)
+elif mode == 233: sterren.ListNpoGemist3(url, page)
 elif mode == 234: oranjetop30.Main()
 elif mode == 235: oranjetop30.List(url, page)
 elif mode == 236: unitynltop25.Main()
@@ -2862,4 +2891,25 @@ elif mode == 250: Artiesten.ListArtist(url)
 elif mode == 251: Artiesten.ListSong(name, url, iconimage)
 elif mode == 252: Artiesten.ListSearch(url)
 elif mode == 253: Artiesten.Search(url)
+elif mode == 254: oranjetop30uitzending.Main()
+elif mode == 255: oranjetop30uitzending.List(url)
+elif mode == 256: oranjetop30uitzending.Playvid(url, name)
+elif mode == 258: radionlagenda.List(url)
+elif mode == 259: radionlagenda.MainTVRADIO()
+elif mode == 260: radionlagenda.MainGeenStream()
+elif mode == 261: radionlagenda.MainRADIO()
+elif mode == 262: truckerstop12.Main()
+elif mode == 263: truckerstop12.List(url)
+elif mode == 264: sterrennltop20.List(url)
+elif mode == 265: sterrennltop20.Playvid(url, name)
+elif mode == 266: sterren.ListSterrenVideos(url)
+elif mode == 267: sterren.PlayvidSterren(url, name)
+elif mode == 268: puurnltop20.List(url)
+elif mode == 269: nederlandmuziekland.Main()
+elif mode == 270: nederlandmuziekland.List(url)
+elif mode == 271: nederlandmuziekland.Playvid(url, name)
+elif mode == 272: unitynl.Main()
+elif mode == 273: unitynl.List(url)
+elif mode == 274: unitynl.Playvid(url, name)
+elif mode == 275: DutchMusicTop20.List(url)
 elif mode == 300: utils.playyt(url, name)

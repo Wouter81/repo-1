@@ -5,8 +5,8 @@ import utils, sqlite3
 
 
 def Main():
-    utils.addDir('Programma Gemist','http://www.tvoranje.nl/?p=84&p2=1',221,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
-    utils.addDir('Showflitsen','http://www.tvoranje.nl/?p=9&p2=1',221,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png',fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')    
+    utils.addDir('Programma Gemist','http://www.tvoranje.nl/?p=84&p2=1',221,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png')
+    utils.addDir('Showflitsen','http://www.tvoranje.nl/?p=9&p2=1',221,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png')    
     xbmcplugin.endOfDirectory(utils.addon_handle)
 
 
@@ -17,7 +17,7 @@ def List(url, page=None):
         name = utils.cleantext(name)
         img = "http://www.tvoranje.nl" + img
         videopage = "http://www.tvoranje.nl" + videopage
-        utils.addDownLink(name, videopage, 222, img, '', fanart='https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG')
+        utils.addDownLink(name, videopage, 222, img, '')
     try:
         page = page + 1
         nextp=re.compile('href="([^"]+)"> Vol', re.DOTALL | re.IGNORECASE).findall(listhtml)[0]
@@ -29,6 +29,8 @@ def List(url, page=None):
 def Playvid(url, name):
     listhtml = utils.getHtml2(url)
     match = re.compile('<video src="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(listhtml)
+    dp = xbmcgui.DialogProgress()
+    dp.create("DutchMusic","Een ogenblik geduld.")  
     if match:
         videourl = match[0]
         videourl = videourl.replace(" ","%20")

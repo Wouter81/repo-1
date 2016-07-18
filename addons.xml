@@ -154,7 +154,7 @@
 
 <addon id="plugin.video.DutchMusic"
        name="DutchMusic"
-       version="1.0.4"
+       version="1.0.6"
        provider-name="DutchMusic">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -169,9 +169,7 @@
     <import addon="script.module.urlresolver" optional="true"/>
     <import addon="script.module.simplejson" />
     <import addon="script.common.plugin.cache" version="2.5.5"/>
-    <import addon="script.module.metahandler" version="2.9.0"/>
-
-
+	<import addon="script.module.metahandler" version="2.9.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video audio</provides>
@@ -810,7 +808,7 @@
 
 <addon id="script.dokionderhoud"
        name="[COLOR lime]D[/COLOR]OKI Onderhoud"
-       version="0.0.1"
+       version="0.0.2"
        provider-name="DOKI Onderhoud">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

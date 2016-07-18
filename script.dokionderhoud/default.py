@@ -12,8 +12,10 @@ tempPath = xbmc.translatePath('special://temp')
 addonPath = os.path.join(os.path.join(xbmc.translatePath('special://home'), 'addons'),'script.dokionderhoud')
 mediaPath = os.path.join(addonPath, 'media')
 databasePath = xbmc.translatePath('special://database')
-base='http://doki.netne.net/'
+base='http://xml.dokitv.nl/'
 dialog = xbmcgui.Dialog()
+
+import utils
 
 #######################################################################
 #                          CLASSES
@@ -43,8 +45,9 @@ def mainMenu():
     addItem('[B][COLOR lime]V[/COLOR]erwijder Zero Cache[/B]', 'url', 6,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]K[/COLOR]odi Versie[/B]', 'url', 7,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]F[/COLOR]abrieksInstellingen[/B]', 'url', 9,os.path.join(mediaPath, "thumbs.png"))	
+    addItem('[B][COLOR lime]C[/COLOR]ontact[/B]','url',13,os.path.join(mediaPath, "thumbs.png"))
     addItem('[B][COLOR lime]D[/COLOR]OKI Installer[/B]', 'url', 10,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]D[/COLOR]OKI Fix[/B]', 'url', 12,os.path.join(mediaPath, "thumbs.png"))	
+    #addItem('[B][COLOR lime]D[/COLOR]OKI Fix[/B]', 'url', 12,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]D[/COLOR]OKI Nieuws Flits[/B]', 'url', 11,os.path.join(mediaPath, "thumbs.png"))					    
 #######################################################################
 #						Add to menus
@@ -65,6 +68,37 @@ def addDir(name,url,mode,iconimage):
 	liz.setInfo( type="Video", infoLabels={ "Title": name } )
 	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
 	return ok
+    
+def addDir2(name,url,mode,iconimage,fanart,description,genre,date,credits,showcontext=False,Folder=True):
+        
+        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&fanart="+urllib.quote_plus(fanart)
+        ok=True
+        if date == '':
+            date = None
+        else:
+            description += '\n\nDate: %s' %date
+        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+        liz.setInfo(type="Video", infoLabels={ "Title": name, "Plot": description, "Genre": genre, "dateadded": date, "credits": credits })
+        liz.setProperty("Fanart_Image", fanart)
+        if showcontext:
+            contextMenu = []
+            if showcontext == 'source':
+                if name in str(SOURCES):
+                    contextMenu.append(('Remove from Sources','XBMC.RunPlugin(%s?mode=8&name=%s)' %(sys.argv[0], urllib.quote_plus(name))))
+            elif showcontext == 'download':
+                contextMenu.append(('Download','XBMC.RunPlugin(%s?url=%s&mode=9&name=%s)'
+                                    %(sys.argv[0], urllib.quote_plus(url), urllib.quote_plus(name))))
+            elif showcontext == 'fav':
+                contextMenu.append(('Remove from DutchMusic Favorites','XBMC.RunPlugin(%s?mode=6&name=%s)'
+                                    %(sys.argv[0], urllib.quote_plus(name))))
+                                    
+            if not name in FAV:
+                contextMenu.append(('Add to DutchMusic Favorites','XBMC.RunPlugin(%s?mode=5&name=%s&url=%s&iconimage=%s&fanart=%s&fav_mode=%s)'
+                         %(sys.argv[0], urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), urllib.quote_plus(fanart), mode)))
+            liz.addContextMenuItems(contextMenu)
+        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=Folder)
+
+        return ok
 	
 def addItem(name,url,mode,iconimage):
 	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
@@ -221,7 +255,7 @@ def clearCache():
 
     dialog = xbmcgui.Dialog()
     dialog.ok("Doki Onderhoud", "Je cache is geleegd!")
-    
+
     
 def deleteThumbnails():
     if os.path.exists(thumbnailPath)==True:  
@@ -385,6 +419,28 @@ def factoryreset(url):
         time.sleep(3)
         addonfolder=xbmc.translatePath(os.path.join('special://home','addons','')); dp=xbmcgui.DialogProgress(); print '=== INSTALLING Fresh Start ==='; dp.create(AddonTitle,"Extracting Zip Please Wait")
         extract.all(lib,addonfolder,dp); xbmc.executebuiltin("XBMC.UpdateLocalAddons()"); xbmc.executebuiltin("RunAddon(plugin.video.freshstart)")		
+
+def stuurbericht():
+    dialog.ok('Stuur een bericht','Vul in de volgende vensters je naam, e-mail adres en het bericht in.')
+    naam = utils._get_keyboard(heading='Naam')
+    if (not naam): 
+        utils.notify('Niet verzonden','Er is geen naam ingevuld.')
+        return False
+    email = utils._get_keyboard(heading='E-mail adres')
+    if (not email):
+        utils.notify('Niet verzonden','Er is geen e-mail adres ingevuld.')
+        return False
+    bericht = utils._get_keyboard(heading='Bericht')
+    if (not bericht):
+        utils.notify('Niet verzonden','Er is geen bericht ingevuld.')
+        return False
+    form_values = {}
+    form_values['bezoeker_naam'] = naam
+    form_values['bezoeker_email'] = email
+    form_values['bezoeker_bericht'] = bericht
+    result = utils.postHtml('http://dutchmusic.ml/dokionderhoud/versturen.php', form_data=form_values)
+    utils.notify('Bericht Verzonden','')
+
 
 def dokiinstall(url):
     pluginpath=os.path.exists(xbmc.translatePath(os.path.join('special://home','addons','plugin.program.dokiinstaller')))
@@ -550,6 +606,9 @@ elif mode==11:
 
 elif mode==12:
     dokifix(url)	
+
+elif mode==13:
+    stuurbericht()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
