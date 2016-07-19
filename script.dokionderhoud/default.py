@@ -11,6 +11,7 @@ cachePath = os.path.join(xbmc.translatePath('special://home'), 'cache')
 tempPath = xbmc.translatePath('special://temp')
 addonPath = os.path.join(os.path.join(xbmc.translatePath('special://home'), 'addons'),'script.dokionderhoud')
 mediaPath = os.path.join(addonPath, 'media')
+dokifanart = os.path.join(addonPath, 'fanart.jpg')
 databasePath = xbmc.translatePath('special://database')
 base='http://xml.dokitv.nl/'
 dialog = xbmcgui.Dialog()
@@ -96,17 +97,19 @@ def addDir2(name,url,mode,iconimage,fanart,description,genre,date,credits,showco
                 contextMenu.append(('Add to DutchMusic Favorites','XBMC.RunPlugin(%s?mode=5&name=%s&url=%s&iconimage=%s&fanart=%s&fav_mode=%s)'
                          %(sys.argv[0], urllib.quote_plus(name), urllib.quote_plus(url), urllib.quote_plus(iconimage), urllib.quote_plus(fanart), mode)))
             liz.addContextMenuItems(contextMenu)
+        liz.setArt({'fanart': dokifanart})
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=Folder)
 
         return ok
-	
+    
 def addItem(name,url,mode,iconimage):
-	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
-	ok=True
-	liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage,)
-	liz.setInfo( type="Video", infoLabels={ "Title": name } )
-	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
-	return ok
+    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
+    ok=True
+    liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage,)
+    liz.setInfo( type="Video", infoLabels={ "Title": name } )
+    liz.setArt({'fanart': dokifanart})
+    ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
+    return ok
 
 #######################################################################
 #						Parses Choice
