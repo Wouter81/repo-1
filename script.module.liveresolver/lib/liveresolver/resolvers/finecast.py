@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
-import re,urlparse,cookielib,os
-from liveresolver.modules import client,unCaptcha,control,constants, decryptionUtils
+import re,urlparse,cookielib,os,urllib
+from liveresolver.modules import client,recaptcha_v2,control,constants, decryptionUtils
 from liveresolver.modules.log_utils import log
 cookieFile = os.path.join(control.dataPath, 'finecastcookie.lwp')
 
 def resolve(url):
-    try:
+    #try:
         try:
             referer = urlparse.parse_qs(urlparse.urlparse(url).query)['referer'][0]
         except:
@@ -15,26 +15,24 @@ def resolve(url):
 
 
         id = urlparse.parse_qs(urlparse.urlparse(url).query)['u'][0]
-        url = 'http://www.finecast.tv/embed4.php?u=%s&vw=640&vh=450'%id
-
-        headers=[("User-Agent", client.agent()), ("Referer", referer)]
         cj = get_cj()
-
-        result = unCaptcha.performCaptcha(url, cj, headers = headers)
-        result = decryptionUtils.doDemystify(result)
-        cj.save (cookieFile,ignore_discard=True)
-        
+        url = 'http://www.finecast.tv/embed4.php?u=%s&vw=640&vh=450'%id
+        rs = client.request(url,referer=referer,cj=cj)
+        sitekey = re.findall('data-sitekey="([^"]+)', rs)[0]
+        token = recaptcha_v2.UnCaptchaReCaptcha().processCaptcha(sitekey, lang='de')
+        #1:04
+        result =client.request (url, post=urllib.urlencode(token),referer=referer)
+        log(result)
 
         file = re.findall('[\'\"](.+?.stream)[\'\"]',result)[0]
         auth = re.findall('[\'\"](\?wmsAuthSign.+?)[\'\"]',result)[0]
         rtmp = 'http://play.finecast.tv:1935/live/%s/playlist.m3u8%s'%(file,auth)
 
-        #url = rtmp +  ' playpath=' + file + ' swfUrl=http://www.finecast.tv/player6/jwplayer.flash.swf flashver=' + constants.flash_ver() + ' live=1 timeout=14 pageUrl=' + url
         return rtmp
 
         
-    except:
-        return
+    #except:
+    #    return
 
 
 def get_cj():

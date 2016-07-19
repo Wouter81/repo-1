@@ -12,35 +12,55 @@ cookieFile = os.path.join(control.dataPath, 'streamlivecookie.lwp')
 
 
 def resolve(url):
-    if 'embed' in url:
-        import streamlive_embed
-        return streamlive_embed.resolve(url)
+    
     
     try:
+        log_in = True
         page = url
         addonid = 'script.module.liveresolver'
 
         user, password = control.setting('streamlive_user'), control.setting('streamlive_pass')
         if (user == '' or password == ''):
             user, password = control.addon(addonid).getSetting('streamlive_user'), control.addon(addonid).getSetting('streamlive_pass')
-        if (user == '' or password == ''): return ''
+        if (user == '' or password == ''): 
+            log_in = False
+            url = url.replace('view','embed')
+            import streamlive_embed
+            return streamlive_embed.resolve(url)
 
+        if not log_in and 'embed' in url:
+            import streamlive_embed
+            return streamlive_embed.resolve(url)
+        
         try: 
             referer = urlparse.parse_qs(urlparse.urlparse(url).query)['referer'][0]
             url = url.replace(referer,'').replace('?referer=','').replace('&referer=','')
         except:
             referer = url
 
+        if 'embed' in url:
+            url = re.findall('(http.+?embed[^&$]+)',url)[0].replace('embed','view')
 
         post_data = 'username=%s&password=%s&accessed_by=web&submit=Login'%(user,password)
 
         cj = get_cj()
         result = client.request(url,cj=cj,headers={'referer':'http://www.streamlive.to', 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to', 'User-agent':client.agent()})
+        if 'FREE credits here' in result:
+            url = url.replace('view','embed')
+            import streamlive_embed
+            res = streamlive_embed.resolve(url)
+            if res == '' :
+                if not log_in:
+                    control.infoDialog('Login or solve captcha to watch this channel.',heading = 'Streamlive.to',time=6000)
+                else:
+                    control.infoDialog('Not enough credits! Get FREE credits at streamlive.to or solve captcha.',heading='Streamlive.to',time=6000)
+            return res
+
         if 'this channel is a premium channel.' in result.lower():
           control.infoDialog('Premium channel. Upgrade your account to watch it!', heading='Streamlive.to')
           return 
 
-        if 'not logged in yet' in result.lower():
+        if 'not logged in yet' in result.lower() or 'you have reached the limit today' in result.lower():
             #Cookie expired or not valid, request new cookie
             cj = login(cj,post_data)
             cj.save (cookieFile,ignore_discard=True)
@@ -63,7 +83,7 @@ def resolve(url):
 
 
 def login(cookies,post_data):
-    log('Making new login token.')
+    log('Streamlive: Making new login token.')
     cj = client.request('http://www.streamlive.to/login.php', post=post_data, headers = {'referer':'http://www.streamlive.to/login', 'Content-type':'application/x-www-form-urlencoded', 'Origin': 'http://www.streamlive.to', 'Host':'www.streamlive.to', 'User-agent':client.agent()},cj=cookies,output='cj')
     return cj
 

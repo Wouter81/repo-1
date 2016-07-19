@@ -11,17 +11,17 @@ def resolve(url):
     try:
 
         page = re.compile('//(.+?)/(?:embed|v)/([0-9a-zA-Z-_]+)').findall(url)[0]
-        page = 'http://%s/embed/%s' % (page[0], page[1])
+        
         try: referer = urlparse.parse_qs(urlparse.urlparse(url).query)['referer'][0]
         except: referer = page
         try: host = urlparse.parse_qs(urlparse.urlparse(url).query)['host'][0]
-        except: host = 'sawlive.tv'
-
+        except: host = 'www.sawlive.tv'
+        page = 'http://sawlive.tv/embed/%s' % (page[1])
         headers={'User-Agent': client.agent(),'Host': host, 'Referer': referer, 'Connection': 'keep-alive'}
-        
-        result = client.request(page, referer=referer)
+        result = client.request(page, referer=referer, headers = headers)
         
         unpacked = ''
+        
         packed = result.split('\n')
         for i in packed:
             try:
@@ -30,31 +30,45 @@ def resolve(url):
                 pass
         result += unpacked
         result = urllib.unquote_plus(result)
-        rplcs = re.findall(';.+?=(.+?).replace\([\"\'](.+?)[\"\']\s*,\s*[\"\']([^\"\']*)[\"\']',result)
-        url = client.parseDOM(result, 'iframe', ret='src')[-1]
-        url = url.replace(' ', '').replace('+','')
-        var = re.compile('var\s(.+?)\s*=\s*[\'\"](.+?)[\'\"]').findall(result)
-        for i in range(100):
-            for v in var: result = result.replace(" %s " % v[0], ' %s '%v[1])
-        var = re.compile('var\s(.+?)\s*=\s*[\'\"](.+?)[\'\"]').findall(result)
-        var_dict = dict(var)
-
-        for v in var:
-            if '+' in v[1]:
-                ss = v[1].rstrip('+').replace('"+','').split('+')
-                sg = v[1].rstrip('+').replace('"+','')
-                for s in ss:
-                    sg = sg.replace(s, var_dict[s])
-                var_dict[v[0]]=sg.replace('+','')
+        r2 = result
+        resul = None
+        try:
+            url = client.parseDOM(result, 'iframe', ret='src')[-1]
+        except:
+            result = unpacked
+            try:
+                url = client.parseDOM(result, 'iframe', ret='src')[-1]
+                var = re.compile('var\s(.+?)\s*=\s*[\'\"](.+?)[\'\"]').findall(result)
+                var_dict = dict(var)       
                 
-        for i in range(100):
-            for v in var_dict.keys(): url = url.replace("'%s'" % v, var_dict[v])
-            for v in var_dict.keys(): url = url.replace("(%s)" % v, "(%s)" % var_dict[v])
+                for v in var_dict.keys():
+                    url = url.replace(v,var_dict[v])
+                url = url.replace('\'','').replace('\"','').replace('+','').replace(' ','')
+                resul = client.request(url, headers = headers)
+            except:
+                pass
         
-        url = url.replace(' ', '').replace('+','').replace('"','').replace('\'','')
-        for r in rplcs:
-            url = url.replace(r[1],r[2])
-        result = client.request(url, headers = headers, mobile=True)
+        if resul is None:
+            #aaa = r2.replace('var ','').replace('\' ','\' +').replace(' \'','+ \'')
+
+            aaa = r2.replace('document.write(',' var result =').replace('\');','\'')
+            aaa = aaa.replace('"\' +swidth+ \'"','')
+            aaa = aaa.replace('"\' +sheight+ \'"','')
+            aaa = re.sub('([^+\s])\s([^+\s])',r'\1+\2',aaa)
+            aaa = aaa.replace('function+','function ')
+            aaa = aaa.replace('var+','var ')
+            aaa = aaa.replace('result+','result ')
+            import js2py
+            context = js2py.EvalJs()
+            context.swidth = '400'
+            context.sheight = '400'
+            context.execute(aaa)
+            result = context.result
+            result = urllib.unquote_plus(result)
+            url = client.parseDOM(result, 'iframe', ret='src')[-1]
+            result = client.request(url, headers = headers)
+        else:
+            result = resul
         unpacked = ''
         packed = result.split('\n')
         for i in packed:

@@ -1,9 +1,9 @@
 
 def flash_ver():
-      return 'WIN\\2021,0,0,182'
+      return 'WIN\\2021,0,0,242'
 
 def get_shockwave():
-      return 'ShockwaveFlash/21.0.0.182'
+      return 'ShockwaveFlash/21.0.0.242'
       
 def blacklist():
       black = ['advert', 'banner', 'bet', 'c4.zedo', 'chat', 'chatango', '.css', 'histats']
@@ -18,7 +18,7 @@ resolver_dict={ 'sawlive.tv': 'sawlive',
             'finecast.tv' : 'finecast',
             'filmon.com' : 'filmon',
             'miplayer.net' : 'miplayer',
-            'lshstream.com' : 'lshunter',
+            'lshstreams.com' : 'lshunter',
             'cdn.lshstream.com' : 'lshunter',
             'castamp.com' : 'castamp',
             'yocast.tv': 'yocast',
@@ -45,7 +45,7 @@ resolver_dict={ 'sawlive.tv': 'sawlive',
             'p3g.tv' : 'p3g',
             'liveflashplayer.net' : 'liveflashplayer',
             'laola1.tv' : 'laola1',
-            'ehftv.com' : 'ehftv',
+            'ehftv.com' : 'laola1',
             'zoomtv.me' : 'zoomtv',#not implemented
             'iguide.to' : 'iguide',
             'letgo.tv' : 'letgo',
@@ -85,6 +85,9 @@ resolver_dict={ 'sawlive.tv': 'sawlive',
 
             'streamcasttv.biz':'streamcasttv',
             'vaughnlive.tv' : 'vaughnlive',
+            'vapers.tv' : 'vaughnlive',
+            'breakers.tv' : 'vaughnlive',
+            'instagib.tv' : 'vaughnlive',
             'hdcast.org' : 'hdcast_org',
             'ustream.tv' : 'ustream',
             'cast4u.tv' : 'cast4u',
@@ -106,7 +109,13 @@ resolver_dict={ 'sawlive.tv': 'sawlive',
             'hornos.moy.su' : 'kolstg',
             'mipsplayer.com' : 'mips',
             'bro.adcast.tech' : 'broadcast',
+            'bro.adca.st' : 'broadcast',
             'sportstream365.com':'sportstream365',
             'navixsport.com' : 'navix',
-            'cndhlsstream.pw' : 'cndhls'
+            'cndhlsstream.pw' : 'cndhls',
+            'streamifyplayer.com' : 'streamify',
+            'zoptv.com' : 'zoptv',
+            'streamp2p.com' : 'streamp2p',
+            'akamaistreaming.com' : 'akamaistreaming',
+            'cast3d.me' : 'dinozap'
               }
