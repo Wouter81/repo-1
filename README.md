@@ -4,3 +4,10 @@ DOKITV.NL
 ===================
 
 www.DOKITV.nl
+===================
+#DOKI Holland
+https://www.facebook.com/groups/dokiholland/
+
+#DOKI Sport
+https://www.facebook.com/groups/dokisport/
+
