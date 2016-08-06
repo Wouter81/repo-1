@@ -227,11 +227,11 @@
 
 <addon id="plugin.video.nosrio2016"
        name="NOS Rio 2016"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="Patrick Dijkkamp">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="xbmc.python" version="2.19.0"/>
+        <import addon="script.module.simplejson" version="2.0.10" optional="true"/>
     </requires>
     <extension point="xbmc.python.pluginsource"
                library="default.py">

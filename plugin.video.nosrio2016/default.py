@@ -22,7 +22,7 @@
 __scriptname__ = "NOS Rio 2016"
 __author__ = "Patrick Dijkkamp"
 __scriptid__ = "plugin.video.nosrio2016"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 import urllib,urllib2,re, cookielib, urlparse, httplib
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,sys,time, os, gzip, socket
