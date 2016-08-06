@@ -225,6 +225,26 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.nosrio2016"
+       name="NOS Rio 2016"
+       version="1.0.0"
+       provider-name="Patrick Dijkkamp">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>GPL 2.0</license>
+        <summary lang="en">Live NOS Streams van Rio 2016</summary>
+        <description lang="en">Live NOS Streams van Rio 2016</description>
+    </extension>
+</addon>
+
 <addon
   id="plugin.video.SportsDevil"
   version="ZNL2016.2016.2016.07.20.NL1"
