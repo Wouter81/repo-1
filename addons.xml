@@ -72,26 +72,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.brettus.streams" name="[COLOR white]B[/COLOR][COLOR dodgerblue]rettus [/COLOR][COLOR white]S[/COLOR][COLOR dodgerblue]treams[/COLOR]" version="1.0.3" provider-name="Biggy_Ozz">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0" />
-		<import addon="script.module.pyxbmct" version="1.1.4" />
-		<import addon="script.module.urlresolver" version="3.0.0"/>
-		<import addon="script.module.liveresolver" version="0.1.24"/>
-		<import addon="plugin.video.youtube" optional="true" />
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Brettus-Streams</summary>
-		<description lang="en">Brettus-Streams</description>
-		<platform>all</platform>
-		<forum>Brettus-Streams</forum>
-		<website>Brettus-Streams</website>
-	</extension>
-</addon>
-
 <addon id="plugin.video.clubtv"
 	name="Doki Club TV"
 	version="1.0.7"
@@ -396,6 +376,19 @@
         <platform>all</platform>
     <website>http://repo.bbtsip.tv/</website>
   </extension>
+</addon>
+
+<addon id="repository.BES-IPTV" name="BES-IPTV Repository" version="1.0.2" provider-name="SaydinX,SimpleKodi">
+	<extension point="xbmc.addon.repository" name="BES-IPTV Repository">
+		<info compressed="false">http://ipbestv.net16.net/Addons/addons.xml</info>
+		<checksum>http://ipbestv.net16.net/Addons/addons.xml.md5</checksum>
+		<datadir zip="true">http://ipbestv.net16.net/Addons/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>BES-IPTV, Albanian IPTV!</summary>
+		<description>BES-IPTV Repository by SimpleKodi,SaydinX</description>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 <addon id="repository.BlazeRepo" name="Blazetamer's Repository" version="3.2" provider-name="Blazetamer">
