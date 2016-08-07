@@ -207,7 +207,7 @@
 
 <addon id="plugin.video.nosrio2016"
        name="NOS Rio 2016"
-       version="1.0.1"
+       version="1.0.2"
        provider-name="Patrick Dijkkamp">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>

@@ -22,7 +22,7 @@
 __scriptname__ = "NOS Rio 2016"
 __author__ = "Patrick Dijkkamp"
 __scriptid__ = "plugin.video.nosrio2016"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 import urllib,urllib2,re, cookielib, urlparse, httplib
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,sys,time, os, gzip, socket
@@ -89,33 +89,40 @@ def HOOFDMENU():
            'X-Requested-With': 'XMLHttpRequest',
            'Cookie': 'DNT: 1'}
     livejson = getHtml('http://nos.nl/rio2016/live/','http://nos.nl/rio2016/', headers2)
-    livejson = json.loads(livejson)
-    streamlijst = livejson["live"]
-    for stream in streamlijst:
-        try:
-            einde = stream["end_at"]
-            einde = re.compile(r"\d{2}:\d{2}", re.DOTALL | re.IGNORECASE).findall(einde)[0]         
-            naam = "["+stream["title"].upper() + "] tot "+ einde + ": " + stream["description"].replace('\n',' ')
-            naam = naam.encode('utf-8')
-            url = stream["channel"]["stream"]
-            img = stream["stream_icon"]["formats"]["url"]["png"]
-            addDownLink(naam, url, 2, img)
-        except: pass
-    addDownLink('------ Straks --------', '', '', '')
-    strakslijst = livejson["upcoming"]
-    for straks in strakslijst:
-        try:
-            start = straks["start_at"]
-            start = re.compile(r"\d{2}:\d{2}", re.DOTALL | re.IGNORECASE).findall(start)[0]        
-            naam = start + " ["+straks["title"].upper() + "] " + straks["description"].replace('\n',' ')
-            naam = naam.encode('utf-8')
-            url = straks["channel"]["stream"]
-            img = straks["stream_icon"]["formats"]["url"]["png"]
-
-            addDownLink(naam, url, 2, img)
-        except: pass    
+    try:
+        livejson = json.loads(livejson)
+        streamlijst = livejson["live"]
+        for stream in streamlijst:
+            try:
+                einde = stream["end_at"]
+                einde = re.compile(r"\d{2}:\d{2}", re.DOTALL | re.IGNORECASE).findall(einde)[0]         
+                naam = "["+stream["title"].upper() + "] tot "+ kleurtje(einde, "red") + ": " + stream["description"].replace('\n',' ')
+                naam = naam.encode('utf-8')
+                url = stream["channel"]["stream"]
+                img = stream["stream_icon"]["formats"]["url"]["png"]
+                addDownLink(naam, url, 2, img)
+            except: pass
+    except: pass
+    try:
+        addDownLink('------ Straks --------', '', '', '')
+        strakslijst = livejson["upcoming"]
+        for straks in strakslijst:
+            try:
+                start = straks["start_at"]
+                start = re.compile(r"\d{2}:\d{2}", re.DOTALL | re.IGNORECASE).findall(start)[0]        
+                naam = kleurtje(start, "green") + " ["+straks["title"].upper() + "] " + straks["description"].replace('\n',' ')
+                naam = naam.encode('utf-8')
+                url = straks["channel"]["stream"]
+                img = straks["stream_icon"]["formats"]["url"]["png"]
+                addDownLink(naam, url, 2, img)
+            except: pass
+    except:
+        addDownLink('Geen streams of aankomende streams', '', '', '')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-    
+
+def kleurtje(tekst, kleur):
+    tekst = "[COLOR " + kleur + "]" + tekst + "[/COLOR]"
+    return tekst
 
 def VIDEOLINKS(url,name):
     videourl = streamNpo(url)
