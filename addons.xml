@@ -205,6 +205,27 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.NJMLive"
+	   name="NJMLive"
+	   version="1.0.1"
+	   provider-name="NJMSoccer-2uk3y-Kodim-Ares">
+  <requires>
+    <import addon="script.module.requests" version="1.0.0" />
+	<import addon="plugin.video.f4mTester" />
+	<import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.video.F4mProxy" version="2.2.3"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+			 library="njm.py">
+    	<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary></summary>
+    <description></description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.nosrio2016"
        name="NOS Rio 2016"
        version="1.0.2"
