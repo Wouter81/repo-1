@@ -13,4 +13,8 @@ https://www.facebook.com/groups/dokiholland/
 ![DOKI](http://www.governancenow.com/images/facebook.png) 
 https://www.facebook.com/groups/dokisport/
 
+#DOKI Films, Series en Muziek
+![DOKI](http://www.governancenow.com/images/facebook.png) 
+https://www.facebook.com/groups/dokifilmseriemuziek/
+
 ===================
