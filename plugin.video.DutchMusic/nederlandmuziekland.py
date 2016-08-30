@@ -22,7 +22,7 @@ def List(url):
 
 def Playvid(url, name):
     listhtml = utils.getHtml2(url)
-    match = re.compile('og:video" content="([^"]+)"', re.DOTALL | re.IGNORECASE).findall(listhtml)
+    match = re.compile('<meta property="og:url" content="(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
     dp = xbmcgui.DialogProgress()
     dp.create("DutchMusic","Een ogenblik geduld.")      
     if match:

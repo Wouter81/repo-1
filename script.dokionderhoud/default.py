@@ -46,7 +46,7 @@ def mainMenu():
     addItem('[B][COLOR lime]V[/COLOR]erwijder Zero Cache[/B]', 'url', 6,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]K[/COLOR]odi Versie[/B]', 'url', 7,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]F[/COLOR]abrieksInstellingen[/B]', 'url', 9,os.path.join(mediaPath, "thumbs.png"))	
-    addItem('[B][COLOR lime]C[/COLOR]ontact[/B]','url',13,os.path.join(mediaPath, "thumbs.png"))
+    #addItem('[B][COLOR lime]C[/COLOR]ontact[/B]','url',13,os.path.join(mediaPath, "thumbs.png"))
     addItem('[B][COLOR lime]D[/COLOR]OKI Installer[/B]', 'url', 10,os.path.join(mediaPath, "thumbs.png"))
     #addItem('[B][COLOR lime]D[/COLOR]OKI Fix[/B]', 'url', 12,os.path.join(mediaPath, "thumbs.png"))	
     addItem('[B][COLOR lime]D[/COLOR]OKI Nieuws Flits[/B]', 'url', 11,os.path.join(mediaPath, "thumbs.png"))					    

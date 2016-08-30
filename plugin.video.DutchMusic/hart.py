@@ -4,13 +4,13 @@ import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 import utils
 
 
-def Main():
-    utils.addDir('Programma Gemist','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276',227,'','')    
-    xbmcplugin.endOfDirectory(utils.addon_handle)
+#def Main():
+#    utils.addDir('Programma Gemist','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276',227,'','')    
+#    xbmcplugin.endOfDirectory(utils.addon_handle)
 
 
 def List(url, page=None):
-    listhtml = utils.getHtml2(url)
+    listhtml = utils.getHtml2('http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1276')
     match = re.compile('<span class="date-time">([^<]+)<em>([^<]+)</em></span>([^\t]+).+?<img src=".([^"]+)".*?<a href="(/[^"]+)"', re.DOTALL | re.IGNORECASE).findall(listhtml)
     for datum, tijd, name, img, videopage in match:
         name = datum + ' ' + tijd + ' - ' + name

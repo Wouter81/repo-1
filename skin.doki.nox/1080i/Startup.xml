@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<allowoverlay>no</allowoverlay>
+	<onload>RunScript(script.favourites)</onload>
+	<onload condition="System.HasAddon(script.skin.info.service)">RunScript(script.skin.info.service)</onload>
+	<onload condition="!System.HasAddon(script.tv.show.next.aired)">Skin.SetBool(Disable.NextAired)</onload>
+	<onload condition="System.HasAddon(script.toolbox)">RunScript(script.toolbox,daemon=True,radius=30)</onload>
+	<onload condition="IsEmpty(Skin.String(Overlay.Toggle))">SetProperty(Overlay.Path,overlays/showcase/,home)</onload>
+	<onload condition="IsEmpty(Skin.String(WeatherFanartDir))">Skin.SetString(WeatherFanartDir,http://aeon-nox-background-packs.googlecode.com/svn/trunk/weather-fanart/default/)</onload>
+	<onload condition="StringCompare(Skin.String(Overlay.Toggle),1)">SetProperty(Overlay.Path,overlays/showcase/1/,home)</onload>
+	<onload condition="StringCompare(Skin.String(Overlay.Toggle),2)">SetProperty(Overlay.Path,overlays/showcase/2/,home)</onload>
+	<onload condition="StringCompare(Skin.String(Overlay.Toggle),3)">SetProperty(Overlay.Path,overlays/showcase/3/,home)</onload>
+	<onload condition="Skin.HasSetting(Disable.Resumable)">SetProperty(Overlay.Resumable,True,home)</onload>
+	<!-- Intro -->
+	<onload condition="!Skin.HasSetting(Disable.StartupIntro)">PlayMedia(special://skin/intro.mp4,1)</onload>
+	<onunload>PlayerControl(Stop)</onunload>
+	<defaultcontrol always="true">10</defaultcontrol>
+	<controls>
+		<control type="button" id="10">
+			<include>HiddenObject</include>
+			<onup>ReplaceWindow($INFO[System.StartupWindow])</onup>
+			<ondown>ReplaceWindow($INFO[System.StartupWindow])</ondown>
+			<onleft>ReplaceWindow($INFO[System.StartupWindow])</onleft>
+			<onright>ReplaceWindow($INFO[System.StartupWindow])</onright>
+			<onclick>ReplaceWindow($INFO[System.StartupWindow])</onclick>
+			<onfocus>ReplaceWindow($INFO[System.StartupWindow])</onfocus>
+			<animation effect="fade" start="100" end="0" time="6000" condition="!Skin.HasSetting(Disable.StartupIntro)">Focus</animation>
+		</control>
+		<control type="videowindow">
+			<include>FullscreenDimensions</include>
+			<visible>Player.HasVideo</visible>
+		</control>
+	</controls>
+</window>

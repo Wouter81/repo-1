@@ -10,7 +10,7 @@ __scriptname__ = "DutchMusic"
 __author__ = "DutchMusic"
 __scriptid__ = "plugin.video.DutchMusic"
 __credits__ = "DutchMusic"
-__version__ = "1.0.2"
+__version__ = "1.0.7b"
 
 USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
 

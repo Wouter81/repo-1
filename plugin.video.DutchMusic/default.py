@@ -60,6 +60,7 @@ KaraokeBase = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y
 SterrenNLBase = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL3N0ZXJyZW5ubG11emlla2ZlZXN0LnhtbA=='
 SterrenNLTop20Base = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL3N0ZXJyZW50b3AyMC54bWw='
 DutchMusicPlaylistBase = 'aHR0cDovL2JpdC5seS9kdXRjaG11c2lj'
+DMIndexMenu = 'aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIveG1sL01lbnVpbmRleC54bWw='
 
 addon = xbmcaddon.Addon('plugin.video.DutchMusic')
 addon_version = addon.getAddonInfo('version')
@@ -135,7 +136,8 @@ def DMIndex():
     addDir('[B]Karaoke[/B]','',76,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/karaoke.png' , fanart,'','','','')
     addDir('[B]Artiesten[/B]','http://www.radionl.fm/artiesten/',249,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/artiesten.png' ,  fanart,'','','','')
     addDir('[B]Muziek zoeken[/B]','',246,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/zoeken.png' ,  fanart,'','','','')
-    addDir('[B]Contact[/B]','',100,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/contact.png' ,  fanart,'','','','', Folder=False)
+    getData(base64.b64decode(DMIndexMenu),'')
+    #addDir('[B]Contact[/B]','',100,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/contact.png' ,  fanart,'','','','', Folder=False)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexoranjetop30():
@@ -163,7 +165,7 @@ def indexwebsites():
     addon_log("indexwebsites")
     addDir('[B]Sterren NL[/B]','http://sterren.nl/',229,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl.png' ,  fanart,'','','','')
     addDir('[B]Hart voor Muziek[/B]','http://www.omroepbrabant.nl/Uitzendinggemist.aspx?type=tv&id=1275',227,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/hart-voor-muziek.png' ,  fanart,'','','','')
-    addDir('[B]Nederland Muziekland[/B]','http://www.sbs6.nl/',269,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/nederland-muziekland.png' ,  fanart,'','','','')
+    #addDir('[B]Nederland Muziekland[/B]','http://www.sbs6.nl/',269,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/nederland-muziekland.png' ,  fanart,'','','','')
     addDir('[B]TV Oranje[/B]','http://www.tvoranje.nl/?p=84&p2=1',220,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/tvoranje.png' ,  fanart,'','','','')
     addDir('[B]Unity NL[/B]','http://www.unity.nu/Kijk-terug/',272,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png' ,  fanart,'','','','')
     addDir('[B]Hollandse Hits Forum - Nieuwe Releases[/B]','http://www.hollandsehitsforum.nl/index.php?option=com_content&view=category&layout=blog&id=168&Itemid=40',248,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/HHF.png' ,  fanart,'','','','')

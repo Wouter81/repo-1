@@ -1,3 +1,9 @@
+[B]V1.0.8[/B]
+- Hart voor Muziek fix
+- Hollandse Hits Forum fix
+- Nederland Muziekland tijdelijk verwijderd
+[B]V1.0.7[/B]
+- Oldie van de Week toegevoegd
 [B]V1.0.6[/B]
 - SterrenNL Uitbreidingen
 - DutchMusic Top 20 Toegevoegd
