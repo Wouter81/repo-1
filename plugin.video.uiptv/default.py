@@ -20,7 +20,7 @@
 __scriptname__ = "Ultimate IPTV"
 __author__ = "Patrick Dijkkamp"
 __scriptid__ = "plugin.video.uiptv"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 import urllib,urllib2,re, gzip, socket
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,sys,time, os
@@ -83,9 +83,12 @@ def addLink(name, url, iconimage):
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
     liz.setArt({'thumb': iconimage, 'icon': iconimage})
-    #fanart = os.path.join(rootDir, 'fanart.jpg')
-    #liz.setArt({'fanart': fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name})
+    if '.ts' in url:
+        contextMenuItems = []
+        f4m = 'plugin://plugin.video.f4mTester/?streamtype=TSDOWNLOADER&amp;url=' + url + '&amp;name=' + name
+        contextMenuItems.append(('Play with f4mTester', 'xbmc.RunPlugin('+f4m+')'))
+        liz.addContextMenuItems(contextMenuItems, replaceItems=False)      
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=liz, isFolder=False)
     return ok
     
