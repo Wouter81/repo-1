@@ -133,8 +133,8 @@
 </addon>
 
 <addon id="plugin.video.dutchmovies"
-	name="Nederlandse films"
-	version="1.0"
+	name="[COLOR darkorange][B]D[/B][/COLOR]utch [COLOR darkorange][B]M[/B][/COLOR]ovies"
+	version="1.0.1"
 	provider-name="Dutch movies">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

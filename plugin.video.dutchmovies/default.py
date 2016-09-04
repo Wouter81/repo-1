@@ -8,12 +8,14 @@ addonID = 'plugin.video.dutchmovies'
 addon = Addon(addonID, sys.argv)
 local = xbmcaddon.Addon(id=addonID)
 icon = local.getAddonInfo('icon')
-
+FANART = local.getAddonInfo('fanart')
 
 channellist=[
         ("Nederlandse films", "playlist/PLwZj5jiLW6kxWVZJAocTrkjZn_z5aU17R", 'https://www.mupload.nl/img/yh3dab22pno80.png'),
-		("Films met ingebakken subs", "playlist/PLwZj5jiLW6kzdzaSR3iX_t6M6UaI_QHMO", 'https://www.mupload.nl/img/yh3dab22pno80.png'),
-]
+		("Films met ingebakken subs", "playlist/PLwZj5jiLW6kzdzaSR3iX_t6M6UaI_QHMO", 'https://www.mupload.nl/img/yh3dab22pno80.png'),	
+		
+        ]
+
 
 
 
@@ -37,7 +39,7 @@ def main_list(params):
     plugintools.log("NLMovies.main_list "+repr(params))
 
 for name, id, icon in channellist:
-	plugintools.add_item(title=name,url="plugin://plugin.video.youtube/"+id+"/",thumbnail=icon,folder=True )
+	plugintools.add_item(title=name,url="plugin://plugin.video.youtube/"+id+"/",thumbnail=icon,fanart=FANART,folder=True )
 
 
 
