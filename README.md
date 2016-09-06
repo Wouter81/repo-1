@@ -25,4 +25,8 @@ https://twitter.com/dokitvnl
 ![DOKI](http://vignette2.wikia.nocookie.net/lyricwiki/images/c/c0/YouTube_Icon.png/revision/latest?cb=20110602185215) 
 https://www.youtube.com/channel/UCAIB9JsLfsleqmsbLDpIlzg
 
+#DOKI LibreElec 7.0.2 Raspberry PI 2B/3B 
+![DOKI](https://sc02.alicdn.com/kf/HTB1GCLcJFXXXXavXXXXq6xXFXXX0/Dual-Boot-Android-LibreElec-Just-enough-OS.jpg_50x50.jpg) 
+http://bit.ly/doki-libreelec702
+
 ===================
