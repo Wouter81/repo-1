@@ -26,7 +26,7 @@ https://twitter.com/dokitvnl
 https://www.youtube.com/channel/UCAIB9JsLfsleqmsbLDpIlzg
 
 #DOKI LibreElec 7.0.2 Raspberry PI 2B/3B 
-![DOKI](https://sc02.alicdn.com/kf/HTB1GCLcJFXXXXavXXXXq6xXFXXX0/Dual-Boot-Android-LibreElec-Just-enough-OS.jpg_50x50.jpg) 
+![DOKI](https://www.mupload.nl/img/pb9pml3cdwvii.jpg) 
 http://bit.ly/doki-libreelec702
 
 ===================
