@@ -3,6 +3,7 @@ DOKITV.NL
 ![DOKI](http://dokitv.nl/wp-content/uploads/2016/01/dokilogo-1.png)
 ===================
 #Website
+![DOKI](http://dokitv.nl/logo1/doki.png) 
 www.DOKITV.nl
 
 #DOKI Holland
