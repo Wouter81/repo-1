@@ -6,27 +6,27 @@ DOKITV.NL
 www.DOKITV.nl
 
 #DOKI Holland
-![DOKI](http://www.governancenow.com/images/facebook.png) 
+![DOKI](http://dokitv.nl/logo1/facebook.png) 
 https://www.facebook.com/groups/dokiholland/
 
 #DOKI Sport
-![DOKI](http://www.governancenow.com/images/facebook.png) 
+![DOKI](http://dokitv.nl/logo1/facebook.png) 
 https://www.facebook.com/groups/dokisport/
 
 #DOKI Films, Series en Muziek
-![DOKI](http://www.governancenow.com/images/facebook.png) 
+![DOKI](http://dokitv.nl/logo1/facebook.png) 
 https://www.facebook.com/groups/dokifilmseriemuziek/
 
 #DOKI TWITTER 
-![DOKI](http://www.governancenow.com/images/twitter.png) 
+![DOKI](http://dokitv.nl/logo1/twitter.png) 
 https://twitter.com/dokitvnl
 
 #DOKI YOUTUBE 
-![DOKI](http://vignette2.wikia.nocookie.net/lyricwiki/images/c/c0/YouTube_Icon.png/revision/latest?cb=20110602185215) 
+![DOKI](http://dokitv.nl/logo1/youtube.png) 
 https://www.youtube.com/channel/UCAIB9JsLfsleqmsbLDpIlzg
 
 #DOKI LibreElec 7.0.2 Raspberry PI 2B/3B 
-![DOKI](https://www.mupload.nl/img/pb9pml3cdwvii.jpg) 
+![DOKI](http://dokitv.nl/logo1/libreelec.jpg) 
 http://bit.ly/doki-libreelec702
 
 ===================
