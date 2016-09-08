@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.dutchaddon" name="Dutch Addon" version="1.0" provider-name="Dutch Addons">
+	<extension point="xbmc.addon.repository" name="Dutch Addons">
+		<info compressed="false">http://repo.djretard.nl/addons.xml</info>
+		<checksum>http://repo.djretard.nl/addons.xml.md5</checksum>
+		<datadir zip="true">http://repo.djretard.nl</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Dutch Addons</summary>
+		<description>Dutch Addon Repository</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+

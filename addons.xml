@@ -134,19 +134,20 @@
 
 <addon id="plugin.video.dutchmovies"
 	name="[COLOR darkorange][B]D[/B][/COLOR]utch [COLOR darkorange][B]M[/B][/COLOR]ovies"
-	version="1.0.1"
+	version="1.0.2"
 	provider-name="Dutch movies">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" version="2.0.0"/>
     <import addon="plugin.video.youtube" version="5.0.0"/>
+    <import addon="repository.dutchaddon"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Nederlandse films</summary>
-    <description lang="en">Veel NL films</description>
+    <description lang="en">Films en Series van youtube</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -563,6 +564,19 @@
         <description>Download and install addons from DudeHere. Seek support at tvaddons.ag.</description>
         <platform>all</platform>
     </extension>
+</addon>
+
+<addon id="repository.dutchaddon" name="Dutch Addon" version="1.0" provider-name="Dutch Addons">
+	<extension point="xbmc.addon.repository" name="Dutch Addons">
+		<info compressed="false">http://repo.djretard.nl/addons.xml</info>
+		<checksum>http://repo.djretard.nl/addons.xml.md5</checksum>
+		<datadir zip="true">http://repo.djretard.nl</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Dutch Addons</summary>
+		<description>Dutch Addon Repository</description>
+		<platform>all</platform>
+	</extension>
 </addon>
 
 <addon id="repository.dutchmusic" name="DutchMusic Repository" version="1.0.0" provider-name="DutchMusic">
