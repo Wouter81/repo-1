@@ -147,6 +147,9 @@ class BaseRequest(object):
         if len(response) > 10:
             if self.cookie_file:
                 self.save_cookies_lwp(self.s.cookies, self.cookie_file)
+        
+        if 'setCurrentQuality' in response:
+            response = response.replace("""' + '""",'')
 
         return HTMLParser().unescape(response)
 

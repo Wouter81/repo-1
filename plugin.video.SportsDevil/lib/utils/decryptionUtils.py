@@ -194,7 +194,7 @@ def doDemystify(data):
         if gs:
             for g in gs:
                 _in = json.loads(g).split('.')
-                aes = AES.new('5e4841405044757e4631795f39373837384e313335396d316775336c346e5972'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
+                aes = AES.new('5e41564050447a7e4631795f33373037374f313337396d316862396c34654763'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
                 unpad = lambda s : s[0:-ord(s[-1])]
                 try:
                     _url = unpad(aes.decrypt(_in[0].decode('hex')))
@@ -203,7 +203,7 @@ def doDemystify(data):
                 if _url:
                     data = data.replace(g,json.dumps( _url ))
                 else:
-                    aes = AES.new('5e6d59405052757e4b65795f393738373831313335396d316775336c346e7472'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
+                    aes = AES.new('5e4d58405044757e73314a5f39373837514e313335396a3144793833366e527a'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
                     data = data.replace(g,json.dumps( unpad(aes.decrypt(_in[0].decode('hex'))) ))
                 
         r = re.compile(r""":("(?!http)[\w=\\/\+]+\.m3u8")""")
@@ -267,7 +267,7 @@ def doDemystify(data):
     
     if 'eval(function(' in data:
         data = re.sub(r"""function\(\w\w\w\w,\w\w\w\w,\w\w\w\w,\w\w\w\w""",'function(p,a,c,k)',data.replace('#','|'))
-        data = re.sub(r"""\(\w\w\w\w\+0\)%\w\w\w\w""",'e%a',data)
+        data = re.sub(r"""\(\w\w\w\w\)%\w\w\w\w""",'e%a',data)
         data = re.sub(r"""RegExp\(\w\w\w\w\(\w\w\w\w\)""",'RegExp(e(c)',data)
         r = re.compile(r"""\.split\('([^']+)'\)""")
         gs = r.findall(data)
