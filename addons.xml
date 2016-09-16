@@ -180,6 +180,25 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.dutchsaiyaman"
+       name="Dutch Saiyaman"
+       version="1.0.3A"
+       provider-name="Patrick Dijkkamp">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>GPL 2.0</license>
+        <summary lang="en">Bekijk anime van dutchsaiyaman.nl</summary>
+        <description lang="en">Bekijk anime van dutchsaiyaman.nl. Zoals Dragonball Super en Boku no Hero Academia</description>
+    </extension>
+</addon>
+
 <addon id="plugin.video.f4mTester" version="2.2.4" name="f4mTester" provider-name="Shani">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -238,7 +257,7 @@
 
 <addon
   id="plugin.video.SportsDevil"
-  version="ZNL2016.2016.2016.09.11.NL1"
+  version="ZNL2016.2016.2016.09.16.NL1"
   name="SportsDevil"
   provider-name="MaxMustermann, Al101, Hubbab3, Jairox, Sattekop">
   <requires>
