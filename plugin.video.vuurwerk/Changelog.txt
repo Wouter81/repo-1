@@ -1,0 +1,38 @@
+[B]V1.0.8[/B]
+- Hart voor Muziek fix
+- Hollandse Hits Forum fix
+- Nederland Muziekland tijdelijk verwijderd
+[B]V1.0.7[/B]
+- Oldie van de Week toegevoegd
+[B]V1.0.6[/B]
+- SterrenNL Uitbreidingen
+- DutchMusic Top 20 Toegevoegd
+- PuurNL Top 20 Toegevoegd
+- RADIONL Agenda Verbeterd
+- Oranje Top 30 Verbeterd
+[B]V1.0.5[/B]
+- RADIONL Agenda toegevoegd
+- Contact toegevoegd
+- Sterren NL Top 20 (hitlijsten) toegevoegd
+- Truckers Top 12 (hitlijsten) toegevoegd
+- Hollandse Hits Forum Fix
+[B]V1.0.4[/B]
+- Artiesten Fix
+[B]V1.0.3[/B]
+- Sterren NL fix
+- Hollandse Hits Forum - Nieuwe Releases toegevoegd
+- Artiesten toegevoegd
+- DutchMusic Playlist op beginscherm gezet
+- Turorial - DutchMusic Playlist afspelen toegevoegd
+[B]V1.0.2[/B]
+- Categorie Hitlijsten toegevoegd
+- Oranje Top 30 verplaatst van Websites naar Hitlijsten
+- Sterren NL Top 20 toegevoegd
+- Unity NL Top 25 toegevoegd
+- RADIONL Top 1500 toegevoegd
+- Karaoke toegevoegd
+- Menuindeling veranderd
+- Zoekfunctie veranderd
+- Sterren NL fix
+[B]V1.0.1[/B]
+- Release
