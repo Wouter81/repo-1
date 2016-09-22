@@ -9,6 +9,7 @@ try: import json
 except ImportError: import simplejson as json
 try: from Crypto.Cipher import AES
 except ImportError: import pyaes as AES
+#import lib.common
 
 def encryptDES_ECB(data, key):
     data = data.encode()
@@ -206,23 +207,29 @@ def doDemystify(data):
             pass
 
     if '"result2":"'in data:
+        #lib.common.log("JairoX3:" + data)
+        aeskeys = [ '5e4542404f4c757e4431675f373837385649313133356f3152693935366e4361',
+                    '5e5858405046757e4631775f33414141514e3133393973315775336c34695a5a',
+                    '5e4d58405044757e73314a5f39373837514e313335396a3144793833366e527a'
+                  ]
         r = re.compile(r""":("(?!http)\w+\.\w+\.m3u8")""")
         gs = r.findall(data)
         if gs:
             for g in gs:
-                _in = json.loads(g).split('.')
-                aes = AES.new('5e4542404f4c757e4431675f373837385649313133356f3152693935366e4361'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
-                unpad = lambda s : s[0:-ord(s[-1])]
-                try:
-                    _url = unpad(aes.decrypt(_in[0].decode('hex')))
-                except:
-                    _url = None
-                if _url:
-                    data = data.replace(g,json.dumps( _url ))
-                else:
-                    aes = AES.new('5e4d58405044757e73314a5f39373837514e313335396a3144793833366e527a'.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))
-                    _url = unpad(aes.decrypt(_in[0].decode('hex')))
-                    data = data.replace(g,json.dumps( _url ))
+                for aeskey in aeskeys:
+                    _in = json.loads(g).split('.')
+                    aes = AES.new(aeskey.decode('hex'), AES.MODE_CBC, _in[1].decode('hex'))            
+                    unpad = lambda s : s[0:-ord(s[-1])]
+                    try:
+                        _url = unpad(aes.decrypt(_in[0].decode('hex')))
+                    except:
+                        _url = None
+                    if _url and re.match(r'http://.*m3u8', _url):
+                        try:
+                            data = data.replace(g,json.dumps( _url ))
+                            break
+                        except:
+                            continue
                 
         r = re.compile(r""":("(?!http)[\w=\\/\+]+\.m3u8")""")
         gs = r.findall(data)
