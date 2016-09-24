@@ -184,12 +184,6 @@ item_info_build=%s
 ##item_info_convert=debug
 #item_info_build=%s
 
-item_info_name=s1
-item_info_from=srp
-item_info_convert=rowbalance
-#item_info_convert=debug
-item_info_build=%s
-
 item_info_name=p
 item_info_from=p1 || p2 || p3 || p4 || p5 || p6
 item_info_build=%s
@@ -298,6 +292,12 @@ item_info_build=%s
 
 item_info_name=pp
 item_info_from=p21 || p22 || p23 || p24 || p25
+item_info_build=%s
+
+item_info_name=s1
+item_info_from=srp
+item_info_convert=rowbalance
+#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=rtmp_1
