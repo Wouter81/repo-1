@@ -288,7 +288,7 @@
 
 <addon
   id="plugin.video.SportsDevil"
-  version="ZNL2016.2016.2016.10.10.NL1"
+  version="ZNL2016.2016.2016.10.10.NL2"
   name="SportsDevil"
   provider-name="MaxMustermann, Al101, Hubbab3, Jairox, Sattekop">
   <requires>
@@ -304,6 +304,9 @@
     library="default.py">
    <provides>video</provides>
   </extension>
+  <extension
+      point="xbmc.python.script"
+      library="lib/livestreamerXBMCLocalProxy.py" />
   <extension point="xbmc.addon.metadata">
     <summary>Play videos of different sports streaming sites</summary>
     <description>Play videos of different sports streaming sites</description>
