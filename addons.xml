@@ -1707,7 +1707,7 @@
 
 <addon id="service.subtitles.opensubtitles"
        name="OpenSubtitles.org"
-       version="5.0.14B"
+       version="5.0.14C"
        provider-name="amet">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1730,7 +1730,7 @@
 
 <addon id="service.subtitles.opensubtitlesBeta"
        name="OpenSubtitles.org (Unofficial)"
-       version="5.0.10"
+       version="5.0.10A"
        provider-name="amet,Mafarricos">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
