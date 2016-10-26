@@ -22,20 +22,6 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.nlradio" name="NL Radio" version="6.8.8" provider-name="vDia Internet Applications &amp; PvdL">
-	<extension point="xbmc.python.pluginsource" library="start.py">
-		<provides>audio</provides>
-	</extension>
-	<extension  point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="nl">Nederlandse radiostreams in een plugin verwerkt</summary>
-		<description lang="nl">Luister eenvoudig naar Nederlandse radiostreams.</description>
-		<disclaimer>De radiostreams worden sinds 2005 zorgvuldig verzameld en ingedeeld door bigfoot87.com</disclaimer>
-		<language>nl</language>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.audio.punchoutbattles" name="PunchOUT Battles" version="1.0.1" provider-name="DOKI">
 	<requires>
 		<import addon="plugin.video.youtube" version="4.0" optional="false"/>
@@ -132,25 +118,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.dutchmovies"
-	name="[COLOR darkorange][B]D[/B][/COLOR]utch [COLOR darkorange][B]M[/B][/COLOR]ovies"
-	version="1.0.3"
-	provider-name="Dutch movies">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.addon.common" version="2.0.0"/>
-    <import addon="plugin.video.youtube" version="5.0.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Nederlandse films</summary>
-    <description lang="en">Films en Series van youtube</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.DutchMusic"
        name="DutchMusic"
        version="1.0.8"
@@ -180,25 +147,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.dutchsaiyaman"
-       name="Dutch Saiyaman"
-       version="1.0.3A"
-       provider-name="Patrick Dijkkamp">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <license>GPL 2.0</license>
-        <summary lang="en">Bekijk anime van dutchsaiyaman.nl</summary>
-        <description lang="en">Bekijk anime van dutchsaiyaman.nl. Zoals Dragonball Super en Boku no Hero Academia</description>
-    </extension>
-</addon>
-
 <addon id="plugin.video.f4mTester" version="2.2.4" name="f4mTester" provider-name="Shani">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -214,45 +162,32 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.NJMLive"
-	   name="NJMLive"
-	   version="1.0.1"
-	   provider-name="NJMSoccer-2uk3y-Kodim-Ares">
+<addon id="plugin.video.musictv"
+       name="MusicTV"
+       version="1.0.0"
+       provider-name="DOKI TV">
   <requires>
-    <import addon="script.module.requests" version="1.0.0" />
-	<import addon="plugin.video.f4mTester" />
-	<import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.video.F4mProxy" version="2.2.3"/>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.t0mm0.common" version="2.1.1"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.requests" />
+    <import addon="script.module.youtube.dl" />
+    <import addon="plugin.video.youtube" />
+    <import addon="script.module.urlresolver" />
+    <import addon="script.module.simplejson" />
+    <import addon="script.common.plugin.cache" />
+    <import addon="script.module.liveresolver" />
+
+
   </requires>
-  <extension point="xbmc.python.pluginsource"
-			 library="njm.py">
-    	<provides>video</provides>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video audio</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary></summary>
-    <description></description>
+    <summary lang="en">MusicTV for XBMC/Kodi!</summary>
+    <description lang="en"></description>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="plugin.video.nosrio2016"
-       name="NOS Rio 2016"
-       version="1.0.4"
-       provider-name="Patrick Dijkkamp">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-        <import addon="script.module.simplejson" version="2.0.10" optional="true"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <license>GPL 2.0</license>
-        <summary lang="en">Live NOS Streams van Rio 2016</summary>
-        <description lang="en">Live NOS Streams van Rio 2016</description>
-    </extension>
 </addon>
 
 <addon id="plugin.video.onlydutch"
@@ -1705,22 +1640,24 @@
     </extension>
 </addon>
 
-<addon id="service.subtitles.opensubtitles" name="OpenSubtitles.org" provider-name="amet" version="5.0.15">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension library="service.py" point="xbmc.subtitle.module"/>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">OpenSubtitles</summary>
-    <description lang="en">Search and download subtitles from opensubtitles.org</description>
-    <disclaimer lang="en"/>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=183114</forum>
-    <website/>
-    <email/>
-    <source>https://github.com/amet/service.subtitles.opensubtitles</source>
-  </extension>
+<addon id="service.subtitles.opensubtitles" version="5.0.15a" name="OpenSubtitles.org" provider-name="amet, EPiC, XvBMC">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.subtitle.module" library="service.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">OpenSubtitles</summary>
+		<summary lang="nl">OpenSubtitles</summary>
+		<description lang="en">Search and download subtitles from opensubtitles.org</description>
+		<description lang="nl">Zoek en Download ondertiteling van opensubtitles.org</description>
+		<disclaimer lang="en">http://forum.xbmc.org/showthread.php?tid=183114</disclaimer>
+		<disclaimer lang="nl">credits to: Zeljko Ametovic</disclaimer>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://forum.xbmc.org/showthread.php?tid=183114</forum>
+		<website>http://forum.xbmc.org/showthread.php?tid=183114</website>
+		<source>https://github.com/amet/service.subtitles.opensubtitles</source>
+	</extension>
 </addon>
 
 <addon id="service.subtitles.opensubtitlesBeta"
@@ -1767,28 +1704,6 @@ Other languages with a great number of subtitles are: Danish, French, Swedish, D
         <email/>
         <source>https://github.com/manacker/service.subtitles.subscene</source>
     </extension>
-</addon>
-
-<addon
-  id="skin.doki.nox"
-  version="1.0.6"
-  name="[COLOR lime][B]DOKITV.NL NOX SKIN[/B][/COLOR]"
-  provider-name="DOKI">
-	<requires>
-		<import addon="xbmc.gui" version="5.10.0"/>
-		<import addon="script.grab.fanart" version="0.12.8"/>
-		<import addon="script.skinshortcuts" version="0.4.5"/>
-		<import addon="service.library.data.provider" version="0.0.7"/>
-	</requires>
-	<extension
-	  point="xbmc.gui.skin"
-	  debugging="false"
-	  effectslowdown="0.75">
-		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-	</extension>
 </addon>
 
 <addon id="tvsupertuga.repository" name="[COLOR cyan]TV[/COLOR]-[COLOR red]SUPERTUGA[/COLOR].[COLOR limegreen]REPOSITORY[/COLOR]" version="0.0.6" provider-name="TVsupertuga">

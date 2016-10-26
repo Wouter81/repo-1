@@ -1,5 +1,0 @@
-1.0.4: Fix voor stream agenda
-1.0.3: Aangepast voor paralympische spelen
-1.0.2: Fix als er geen live uitzendingen zijn
-1.0.1: Compatible vanaf Helix
-1.0.0: Eerste release

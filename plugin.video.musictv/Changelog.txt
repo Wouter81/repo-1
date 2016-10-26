@@ -1,0 +1,12 @@
+1.0.0 Initial release
+1.0.1 Added Slamfm top40 and DjRegard Official
+1.0.2 Fix for BVLS
+1.0.3 Code Cleanup
+1.0.4 Channel name vissible when using f4m proxy on streams
+1.0.5 Speed up BVLS stream list. Fixes for live365.
+1.0.6 Added IPTV World moved Sport channels to IPTV World
+1.0.7 Removed BVLS2016
+1.0.8 Added StreamHD.eu
+1.0.9 Removed IPTVWorld
+1.1.0 Added Fullmatchesandshows.com, Added UFC, Added MamaHD, Added SEBN.SC, Added Wizhdsports.to, Added Hesgoals.sc, Added Showsport-tv.com, Added HDFree.Tv, Added Sportstream365.com, Added Tuttosportweb.com, Added Golden Arrows Channel (Darts), Fixes for Sport365.live
+1.1.1 Fixes for Hesgoals, Fixes for Sport365, Fixes for StreamHD, Added Wiz1.net, Added Goatd.net, Added Live9.net
