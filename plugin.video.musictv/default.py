@@ -74,7 +74,7 @@ if not os.path.exists(profile):
 
 REV = os.path.join(profile, 'list_revision')
 icon = os.path.join(home, 'icon.png')
-FANART = os.path.join(home, 'fanart.png')
+FANART = os.path.join(home, 'fanart.jpg')
 source_file = os.path.join(profile, 'source_file')
 functions_dir = profile
 
@@ -253,10 +253,10 @@ def makeRequest(url, headers=None):
 def MusicTVIndex():
     addon_log("MusicTVIndex")
     addDir('MediaMarkt Top40','',249,'https://lh6.ggpht.com/yAEnch7Ae2UWUFc5cjTsdl4CAAh8_hAW9c_34w1VbvjLuAqb54_LFEWJPsIfll1d5Qo4=w300' ,  fanart,'','','','')
-    addDir('XITE Weekmix','',221,'http://xite.nl/uploads/images/weekmix_xite_head.jpg' ,  fanart,'','','','')
+    #addDir('XITE Weekmix','',221,'http://xite.nl/uploads/images/weekmix_xite_head.jpg' ,  fanart,'','','','')
     addDir('Slam FM Top 40','http://www.slam.nl/slam40/',241,'http://images.cdn.slam.nl/wp-content/uploads/2015/08/Teaser_SLAM40.jpg' ,  fanart,'','','','')   
-    addDir('MusicTV Channels','',75,icon ,  fanart,'','','','')
-    addDir('MusicTV Radio','',76,icon ,  fanart,'','','','')
+    addDir('MusicTV Channels','',75,'http://addon.dokitv.nl/musictv/musictvchannelsicon.png' ,  fanart,'','','','')
+    addDir('MusicTV Radio','',76,'http://addon.dokitv.nl/musictv/radiochannels1.png',  fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def indexmuziek():
