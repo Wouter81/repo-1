@@ -20,6 +20,7 @@
 import re
 import urllib
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class Mp4streamResolver(UrlResolver):
@@ -33,8 +34,15 @@ class Mp4streamResolver(UrlResolver):
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
 
-        response = self.net.http_GET(web_url)
+        headers = {
+            'Host': 'mp4stream.com',
+            'Referer': 'https://www.mp4stream.com'
+        }
+
+        response = self.net.http_GET(web_url, headers=headers)
+
         html = response.content
+
         headers = dict(response._response.info().items())
 
         r = re.search('sources\s*:\s*(\[.*?\])', html, re.DOTALL)
@@ -43,19 +51,9 @@ class Mp4streamResolver(UrlResolver):
             html = r.group(1)
             r = re.search("'file'\s*:\s*'(.+?)'", html)
             if r:
-                return r.group(1) + '|' + urllib.urlencode({'Cookie': headers['set-cookie']})
+                return r.group(1) + helpers.append_headers({'Cookie': headers['set-cookie']})
             else:
                 raise ResolverError('File Not Found or removed')
 
     def get_url(self, host, media_id):
         return 'http://mp4stream.com/embed/%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host

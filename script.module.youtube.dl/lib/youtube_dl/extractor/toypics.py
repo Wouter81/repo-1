@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# coding: utf-8
 from __future__ import unicode_literals
 
 from .common import InfoExtractor
@@ -41,7 +41,7 @@ class ToypicsIE(InfoExtractor):
 
 class ToypicsUserIE(InfoExtractor):
     IE_DESC = 'Toypics user profile'
-    _VALID_URL = r'http://videos\.toypics\.net/(?P<username>[^/?]+)(?:$|[?#])'
+    _VALID_URL = r'https?://videos\.toypics\.net/(?P<username>[^/?]+)(?:$|[?#])'
     _TEST = {
         'url': 'http://videos.toypics.net/Mikey',
         'info_dict': {

@@ -10,6 +10,7 @@ from ..utils import (
     int_or_none,
     parse_duration,
     str_to_int,
+    unescapeHTML,
     xpath_text,
 )
 
@@ -71,12 +72,17 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
     def _real_extract(self, url):
         mobj = re.match(self._VALID_URL, url)
         video_id = mobj.group('id')
-        display_id = mobj.group('display_id')
+        display_id = mobj.group('display_id') if 'display_id' in mobj.groupdict() else video_id
 
         webpage = self._download_webpage(url, display_id)
 
         cfg_url = self._proto_relative_url(self._html_search_regex(
-            self._CONFIG_REGEX, webpage, 'flashvars.config'), 'http:')
+            self._CONFIG_REGEX, webpage, 'flashvars.config', default=None), 'http:')
+
+        if not cfg_url:
+            inputs = self._hidden_inputs(webpage)
+            cfg_url = ('https://cdn-fck.tnaflix.com/tnaflix/%s.fid?key=%s&VID=%s&premium=1&vip=1&alpha'
+                       % (inputs['vkey'], inputs['nkey'], video_id))
 
         cfg_xml = self._download_xml(
             cfg_url, display_id, 'Downloading metadata',
@@ -85,7 +91,7 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
         formats = []
 
         def extract_video_url(vl):
-            return re.sub('speed=\d+', 'speed=', vl.text)
+            return re.sub('speed=\d+', 'speed=', unescapeHTML(vl.text))
 
         video_link = cfg_xml.find('./videoLink')
         if video_link is not None:
@@ -114,10 +120,14 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
             xpath_text(cfg_xml, './startThumb', 'thumbnail'), 'http:')
         thumbnails = self._extract_thumbnails(cfg_xml)
 
-        title = self._html_search_regex(
-            self._TITLE_REGEX, webpage, 'title') if self._TITLE_REGEX else self._og_search_title(webpage)
+        title = None
+        if self._TITLE_REGEX:
+            title = self._html_search_regex(
+                self._TITLE_REGEX, webpage, 'title', default=None)
+        if not title:
+            title = self._og_search_title(webpage)
 
-        age_limit = self._rta_search(webpage)
+        age_limit = self._rta_search(webpage) or 18
 
         duration = parse_duration(self._html_search_meta(
             'duration', webpage, 'duration', default=None))
@@ -132,7 +142,7 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
         average_rating = float_or_none(extract_field(self._AVERAGE_RATING_REGEX, 'average rating'))
 
         categories_str = extract_field(self._CATEGORIES_REGEX, 'categories')
-        categories = categories_str.split(', ') if categories_str is not None else []
+        categories = [c.strip() for c in categories_str.split(',')] if categories_str is not None else []
 
         return {
             'id': video_id,
@@ -152,12 +162,43 @@ class TNAFlixNetworkBaseIE(InfoExtractor):
         }
 
 
+class TNAFlixNetworkEmbedIE(TNAFlixNetworkBaseIE):
+    _VALID_URL = r'https?://player\.(?:tna|emp)flix\.com/video/(?P<id>\d+)'
+
+    _TITLE_REGEX = r'<title>([^<]+)</title>'
+
+    _TESTS = [{
+        'url': 'https://player.tnaflix.com/video/6538',
+        'info_dict': {
+            'id': '6538',
+            'display_id': '6538',
+            'ext': 'mp4',
+            'title': 'Educational xxx video',
+            'thumbnail': 're:https?://.*\.jpg$',
+            'age_limit': 18,
+        },
+        'params': {
+            'skip_download': True,
+        },
+    }, {
+        'url': 'https://player.empflix.com/video/33051',
+        'only_matching': True,
+    }]
+
+    @staticmethod
+    def _extract_urls(webpage):
+        return [url for _, url in re.findall(
+            r'<iframe[^>]+?src=(["\'])(?P<url>(?:https?:)?//player\.(?:tna|emp)flix\.com/video/\d+)\1',
+            webpage)]
+
+
 class TNAFlixIE(TNAFlixNetworkBaseIE):
     _VALID_URL = r'https?://(?:www\.)?tnaflix\.com/[^/]+/(?P<display_id>[^/]+)/video(?P<id>\d+)'
 
-    _TITLE_REGEX = r'<title>(.+?) - TNAFlix Porn Videos</title>'
-    _DESCRIPTION_REGEX = r'<h3 itemprop="description">([^<]+)</h3>'
-    _UPLOADER_REGEX = r'(?s)<span[^>]+class="infoTitle"[^>]*>Uploaded By:</span>(.+?)<div'
+    _TITLE_REGEX = r'<title>(.+?) - (?:TNAFlix Porn Videos|TNAFlix\.com)</title>'
+    _DESCRIPTION_REGEX = r'(?s)>Description:</[^>]+>(.+?)<'
+    _UPLOADER_REGEX = r'<i>\s*Verified Member\s*</i>\s*<h\d+>(.+?)<'
+    _CATEGORIES_REGEX = r'(?s)<span[^>]*>Categories:</span>(.+?)</div>'
 
     _TESTS = [{
         # anonymous uploader, no categories
@@ -171,8 +212,7 @@ class TNAFlixIE(TNAFlixNetworkBaseIE):
             'thumbnail': 're:https?://.*\.jpg$',
             'duration': 91,
             'age_limit': 18,
-            'uploader': 'Anonymous',
-            'categories': [],
+            'categories': ['Porn Stars'],
         }
     }, {
         # non-anonymous uploader, categories

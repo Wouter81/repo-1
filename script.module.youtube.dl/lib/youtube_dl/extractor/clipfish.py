@@ -1,68 +1,67 @@
+# coding: utf-8
 from __future__ import unicode_literals
-
-import re
 
 from .common import InfoExtractor
 from ..utils import (
-    determine_ext,
     int_or_none,
-    js_to_json,
-    parse_iso8601,
-    remove_end,
+    unified_strdate,
 )
 
 
 class ClipfishIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?clipfish\.de/(?:[^/]+/)+video/(?P<id>[0-9]+)'
     _TEST = {
-        'url': 'http://www.clipfish.de/special/game-trailer/video/3966754/fifa-14-e3-2013-trailer/',
-        'md5': '79bc922f3e8a9097b3d68a93780fd475',
+        'url': 'http://www.clipfish.de/special/ugly-americans/video/4343170/s01-e01-ugly-americans-date-in-der-hoelle/',
+        'md5': '720563e467b86374c194bdead08d207d',
         'info_dict': {
-            'id': '3966754',
+            'id': '4343170',
             'ext': 'mp4',
-            'title': 'FIFA 14 - E3 2013 Trailer',
-            'timestamp': 1370938118,
-            'upload_date': '20130611',
-            'duration': 82,
+            'title': 'S01 E01 - Ugly Americans - Date in der Hölle',
+            'description': 'Mark Lilly arbeitet im Sozialdienst der Stadt New York und soll Immigranten bei ihrer Einbürgerung in die USA zur Seite stehen.',
+            'upload_date': '20161005',
+            'duration': 1291,
+            'view_count': int,
         }
     }
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
 
-        webpage = self._download_webpage(url, video_id)
-
-        video_info = self._parse_json(
-            js_to_json(self._html_search_regex(
-                '(?s)videoObject\s*=\s*({.+?});', webpage, 'video object')),
-            video_id)
+        video_info = self._download_json(
+            'http://www.clipfish.de/devapi/id/%s?format=json&apikey=hbbtv' % video_id,
+            video_id)['items'][0]
 
         formats = []
-        for video_url in re.findall(r'var\s+videourl\s*=\s*"([^"]+)"', webpage):
-            ext = determine_ext(video_url)
-            if ext == 'm3u8':
-                formats.append({
-                    'url': video_url.replace('de.hls.fra.clipfish.de', 'hls.fra.clipfish.de'),
-                    'ext': 'mp4',
-                    'format_id': 'hls',
-                })
-            else:
-                formats.append({
-                    'url': video_url,
-                    'format_id': ext,
-                })
-        self._sort_formats(formats)
 
-        title = remove_end(self._og_search_title(webpage), ' - Video')
-        thumbnail = self._og_search_thumbnail(webpage)
-        duration = int_or_none(video_info.get('length'))
-        timestamp = parse_iso8601(self._html_search_meta('uploadDate', webpage, 'upload date'))
+        m3u8_url = video_info.get('media_videourl_hls')
+        if m3u8_url:
+            formats.append({
+                'url': m3u8_url.replace('de.hls.fra.clipfish.de', 'hls.fra.clipfish.de'),
+                'ext': 'mp4',
+                'format_id': 'hls',
+            })
+
+        mp4_url = video_info.get('media_videourl')
+        if mp4_url:
+            formats.append({
+                'url': mp4_url,
+                'format_id': 'mp4',
+                'width': int_or_none(video_info.get('width')),
+                'height': int_or_none(video_info.get('height')),
+                'tbr': int_or_none(video_info.get('bitrate')),
+            })
+
+        descr = video_info.get('descr')
+        if descr:
+            descr = descr.strip()
 
         return {
             'id': video_id,
-            'title': title,
+            'title': video_info['title'],
+            'description': descr,
             'formats': formats,
-            'thumbnail': thumbnail,
-            'duration': duration,
-            'timestamp': timestamp,
+            'thumbnail': video_info.get('media_content_thumbnail_large') or video_info.get('media_thumbnail'),
+            'duration': int_or_none(video_info.get('media_length')),
+            'upload_date': unified_strdate(video_info.get('pubDate')),
+            'view_count': int_or_none(video_info.get('media_views'))
         }

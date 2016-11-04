@@ -221,35 +221,6 @@
   </extension>
 </addon>
 
-<addon
-  id="plugin.video.SportsDevil"
-  version="ZNL2016.2016.2016.10.10.NL2"
-  name="SportsDevil"
-  provider-name="MaxMustermann, Al101, Hubbab3, Jairox, Sattekop">
-  <requires>
-   <import addon="xbmc.python" version="2.14.0"/>
-   <import addon="script.module.simplejson" />
-   <import addon="script.module.six" />
-   <import addon="script.module.requests" />
-   <import addon="script.module.livestreamer" />
-   <import addon="script.module.pydevd" version="4.4.0" optional="true"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension
-      point="xbmc.python.script"
-      library="lib/livestreamerXBMCLocalProxy.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary>Play videos of different sports streaming sites</summary>
-    <description>Play videos of different sports streaming sites</description>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.uiptv"
        name="Ultimate IPTV"
        version="1.0.2"
@@ -933,6 +904,23 @@
 	</extension>
 </addon>
 
+    <addon id="repository.SportsDevilDutch" name="Dutch SportsDevil Repository[COLOR red] This is a special Dutch version of SportsDevil. If you don't want this, do NOT download this repo.[/COLOR]" version="1.0.0" provider-name="DOKITV.NL">
+        <requires>
+            <import addon="xbmc.addon" version="12.0.0"/>
+        </requires>
+        <extension point="xbmc.addon.repository" name="DOKITV.NL Repository">
+            <info compressed="false">https://raw.githubusercontent.com/doki1/SportsDevil/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/doki1/SportsDevil/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/doki1/SportsDevil/master/zips/</datadir>
+            <hashes>false</hashes>
+        </extension>
+        <extension point="xbmc.addon.metadata">
+            <summary>Dutch SportsDevil Repository</summary>
+			<description>This is a special Dutch version of SportsDevil. If you don't want this, do NOT download this repo.</description>
+            <platform>all</platform>
+    </extension>
+</addon>
+
 <addon id="repository.spoyser"
         name="spoysers XBMC Add-ons"
         version="1.0.6"
@@ -1495,7 +1483,7 @@
   </extension>
 </addon>
 
-<addon id="script.module.urlresolver" name="URLResolver" version="3.0.3" provider-name="Eldorado">
+<addon id="script.module.urlresolver" name="URLResolver" version="3.0.23" provider-name="tvaddons.ag, Eldorado">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 	</requires>
@@ -1508,7 +1496,7 @@
 	</extension>
 </addon>
 
-<addon id="script.module.youtube.dl" name="youtube-dl Control" version="15.1124.0" provider-name="Rick Phillips (ruuk)">
+<addon id="script.module.youtube.dl" name="youtube-dl Control" version="16.1026.0" provider-name="Rick Phillips (ruuk)">
     <requires>
         <import addon="xbmc.python" version="2.1.0" />
         <import addon="script.module.addon.signals" version="0.0.1"/>
@@ -1520,7 +1508,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en">Module providing access to youtube-dl video stream extraction</summary>
-        <description lang="en">Module providing access to youtube-dl video stream extraction for over 270 sites. Version is based on youtube-dl date version: YY.MDD.V where V is the addon specific sub-version. Also provides downloading with the option for background downloading with a queue and queue manager.</description>
+        <description lang="en">Module providing access to youtube-dl video stream extraction for hundreds of sites. Version is based on youtube-dl date version: YY.MDD.V where V is the addon specific sub-version. Also provides downloading with the option for background downloading with a queue and queue manager.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <forum>http://forum.xbmc.org/showthread.php?tid=200877</forum>
         <source>http://github.com/ruuk/script.module.youtube.dl</source>
@@ -1574,7 +1562,7 @@
 
 <addon id="script.video.F4mProxy"
 	     name="F4mProxy"
-	     version="2.5.5"
+	     version="2.6.6"
 	     provider-name="Shani">
   <requires>
     <import addon="xbmc.python" version="2.1.0" />
@@ -1584,6 +1572,13 @@
     <extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>executable</provides>
   </extension>
+
+     <extension point="xbmc.addon.repository" name="shani repository">
+        <info compressed="false">https://offshoregit.com/Shani-08/main/addons.xml</info>
+        <checksum>https://offshoregit.com/Shani-08/main/addons.xml.md5</checksum>
+        <datadir zip="true">https://offshoregit.com/Shani-08/main/zips/</datadir>
+    </extension>
+
 
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>

@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -13,7 +13,7 @@ from ..utils import (
 class KontrTubeIE(InfoExtractor):
     IE_NAME = 'kontrtube'
     IE_DESC = 'KontrTube.ru - Труба зовёт'
-    _VALID_URL = r'http://(?:www\.)?kontrtube\.ru/videos/(?P<id>\d+)/(?P<display_id>[^/]+)/'
+    _VALID_URL = r'https?://(?:www\.)?kontrtube\.ru/videos/(?P<id>\d+)/(?P<display_id>[^/]+)/'
 
     _TEST = {
         'url': 'http://www.kontrtube.ru/videos/2678/nad-olimpiyskoy-derevney-v-sochi-podnyat-rossiyskiy-flag/',

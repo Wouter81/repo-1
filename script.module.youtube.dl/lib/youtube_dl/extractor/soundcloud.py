@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -11,10 +11,9 @@ from .common import (
 from ..compat import (
     compat_str,
     compat_urlparse,
-    compat_urllib_parse,
+    compat_urllib_parse_urlencode,
 )
 from ..utils import (
-    encode_dict,
     ExtractorError,
     int_or_none,
     unified_strdate,
@@ -33,7 +32,7 @@ class SoundcloudIE(InfoExtractor):
     _VALID_URL = r'''(?x)^(?:https?://)?
                     (?:(?:(?:www\.|m\.)?soundcloud\.com/
                             (?P<uploader>[\w\d-]+)/
-                            (?!(?:tracks|sets(?:/[^/?#]+)?|reposts|likes|spotlight)/?(?:$|[?#]))
+                            (?!(?:tracks|sets(?:/.+?)?|reposts|likes|spotlight)/?(?:$|[?#]))
                             (?P<title>[\w\d-]+)/?
                             (?P<token>[^?]+?)?(?:[?].*)?$)
                        |(?:api\.soundcloud\.com/tracks/(?P<track_id>\d+)
@@ -54,6 +53,7 @@ class SoundcloudIE(InfoExtractor):
                 'uploader': 'E.T. ExTerrestrial Music',
                 'title': 'Lostin Powers - She so Heavy (SneakPreview) Adrian Ackers Blueprint 1',
                 'duration': 143,
+                'license': 'all-rights-reserved',
             }
         },
         # not streamable song
@@ -67,6 +67,7 @@ class SoundcloudIE(InfoExtractor):
                 'uploader': 'The Royal Concept',
                 'upload_date': '20120521',
                 'duration': 227,
+                'license': 'all-rights-reserved',
             },
             'params': {
                 # rtmp
@@ -85,6 +86,7 @@ class SoundcloudIE(InfoExtractor):
                 'description': 'test chars:  \"\'/\\ä↭',
                 'upload_date': '20131209',
                 'duration': 9,
+                'license': 'all-rights-reserved',
             },
         },
         # private link (alt format)
@@ -99,6 +101,7 @@ class SoundcloudIE(InfoExtractor):
                 'description': 'test chars:  \"\'/\\ä↭',
                 'upload_date': '20131209',
                 'duration': 9,
+                'license': 'all-rights-reserved',
             },
         },
         # downloadable song
@@ -113,12 +116,19 @@ class SoundcloudIE(InfoExtractor):
                 'uploader': 'oddsamples',
                 'upload_date': '20140109',
                 'duration': 17,
+                'license': 'cc-by-sa',
             },
         },
     ]
 
     _CLIENT_ID = '02gUJC0hH2ct1EGOcYXQIzRFU91c72Ea'
     _IPHONE_CLIENT_ID = '376f225bf427445fc4bfb6b99b72e0bf'
+
+    @staticmethod
+    def _extract_urls(webpage):
+        return [m.group('url') for m in re.finditer(
+            r'<iframe[^>]+src=(["\'])(?P<url>(?:https?://)?(?:w\.)?soundcloud\.com/player.+?)\1',
+            webpage)]
 
     def report_resolve(self, video_id):
         """Report information extraction."""
@@ -133,20 +143,20 @@ class SoundcloudIE(InfoExtractor):
         name = full_title or track_id
         if quiet:
             self.report_extraction(name)
-
-        thumbnail = info['artwork_url']
-        if thumbnail is not None:
+        thumbnail = info.get('artwork_url')
+        if isinstance(thumbnail, compat_str):
             thumbnail = thumbnail.replace('-large', '-t500x500')
         ext = 'mp3'
         result = {
             'id': track_id,
-            'uploader': info['user']['username'],
-            'upload_date': unified_strdate(info['created_at']),
+            'uploader': info.get('user', {}).get('username'),
+            'upload_date': unified_strdate(info.get('created_at')),
             'title': info['title'],
-            'description': info['description'],
+            'description': info.get('description'),
             'thumbnail': thumbnail,
             'duration': int_or_none(info.get('duration'), 1000),
             'webpage_url': info.get('permalink_url'),
+            'license': info.get('license'),
         }
         formats = []
         if info.get('downloadable', False):
@@ -216,13 +226,13 @@ class SoundcloudIE(InfoExtractor):
             raise ExtractorError('Invalid URL: %s' % url)
 
         track_id = mobj.group('track_id')
-        token = None
+
         if track_id is not None:
             info_json_url = 'http://api.soundcloud.com/tracks/' + track_id + '.json?client_id=' + self._CLIENT_ID
             full_title = track_id
             token = mobj.group('secret_token')
             if token:
-                info_json_url += "&secret_token=" + token
+                info_json_url += '&secret_token=' + token
         elif mobj.group('player'):
             query = compat_urlparse.parse_qs(compat_urlparse.urlparse(url).query)
             real_url = query['url'][0]
@@ -250,7 +260,20 @@ class SoundcloudIE(InfoExtractor):
         return self._extract_info_dict(info, full_title, secret_token=token)
 
 
-class SoundcloudSetIE(SoundcloudIE):
+class SoundcloudPlaylistBaseIE(SoundcloudIE):
+    @staticmethod
+    def _extract_id(e):
+        return compat_str(e['id']) if e.get('id') else None
+
+    def _extract_track_entries(self, tracks):
+        return [
+            self.url_result(
+                track['permalink_url'], SoundcloudIE.ie_key(),
+                video_id=self._extract_id(track))
+            for track in tracks if track.get('permalink_url')]
+
+
+class SoundcloudSetIE(SoundcloudPlaylistBaseIE):
     _VALID_URL = r'https?://(?:(?:www|m)\.)?soundcloud\.com/(?P<uploader>[\w\d-]+)/sets/(?P<slug_title>[\w\d-]+)(?:/(?P<token>[^?/]+))?'
     IE_NAME = 'soundcloud:set'
     _TESTS = [{
@@ -260,6 +283,9 @@ class SoundcloudSetIE(SoundcloudIE):
             'title': 'The Royal Concept EP',
         },
         'playlist_mincount': 6,
+    }, {
+        'url': 'https://soundcloud.com/the-concept-band/sets/the-royal-concept-ep/token',
+        'only_matching': True,
     }]
 
     def _real_extract(self, url):
@@ -286,7 +312,7 @@ class SoundcloudSetIE(SoundcloudIE):
             msgs = (compat_str(err['error_message']) for err in info['errors'])
             raise ExtractorError('unable to download video webpage: %s' % ','.join(msgs))
 
-        entries = [self.url_result(track['permalink_url'], 'Soundcloud') for track in info['tracks']]
+        entries = self._extract_track_entries(info['tracks'])
 
         return {
             '_type': 'playlist',
@@ -296,7 +322,7 @@ class SoundcloudSetIE(SoundcloudIE):
         }
 
 
-class SoundcloudUserIE(SoundcloudIE):
+class SoundcloudUserIE(SoundcloudPlaylistBaseIE):
     _VALID_URL = r'''(?x)
                         https?://
                             (?:(?:www|m)\.)?soundcloud\.com/
@@ -313,21 +339,21 @@ class SoundcloudUserIE(SoundcloudIE):
             'id': '114582580',
             'title': 'The Akashic Chronicler (All)',
         },
-        'playlist_mincount': 111,
+        'playlist_mincount': 74,
     }, {
         'url': 'https://soundcloud.com/the-akashic-chronicler/tracks',
         'info_dict': {
             'id': '114582580',
             'title': 'The Akashic Chronicler (Tracks)',
         },
-        'playlist_mincount': 50,
+        'playlist_mincount': 37,
     }, {
         'url': 'https://soundcloud.com/the-akashic-chronicler/sets',
         'info_dict': {
             'id': '114582580',
             'title': 'The Akashic Chronicler (Playlists)',
         },
-        'playlist_mincount': 3,
+        'playlist_mincount': 2,
     }, {
         'url': 'https://soundcloud.com/the-akashic-chronicler/reposts',
         'info_dict': {
@@ -346,7 +372,7 @@ class SoundcloudUserIE(SoundcloudIE):
         'url': 'https://soundcloud.com/grynpyret/spotlight',
         'info_dict': {
             'id': '7098329',
-            'title': 'Grynpyret (Spotlight)',
+            'title': 'GRYNPYRET (Spotlight)',
         },
         'playlist_mincount': 1,
     }]
@@ -384,47 +410,48 @@ class SoundcloudUserIE(SoundcloudIE):
         resource = mobj.group('rsrc') or 'all'
         base_url = self._BASE_URL_MAP[resource] % user['id']
 
-        next_href = None
+        COMMON_QUERY = {
+            'limit': 50,
+            'client_id': self._CLIENT_ID,
+            'linked_partitioning': '1',
+        }
+
+        query = COMMON_QUERY.copy()
+        query['offset'] = 0
+
+        next_href = base_url + '?' + compat_urllib_parse_urlencode(query)
 
         entries = []
         for i in itertools.count():
-            if not next_href:
-                data = compat_urllib_parse.urlencode({
-                    'offset': i * 50,
-                    'limit': 50,
-                    'client_id': self._CLIENT_ID,
-                    'linked_partitioning': '1',
-                    'representation': 'speedy',
-                })
-                next_href = base_url + '?' + data
-
             response = self._download_json(
                 next_href, uploader, 'Downloading track page %s' % (i + 1))
 
             collection = response['collection']
-
             if not collection:
-                self.to_screen('%s: End page received' % uploader)
                 break
 
             def resolve_permalink_url(candidates):
                 for cand in candidates:
                     if isinstance(cand, dict):
                         permalink_url = cand.get('permalink_url')
+                        entry_id = self._extract_id(cand)
                         if permalink_url and permalink_url.startswith('http'):
-                            return permalink_url
+                            return permalink_url, entry_id
 
             for e in collection:
-                permalink_url = resolve_permalink_url((e, e.get('track'), e.get('playlist')))
+                permalink_url, entry_id = resolve_permalink_url((e, e.get('track'), e.get('playlist')))
                 if permalink_url:
-                    entries.append(self.url_result(permalink_url))
+                    entries.append(self.url_result(permalink_url, video_id=entry_id))
 
-            if 'next_href' in response:
-                next_href = response['next_href']
-                if not next_href:
-                    break
-            else:
-                next_href = None
+            next_href = response.get('next_href')
+            if not next_href:
+                break
+
+            parsed_next_href = compat_urlparse.urlparse(response['next_href'])
+            qs = compat_urlparse.parse_qs(parsed_next_href.query)
+            qs.update(COMMON_QUERY)
+            next_href = compat_urlparse.urlunparse(
+                parsed_next_href._replace(query=compat_urllib_parse_urlencode(qs, True)))
 
         return {
             '_type': 'playlist',
@@ -434,7 +461,7 @@ class SoundcloudUserIE(SoundcloudIE):
         }
 
 
-class SoundcloudPlaylistIE(SoundcloudIE):
+class SoundcloudPlaylistIE(SoundcloudPlaylistBaseIE):
     _VALID_URL = r'https?://api\.soundcloud\.com/playlists/(?P<id>[0-9]+)(?:/?\?secret_token=(?P<token>[^&]+?))?$'
     IE_NAME = 'soundcloud:playlist'
     _TESTS = [{
@@ -460,11 +487,11 @@ class SoundcloudPlaylistIE(SoundcloudIE):
         if token:
             data_dict['secret_token'] = token
 
-        data = compat_urllib_parse.urlencode(data_dict)
+        data = compat_urllib_parse_urlencode(data_dict)
         data = self._download_json(
             base_url + data, playlist_id, 'Downloading playlist')
 
-        entries = [self.url_result(track['permalink_url'], 'Soundcloud') for track in data['tracks']]
+        entries = self._extract_track_entries(data['tracks'])
 
         return {
             '_type': 'playlist',
@@ -500,7 +527,7 @@ class SoundcloudSearchIE(SearchInfoExtractor, SoundcloudIE):
         query['client_id'] = self._CLIENT_ID
         query['linked_partitioning'] = '1'
         query['offset'] = 0
-        data = compat_urllib_parse.urlencode(encode_dict(query))
+        data = compat_urllib_parse_urlencode(query)
         next_url = '{0}{1}?{2}'.format(self._API_V2_BASE, endpoint, data)
 
         collected_results = 0

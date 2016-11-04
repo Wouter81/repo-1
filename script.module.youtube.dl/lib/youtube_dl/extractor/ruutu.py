@@ -12,7 +12,7 @@ from ..utils import (
 
 
 class RuutuIE(InfoExtractor):
-    _VALID_URL = r'https?://(?:www\.)?ruutu\.fi/video/(?P<id>\d+)'
+    _VALID_URL = r'https?://(?:www\.)?(?:ruutu|supla)\.fi/(?:video|supla)/(?P<id>\d+)'
     _TESTS = [
         {
             'url': 'http://www.ruutu.fi/video/2058907',
@@ -34,9 +34,21 @@ class RuutuIE(InfoExtractor):
                 'id': '2057306',
                 'ext': 'mp4',
                 'title': 'Superpesis: katso koko kausi Ruudussa',
-                'description': 'md5:da2736052fef3b2bd5e0005e63c25eac',
+                'description': 'md5:bfb7336df2a12dc21d18fa696c9f8f23',
                 'thumbnail': 're:^https?://.*\.jpg$',
                 'duration': 40,
+                'age_limit': 0,
+            },
+        },
+        {
+            'url': 'http://www.supla.fi/supla/2231370',
+            'md5': 'df14e782d49a2c0df03d3be2a54ef949',
+            'info_dict': {
+                'id': '2231370',
+                'ext': 'mp4',
+                'title': 'Osa 1: Mikael Jungner',
+                'description': 'md5:7d90f358c47542e3072ff65d7b1bcffe',
+                'thumbnail': 're:^https?://.*\.jpg$',
                 'age_limit': 0,
             },
         },
@@ -63,15 +75,11 @@ class RuutuIE(InfoExtractor):
                     processed_urls.append(video_url)
                     ext = determine_ext(video_url)
                     if ext == 'm3u8':
-                        m3u8_formats = self._extract_m3u8_formats(
-                            video_url, video_id, 'mp4', m3u8_id='hls', fatal=False)
-                        if m3u8_formats:
-                            formats.extend(m3u8_formats)
+                        formats.extend(self._extract_m3u8_formats(
+                            video_url, video_id, 'mp4', m3u8_id='hls', fatal=False))
                     elif ext == 'f4m':
-                        f4m_formats = self._extract_f4m_formats(
-                            video_url, video_id, f4m_id='hds', fatal=False)
-                        if f4m_formats:
-                            formats.extend(f4m_formats)
+                        formats.extend(self._extract_f4m_formats(
+                            video_url, video_id, f4m_id='hds', fatal=False))
                     else:
                         proto = compat_urllib_parse_urlparse(video_url).scheme
                         if not child.tag.startswith('HTTP') and proto != 'rtmp':
@@ -79,9 +87,12 @@ class RuutuIE(InfoExtractor):
                         preference = -1 if proto == 'rtmp' else 1
                         label = child.get('label')
                         tbr = int_or_none(child.get('bitrate'))
+                        format_id = '%s-%s' % (proto, label if label else tbr) if label or tbr else proto
+                        if not self._is_valid_url(video_url, video_id, format_id):
+                            continue
                         width, height = [int_or_none(x) for x in child.get('resolution', 'x').split('x')[:2]]
                         formats.append({
-                            'format_id': '%s-%s' % (proto, label if label else tbr),
+                            'format_id': format_id,
                             'url': video_url,
                             'width': width,
                             'height': height,

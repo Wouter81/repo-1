@@ -41,14 +41,4 @@ class FilehootResolver(UrlResolver):
         raise ResolverError('No video link found.')
 
     def get_url(self, host, media_id):
-        return 'http://%s/embed-%s.html' % (host, media_id)
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
+        return self._default_get_url(host, media_id)

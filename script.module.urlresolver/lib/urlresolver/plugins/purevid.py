@@ -22,6 +22,7 @@ import re
 import urllib
 import json
 from urlresolver import common
+from lib import helpers
 from urlresolver.resolver import UrlResolver, ResolverError
 
 class PureVidResolver(UrlResolver):
@@ -52,22 +53,12 @@ class PureVidResolver(UrlResolver):
         cookies = {}
         for cookie in self.net._cj:
             cookies[cookie.name] = cookie.value
-        url = url + '|' + urllib.urlencode({'Cookie': urllib.urlencode(cookies)})
+        url += helpers.append_headers({'Cookie': urllib.urlencode(cookies)})
         common.log_utils.log_debug(url)
         return url
 
     def get_url(self, host, media_id):
         return 'http://www.purevid.com/?m=video_info_embed_flv&id=%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
 
     def needLogin(self):
         url = 'http://www.purevid.com/?m=main'

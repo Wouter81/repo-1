@@ -17,7 +17,7 @@ class YouPornIE(InfoExtractor):
     _VALID_URL = r'https?://(?:www\.)?youporn\.com/watch/(?P<id>\d+)/(?P<display_id>[^/?#&]+)'
     _TESTS = [{
         'url': 'http://www.youporn.com/watch/505835/sex-ed-is-it-safe-to-masturbate-daily/',
-        'md5': '71ec5fcfddacf80f495efa8b6a8d9a89',
+        'md5': '3744d24c50438cf5b6f6d59feb5055c2',
         'info_dict': {
             'id': '505835',
             'display_id': 'sex-ed-is-it-safe-to-masturbate-daily',
@@ -35,7 +35,7 @@ class YouPornIE(InfoExtractor):
             'age_limit': 18,
         },
     }, {
-        # Anonymous User uploader
+        # Unknown uploader
         'url': 'http://www.youporn.com/watch/561726/big-tits-awesome-brunette-on-amazing-webcam-show/?from=related3&al=2&from_id=561726&pos=4',
         'info_dict': {
             'id': '561726',
@@ -44,7 +44,7 @@ class YouPornIE(InfoExtractor):
             'title': 'Big Tits Awesome Brunette On amazing webcam show',
             'description': 'http://sweetlivegirls.com Big Tits Awesome Brunette On amazing webcam show.mp4',
             'thumbnail': 're:^https?://.*\.jpg$',
-            'uploader': 'Anonymous User',
+            'uploader': 'Unknown',
             'upload_date': '20111125',
             'average_rating': int,
             'view_count': int,
@@ -75,7 +75,7 @@ class YouPornIE(InfoExtractor):
         links = []
 
         sources = self._search_regex(
-            r'sources\s*:\s*({.+?})', webpage, 'sources', default=None)
+            r'(?s)sources\s*:\s*({.+?})', webpage, 'sources', default=None)
         if sources:
             for _, link in re.findall(r'[^:]+\s*:\s*(["\'])(http.+?)\1', sources):
                 links.append(link)
@@ -101,8 +101,9 @@ class YouPornIE(InfoExtractor):
             }
             # Video URL's path looks like this:
             #  /201012/17/505835/720p_1500k_505835/YouPorn%20-%20Sex%20Ed%20Is%20It%20Safe%20To%20Masturbate%20Daily.mp4
+            #  /201012/17/505835/vl_240p_240k_505835/YouPorn%20-%20Sex%20Ed%20Is%20It%20Safe%20To%20Masturbate%20Daily.mp4
             # We will benefit from it by extracting some metadata
-            mobj = re.search(r'/(?P<height>\d{3,4})[pP]_(?P<bitrate>\d+)[kK]_\d+/', video_url)
+            mobj = re.search(r'(?P<height>\d{3,4})[pP]_(?P<bitrate>\d+)[kK]_\d+/', video_url)
             if mobj:
                 height = int(mobj.group('height'))
                 bitrate = int(mobj.group('bitrate'))
@@ -114,44 +115,42 @@ class YouPornIE(InfoExtractor):
             formats.append(f)
         self._sort_formats(formats)
 
-        description = self._html_search_regex(
-            r'(?s)<div[^>]+class=["\']video-description["\'][^>]*>(.+?)</div>',
-            webpage, 'description', default=None)
+        description = self._og_search_description(webpage, default=None)
         thumbnail = self._search_regex(
             r'(?:imageurl\s*=|poster\s*:)\s*(["\'])(?P<thumbnail>.+?)\1',
             webpage, 'thumbnail', fatal=False, group='thumbnail')
 
         uploader = self._html_search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoBy["\'][^>]*>\s*By:\s*</div>(.+?)</(?:a|div)>',
+            r'(?s)<div[^>]+class=["\']submitByLink["\'][^>]*>(.+?)</div>',
             webpage, 'uploader', fatal=False)
         upload_date = unified_strdate(self._html_search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoTime["\'][^>]*>(.+?)</div>',
+            r'(?s)<div[^>]+class=["\']videoInfo(?:Date|Time)["\'][^>]*>(.+?)</div>',
             webpage, 'upload date', fatal=False))
 
         age_limit = self._rta_search(webpage)
 
         average_rating = int_or_none(self._search_regex(
-            r'<div[^>]+class=["\']videoInfoRating["\'][^>]*>\s*<div[^>]+class=["\']videoRatingPercentage["\'][^>]*>(\d+)%</div>',
+            r'<div[^>]+class=["\']videoRatingPercentage["\'][^>]*>(\d+)%</div>',
             webpage, 'average rating', fatal=False))
 
         view_count = str_to_int(self._search_regex(
-            r'(?s)<div[^>]+class=["\']videoInfoViews["\'][^>]*>.*?([\d,.]+)\s*</div>',
-            webpage, 'view count', fatal=False))
+            r'(?s)<div[^>]+class=(["\']).*?\bvideoInfoViews\b.*?\1[^>]*>.*?(?P<count>[\d,.]+)<',
+            webpage, 'view count', fatal=False, group='count'))
         comment_count = str_to_int(self._search_regex(
             r'>All [Cc]omments? \(([\d,.]+)\)',
             webpage, 'comment count', fatal=False))
 
-        def extract_tag_box(title):
-            tag_box = self._search_regex(
-                (r'<div[^>]+class=["\']tagBoxTitle["\'][^>]*>\s*%s\b.*?</div>\s*'
-                 '<div[^>]+class=["\']tagBoxContent["\']>(.+?)</div>') % re.escape(title),
-                webpage, '%s tag box' % title, default=None)
+        def extract_tag_box(regex, title):
+            tag_box = self._search_regex(regex, webpage, title, default=None)
             if not tag_box:
                 return []
             return re.findall(r'<a[^>]+href=[^>]+>([^<]+)', tag_box)
 
-        categories = extract_tag_box('Category')
-        tags = extract_tag_box('Tags')
+        categories = extract_tag_box(
+            r'(?s)Categories:.*?</[^>]+>(.+?)</div>', 'categories')
+        tags = extract_tag_box(
+            r'(?s)Tags:.*?</div>\s*<div[^>]+class=["\']tagBoxContent["\'][^>]*>(.+?)</div>',
+            'tags')
 
         return {
             'id': video_id,

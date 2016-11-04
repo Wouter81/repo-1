@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 import re
@@ -11,8 +11,7 @@ from math import pow, sqrt, floor
 from .common import InfoExtractor
 from ..compat import (
     compat_etree_fromstring,
-    compat_urllib_parse,
-    compat_urllib_parse_unquote,
+    compat_urllib_parse_urlencode,
     compat_urllib_request,
     compat_urlparse,
 )
@@ -27,6 +26,7 @@ from ..utils import (
     unified_strdate,
     urlencode_postdata,
     xpath_text,
+    extract_attributes,
 )
 from ..aes import (
     aes_cbc_decrypt,
@@ -34,27 +34,63 @@ from ..aes import (
 
 
 class CrunchyrollBaseIE(InfoExtractor):
+    _LOGIN_URL = 'https://www.crunchyroll.com/login'
+    _LOGIN_FORM = 'login_form'
     _NETRC_MACHINE = 'crunchyroll'
 
     def _login(self):
         (username, password) = self._get_login_info()
         if username is None:
             return
-        self.report_login()
-        login_url = 'https://www.crunchyroll.com/?a=formhandler'
-        data = urlencode_postdata({
-            'formname': 'RpcApiUser_Login',
-            'name': username,
-            'password': password,
+
+        login_page = self._download_webpage(
+            self._LOGIN_URL, None, 'Downloading login page')
+
+        def is_logged(webpage):
+            return '<title>Redirecting' in webpage
+
+        # Already logged in
+        if is_logged(login_page):
+            return
+
+        login_form_str = self._search_regex(
+            r'(?P<form><form[^>]+?id=(["\'])%s\2[^>]*>)' % self._LOGIN_FORM,
+            login_page, 'login form', group='form')
+
+        post_url = extract_attributes(login_form_str).get('action')
+        if not post_url:
+            post_url = self._LOGIN_URL
+        elif not post_url.startswith('http'):
+            post_url = compat_urlparse.urljoin(self._LOGIN_URL, post_url)
+
+        login_form = self._form_hidden_inputs(self._LOGIN_FORM, login_page)
+
+        login_form.update({
+            'login_form[name]': username,
+            'login_form[password]': password,
         })
-        login_request = sanitized_Request(login_url, data)
-        login_request.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        self._download_webpage(login_request, None, False, 'Wrong login info')
+
+        response = self._download_webpage(
+            post_url, None, 'Logging in', 'Wrong login info',
+            data=urlencode_postdata(login_form),
+            headers={'Content-Type': 'application/x-www-form-urlencoded'})
+
+        # Successful login
+        if is_logged(response):
+            return
+
+        error = self._html_search_regex(
+            '(?s)<ul[^>]+class=["\']messages["\'][^>]*>(.+?)</ul>',
+            response, 'error message', default=None)
+        if error:
+            raise ExtractorError('Unable to login: %s' % error, expected=True)
+
+        raise ExtractorError('Unable to log in')
 
     def _real_initialize(self):
         self._login()
 
-    def _download_webpage(self, url_or_request, video_id, note=None, errnote=None, fatal=True, tries=1, timeout=5, encoding=None):
+    def _download_webpage(self, url_or_request, *args, **kwargs):
         request = (url_or_request if isinstance(url_or_request, compat_urllib_request.Request)
                    else sanitized_Request(url_or_request))
         # Accept-Language must be set explicitly to accept any language to avoid issues
@@ -65,8 +101,7 @@ class CrunchyrollBaseIE(InfoExtractor):
         # Crunchyroll to not work in georestriction cases in some browsers that don't place
         # the locale lang first in header. However allowing any language seems to workaround the issue.
         request.add_header('Accept-Language', '*')
-        return super(CrunchyrollBaseIE, self)._download_webpage(
-            request, video_id, note, errnote, fatal, tries, timeout, encoding)
+        return super(CrunchyrollBaseIE, self)._download_webpage(request, *args, **kwargs)
 
     @staticmethod
     def _add_skip_wall(url):
@@ -79,7 +114,7 @@ class CrunchyrollBaseIE(InfoExtractor):
         # See https://github.com/rg3/youtube-dl/issues/7202.
         qs['skip_wall'] = ['1']
         return compat_urlparse.urlunparse(
-            parsed_url._replace(query=compat_urllib_parse.urlencode(qs, True)))
+            parsed_url._replace(query=compat_urllib_parse_urlencode(qs, True)))
 
 
 class CrunchyrollIE(CrunchyrollBaseIE):
@@ -113,6 +148,22 @@ class CrunchyrollIE(CrunchyrollBaseIE):
         },
         'params': {
             # rtmp
+            'skip_download': True,
+        },
+        'skip': 'Video gone',
+    }, {
+        'url': 'http://www.crunchyroll.com/rezero-starting-life-in-another-world-/episode-5-the-morning-of-our-promise-is-still-distant-702409',
+        'info_dict': {
+            'id': '702409',
+            'ext': 'mp4',
+            'title': 'Re:ZERO -Starting Life in Another World- Episode 5 – The Morning of Our Promise Is Still Distant',
+            'description': 'md5:97664de1ab24bbf77a9c01918cb7dca9',
+            'thumbnail': 're:^https?://.*\.jpg$',
+            'uploader': 'TV TOKYO',
+            'upload_date': '20160508',
+        },
+        'params': {
+            # m3u8 download
             'skip_download': True,
         },
     }, {
@@ -180,40 +231,40 @@ class CrunchyrollIE(CrunchyrollBaseIE):
             return assvalue
 
         output = '[Script Info]\n'
-        output += 'Title: %s\n' % sub_root.attrib["title"]
+        output += 'Title: %s\n' % sub_root.attrib['title']
         output += 'ScriptType: v4.00+\n'
-        output += 'WrapStyle: %s\n' % sub_root.attrib["wrap_style"]
-        output += 'PlayResX: %s\n' % sub_root.attrib["play_res_x"]
-        output += 'PlayResY: %s\n' % sub_root.attrib["play_res_y"]
+        output += 'WrapStyle: %s\n' % sub_root.attrib['wrap_style']
+        output += 'PlayResX: %s\n' % sub_root.attrib['play_res_x']
+        output += 'PlayResY: %s\n' % sub_root.attrib['play_res_y']
         output += """ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 """
         for style in sub_root.findall('./styles/style'):
-            output += 'Style: ' + style.attrib["name"]
-            output += ',' + style.attrib["font_name"]
-            output += ',' + style.attrib["font_size"]
-            output += ',' + style.attrib["primary_colour"]
-            output += ',' + style.attrib["secondary_colour"]
-            output += ',' + style.attrib["outline_colour"]
-            output += ',' + style.attrib["back_colour"]
-            output += ',' + ass_bool(style.attrib["bold"])
-            output += ',' + ass_bool(style.attrib["italic"])
-            output += ',' + ass_bool(style.attrib["underline"])
-            output += ',' + ass_bool(style.attrib["strikeout"])
-            output += ',' + style.attrib["scale_x"]
-            output += ',' + style.attrib["scale_y"]
-            output += ',' + style.attrib["spacing"]
-            output += ',' + style.attrib["angle"]
-            output += ',' + style.attrib["border_style"]
-            output += ',' + style.attrib["outline"]
-            output += ',' + style.attrib["shadow"]
-            output += ',' + style.attrib["alignment"]
-            output += ',' + style.attrib["margin_l"]
-            output += ',' + style.attrib["margin_r"]
-            output += ',' + style.attrib["margin_v"]
-            output += ',' + style.attrib["encoding"]
+            output += 'Style: ' + style.attrib['name']
+            output += ',' + style.attrib['font_name']
+            output += ',' + style.attrib['font_size']
+            output += ',' + style.attrib['primary_colour']
+            output += ',' + style.attrib['secondary_colour']
+            output += ',' + style.attrib['outline_colour']
+            output += ',' + style.attrib['back_colour']
+            output += ',' + ass_bool(style.attrib['bold'])
+            output += ',' + ass_bool(style.attrib['italic'])
+            output += ',' + ass_bool(style.attrib['underline'])
+            output += ',' + ass_bool(style.attrib['strikeout'])
+            output += ',' + style.attrib['scale_x']
+            output += ',' + style.attrib['scale_y']
+            output += ',' + style.attrib['spacing']
+            output += ',' + style.attrib['angle']
+            output += ',' + style.attrib['border_style']
+            output += ',' + style.attrib['outline']
+            output += ',' + style.attrib['shadow']
+            output += ',' + style.attrib['alignment']
+            output += ',' + style.attrib['margin_l']
+            output += ',' + style.attrib['margin_r']
+            output += ',' + style.attrib['margin_v']
+            output += ',' + style.attrib['encoding']
             output += '\n'
 
         output += """
@@ -222,15 +273,15 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
         for event in sub_root.findall('./events/event'):
             output += 'Dialogue: 0'
-            output += ',' + event.attrib["start"]
-            output += ',' + event.attrib["end"]
-            output += ',' + event.attrib["style"]
-            output += ',' + event.attrib["name"]
-            output += ',' + event.attrib["margin_l"]
-            output += ',' + event.attrib["margin_r"]
-            output += ',' + event.attrib["margin_v"]
-            output += ',' + event.attrib["effect"]
-            output += ',' + event.attrib["text"]
+            output += ',' + event.attrib['start']
+            output += ',' + event.attrib['end']
+            output += ',' + event.attrib['style']
+            output += ',' + event.attrib['name']
+            output += ',' + event.attrib['margin_l']
+            output += ',' + event.attrib['margin_r']
+            output += ',' + event.attrib['margin_v']
+            output += ',' + event.attrib['effect']
+            output += ',' + event.attrib['text']
             output += '\n'
 
         return output
@@ -307,30 +358,49 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             r'<a[^>]+href="/publisher/[^"]+"[^>]*>([^<]+)</a>', webpage,
             'video_uploader', fatal=False)
 
-        playerdata_url = compat_urllib_parse_unquote(self._html_search_regex(r'"config_url":"([^"]+)', webpage, 'playerdata_url'))
-        playerdata_req = sanitized_Request(playerdata_url)
-        playerdata_req.data = compat_urllib_parse.urlencode({'current_page': webpage_url})
-        playerdata_req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-        playerdata = self._download_webpage(playerdata_req, video_id, note='Downloading media info')
-
-        stream_id = self._search_regex(r'<media_id>([^<]+)', playerdata, 'stream_id')
-        video_thumbnail = self._search_regex(r'<episode_image_url>([^<]+)', playerdata, 'thumbnail', fatal=False)
-
+        available_fmts = []
+        for a, fmt in re.findall(r'(<a[^>]+token=["\']showmedia\.([0-9]{3,4})p["\'][^>]+>)', webpage):
+            attrs = extract_attributes(a)
+            href = attrs.get('href')
+            if href and '/freetrial' in href:
+                continue
+            available_fmts.append(fmt)
+        if not available_fmts:
+            for p in (r'token=["\']showmedia\.([0-9]{3,4})p"', r'showmedia\.([0-9]{3,4})p'):
+                available_fmts = re.findall(p, webpage)
+                if available_fmts:
+                    break
+        video_encode_ids = []
         formats = []
-        for fmt in re.findall(r'showmedia\.([0-9]{3,4})p', webpage):
+        for fmt in available_fmts:
             stream_quality, stream_format = self._FORMAT_IDS[fmt]
             video_format = fmt + 'p'
             streamdata_req = sanitized_Request(
                 'http://www.crunchyroll.com/xml/?req=RpcApiVideoPlayer_GetStandardConfig&media_id=%s&video_format=%s&video_quality=%s'
-                % (stream_id, stream_format, stream_quality),
-                compat_urllib_parse.urlencode({'current_page': url}).encode('utf-8'))
+                % (video_id, stream_format, stream_quality),
+                compat_urllib_parse_urlencode({'current_page': url}).encode('utf-8'))
             streamdata_req.add_header('Content-Type', 'application/x-www-form-urlencoded')
             streamdata = self._download_xml(
                 streamdata_req, video_id,
                 note='Downloading media info for %s' % video_format)
             stream_info = streamdata.find('./{default}preload/stream_info')
-            video_url = stream_info.find('./host').text
-            video_play_path = stream_info.find('./file').text
+            video_encode_id = xpath_text(stream_info, './video_encode_id')
+            if video_encode_id in video_encode_ids:
+                continue
+            video_encode_ids.append(video_encode_id)
+
+            video_file = xpath_text(stream_info, './file')
+            if not video_file:
+                continue
+            if video_file.startswith('http'):
+                formats.extend(self._extract_m3u8_formats(
+                    video_file, video_id, 'mp4', entry_protocol='m3u8_native',
+                    m3u8_id='hls', fatal=False))
+                continue
+
+            video_url = xpath_text(stream_info, './host')
+            if not video_url:
+                continue
             metadata = stream_info.find('./metadata')
             format_info = {
                 'format': video_format,
@@ -344,7 +414,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 parsed_video_url = compat_urlparse.urlparse(video_url)
                 direct_video_url = compat_urlparse.urlunparse(parsed_video_url._replace(
                     netloc='v.lvlt.crcdn.net',
-                    path='%s/%s' % (remove_end(parsed_video_url.path, '/'), video_play_path.split(':')[-1])))
+                    path='%s/%s' % (remove_end(parsed_video_url.path, '/'), video_file.split(':')[-1])))
                 if self._is_valid_url(direct_video_url, video_id, video_format):
                     format_info.update({
                         'url': direct_video_url,
@@ -354,10 +424,18 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
             format_info.update({
                 'url': video_url,
-                'play_path': video_play_path,
+                'play_path': video_file,
                 'ext': 'flv',
             })
             formats.append(format_info)
+        self._sort_formats(formats)
+
+        metadata = self._download_xml(
+            'http://www.crunchyroll.com/xml', video_id,
+            note='Downloading media info', query={
+                'req': 'RpcApiVideoPlayer_GetMediaMetadata',
+                'media_id': video_id,
+            })
 
         subtitles = self.extract_subtitles(video_id, webpage)
 
@@ -365,16 +443,19 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             'id': video_id,
             'title': video_title,
             'description': video_description,
-            'thumbnail': video_thumbnail,
+            'thumbnail': xpath_text(metadata, 'episode_image_url'),
             'uploader': video_uploader,
             'upload_date': video_upload_date,
+            'series': xpath_text(metadata, 'series_title'),
+            'episode': xpath_text(metadata, 'episode_title'),
+            'episode_number': int_or_none(xpath_text(metadata, 'episode_number')),
             'subtitles': subtitles,
             'formats': formats,
         }
 
 
 class CrunchyrollShowPlaylistIE(CrunchyrollBaseIE):
-    IE_NAME = "crunchyroll:playlist"
+    IE_NAME = 'crunchyroll:playlist'
     _VALID_URL = r'https?://(?:(?P<prefix>www|m)\.)?(?P<url>crunchyroll\.com/(?!(?:news|anime-news|library|forum|launchcalendar|lineup|store|comics|freetrial|login))(?P<id>[\w\-]+))/?(?:\?|$)'
 
     _TESTS = [{

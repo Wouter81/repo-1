@@ -13,6 +13,9 @@ from ..utils import (
     encodeFilename,
     sanitize_open,
     sanitized_Request,
+    write_xattr,
+    XAttrMetadataError,
+    XAttrUnavailableError,
 )
 
 
@@ -140,8 +143,8 @@ class HttpFD(FileDownloader):
 
         if data_len is not None:
             data_len = int(data_len) + resume_len
-            min_data_len = self.params.get("min_filesize", None)
-            max_data_len = self.params.get("max_filesize", None)
+            min_data_len = self.params.get('min_filesize')
+            max_data_len = self.params.get('max_filesize')
             if min_data_len is not None and data_len < min_data_len:
                 self.to_screen('\r[download] File is smaller than min-filesize (%s bytes < %s bytes). Aborting.' % (data_len, min_data_len))
                 return False
@@ -179,9 +182,8 @@ class HttpFD(FileDownloader):
 
                 if self.params.get('xattr_set_filesize', False) and data_len is not None:
                     try:
-                        import xattr
-                        xattr.setxattr(tmpfilename, 'user.ytdl.filesize', str(data_len))
-                    except(OSError, IOError, ImportError) as err:
+                        write_xattr(tmpfilename, 'user.ytdl.filesize', str(data_len).encode('utf-8'))
+                    except (XAttrUnavailableError, XAttrMetadataError) as err:
                         self.report_error('unable to set filesize xattr: %s' % str(err))
 
             try:

@@ -1,30 +1,34 @@
 from __future__ import unicode_literals
 
-import json
-import random
 import collections
+import json
+import os
+import random
 
 from .common import InfoExtractor
 from ..compat import (
     compat_str,
-    compat_urllib_parse,
     compat_urlparse,
 )
 from ..utils import (
+    dict_get,
     ExtractorError,
+    float_or_none,
     int_or_none,
     parse_duration,
-    sanitized_Request,
+    qualities,
+    srt_subtitles_timecode,
+    urlencode_postdata,
 )
 
 
 class PluralsightBaseIE(InfoExtractor):
-    _API_BASE = 'http://app.pluralsight.com'
+    _API_BASE = 'https://app.pluralsight.com'
 
 
 class PluralsightIE(PluralsightBaseIE):
     IE_NAME = 'pluralsight'
-    _VALID_URL = r'https?://(?:(?:www|app)\.)?pluralsight\.com/training/player\?'
+    _VALID_URL = r'https?://(?:(?:www|app)\.)?pluralsight\.com/(?:training/)?player\?'
     _LOGIN_URL = 'https://app.pluralsight.com/id/'
 
     _NETRC_MACHINE = 'pluralsight'
@@ -46,6 +50,9 @@ class PluralsightIE(PluralsightBaseIE):
         # available without pluralsight account
         'url': 'http://app.pluralsight.com/training/player?author=scott-allen&name=angularjs-get-started-m1-introduction&mode=live&clip=0&course=angularjs-get-started',
         'only_matching': True,
+    }, {
+        'url': 'https://app.pluralsight.com/player?course=ccna-intro-networking&author=ross-bagurdes&name=ccna-intro-networking-m06&clip=0',
+        'only_matching': True,
     }]
 
     def _real_initialize(self):
@@ -62,8 +69,8 @@ class PluralsightIE(PluralsightBaseIE):
         login_form = self._hidden_inputs(login_page)
 
         login_form.update({
-            'Username': username.encode('utf-8'),
-            'Password': password.encode('utf-8'),
+            'Username': username,
+            'Password': password,
         })
 
         post_url = self._search_regex(
@@ -73,12 +80,10 @@ class PluralsightIE(PluralsightBaseIE):
         if not post_url.startswith('http'):
             post_url = compat_urlparse.urljoin(self._LOGIN_URL, post_url)
 
-        request = sanitized_Request(
-            post_url, compat_urllib_parse.urlencode(login_form).encode('utf-8'))
-        request.add_header('Content-Type', 'application/x-www-form-urlencoded')
-
         response = self._download_webpage(
-            request, None, 'Logging in as %s' % username)
+            post_url, None, 'Logging in as %s' % username,
+            data=urlencode_postdata(login_form),
+            headers={'Content-Type': 'application/x-www-form-urlencoded'})
 
         error = self._search_regex(
             r'<span[^>]+class="field-validation-error"[^>]*>([^<]+)</span>',
@@ -89,34 +94,78 @@ class PluralsightIE(PluralsightBaseIE):
         if all(p not in response for p in ('__INITIAL_STATE__', '"currentUser"')):
             raise ExtractorError('Unable to log in')
 
+    def _get_subtitles(self, author, clip_id, lang, name, duration, video_id):
+        captions_post = {
+            'a': author,
+            'cn': clip_id,
+            'lc': lang,
+            'm': name,
+        }
+        captions = self._download_json(
+            '%s/player/retrieve-captions' % self._API_BASE, video_id,
+            'Downloading captions JSON', 'Unable to download captions JSON',
+            fatal=False, data=json.dumps(captions_post).encode('utf-8'),
+            headers={'Content-Type': 'application/json;charset=utf-8'})
+        if captions:
+            return {
+                lang: [{
+                    'ext': 'json',
+                    'data': json.dumps(captions),
+                }, {
+                    'ext': 'srt',
+                    'data': self._convert_subtitles(duration, captions),
+                }]
+            }
+
+    @staticmethod
+    def _convert_subtitles(duration, subs):
+        srt = ''
+        TIME_OFFSET_KEYS = ('displayTimeOffset', 'DisplayTimeOffset')
+        TEXT_KEYS = ('text', 'Text')
+        for num, current in enumerate(subs):
+            current = subs[num]
+            start, text = (
+                float_or_none(dict_get(current, TIME_OFFSET_KEYS)),
+                dict_get(current, TEXT_KEYS))
+            if start is None or text is None:
+                continue
+            end = duration if num == len(subs) - 1 else float_or_none(
+                dict_get(subs[num + 1], TIME_OFFSET_KEYS))
+            if end is None:
+                continue
+            srt += os.linesep.join(
+                (
+                    '%d' % num,
+                    '%s --> %s' % (
+                        srt_subtitles_timecode(start),
+                        srt_subtitles_timecode(end)),
+                    text,
+                    os.linesep,
+                ))
+        return srt
+
     def _real_extract(self, url):
         qs = compat_urlparse.parse_qs(compat_urlparse.urlparse(url).query)
 
         author = qs.get('author', [None])[0]
         name = qs.get('name', [None])[0]
         clip_id = qs.get('clip', [None])[0]
-        course = qs.get('course', [None])[0]
+        course_name = qs.get('course', [None])[0]
 
-        if any(not f for f in (author, name, clip_id, course,)):
+        if any(not f for f in (author, name, clip_id, course_name,)):
             raise ExtractorError('Invalid URL', expected=True)
 
         display_id = '%s-%s' % (name, clip_id)
 
-        webpage = self._download_webpage(url, display_id)
+        parsed_url = compat_urlparse.urlparse(url)
 
-        modules = self._search_regex(
-            r'moduleCollection\s*:\s*new\s+ModuleCollection\((\[.+?\])\s*,\s*\$rootScope\)',
-            webpage, 'modules', default=None)
+        payload_url = compat_urlparse.urlunparse(parsed_url._replace(
+            netloc='app.pluralsight.com', path='player/api/v1/payload'))
 
-        if modules:
-            collection = self._parse_json(modules, display_id)
-        else:
-            # Webpage may be served in different layout (see
-            # https://github.com/rg3/youtube-dl/issues/7607)
-            collection = self._parse_json(
-                self._search_regex(
-                    r'var\s+initialState\s*=\s*({.+?});\n', webpage, 'initial state'),
-                display_id)['course']['modules']
+        course = self._download_json(
+            payload_url, display_id, headers={'Referer': url})['payload']['course']
+
+        collection = course['modules']
 
         module, clip = None, None
 
@@ -136,18 +185,32 @@ class PluralsightIE(PluralsightBaseIE):
         if not clip:
             raise ExtractorError('Unable to resolve clip')
 
+        title = '%s - %s' % (module['title'], clip['title'])
+
         QUALITIES = {
             'low': {'width': 640, 'height': 480},
             'medium': {'width': 848, 'height': 640},
             'high': {'width': 1024, 'height': 768},
+            'high-widescreen': {'width': 1280, 'height': 720},
         }
+
+        QUALITIES_PREFERENCE = ('low', 'medium', 'high', 'high-widescreen',)
+        quality_key = qualities(QUALITIES_PREFERENCE)
 
         AllowedQuality = collections.namedtuple('AllowedQuality', ['ext', 'qualities'])
 
         ALLOWED_QUALITIES = (
-            AllowedQuality('webm', ('high',)),
-            AllowedQuality('mp4', ('low', 'medium', 'high',)),
+            AllowedQuality('webm', ['high', ]),
+            AllowedQuality('mp4', ['low', 'medium', 'high', ]),
         )
+
+        # Some courses also offer widescreen resolution for high quality (see
+        # https://github.com/rg3/youtube-dl/issues/7766)
+        widescreen = course.get('supportsWideScreenVideoFormats') is True
+        best_quality = 'high-widescreen' if widescreen else 'high'
+        if widescreen:
+            for allowed_quality in ALLOWED_QUALITIES:
+                allowed_quality.qualities.append(best_quality)
 
         # In order to minimize the number of calls to ViewClip API and reduce
         # the probability of being throttled or banned by Pluralsight we will request
@@ -157,37 +220,36 @@ class PluralsightIE(PluralsightBaseIE):
         else:
             def guess_allowed_qualities():
                 req_format = self._downloader.params.get('format') or 'best'
-                req_format_split = req_format.split('-')
+                req_format_split = req_format.split('-', 1)
                 if len(req_format_split) > 1:
                     req_ext, req_quality = req_format_split
                     for allowed_quality in ALLOWED_QUALITIES:
                         if req_ext == allowed_quality.ext and req_quality in allowed_quality.qualities:
                             return (AllowedQuality(req_ext, (req_quality, )), )
                 req_ext = 'webm' if self._downloader.params.get('prefer_free_formats') else 'mp4'
-                return (AllowedQuality(req_ext, ('high', )), )
+                return (AllowedQuality(req_ext, (best_quality, )), )
             allowed_qualities = guess_allowed_qualities()
 
         formats = []
-        for ext, qualities in allowed_qualities:
-            for quality in qualities:
+        for ext, qualities_ in allowed_qualities:
+            for quality in qualities_:
                 f = QUALITIES[quality].copy()
                 clip_post = {
-                    'a': author,
-                    'cap': 'false',
-                    'cn': clip_id,
-                    'course': course,
-                    'lc': 'en',
-                    'm': name,
-                    'mt': ext,
-                    'q': '%dx%d' % (f['width'], f['height']),
+                    'author': author,
+                    'includeCaptions': False,
+                    'clipIndex': int(clip_id),
+                    'courseName': course_name,
+                    'locale': 'en',
+                    'moduleName': name,
+                    'mediaType': ext,
+                    'quality': '%dx%d' % (f['width'], f['height']),
                 }
-                request = sanitized_Request(
-                    '%s/training/Player/ViewClip' % self._API_BASE,
-                    json.dumps(clip_post).encode('utf-8'))
-                request.add_header('Content-Type', 'application/json;charset=utf-8')
                 format_id = '%s-%s' % (ext, quality)
-                clip_url = self._download_webpage(
-                    request, display_id, 'Downloading %s URL' % format_id, fatal=False)
+                viewclip = self._download_json(
+                    '%s/video/clips/viewclip' % self._API_BASE, display_id,
+                    'Downloading %s viewclip JSON' % format_id, fatal=False,
+                    data=json.dumps(clip_post).encode('utf-8'),
+                    headers={'Content-Type': 'application/json;charset=utf-8'})
 
                 # Pluralsight tracks multiple sequential calls to ViewClip API and start
                 # to return 429 HTTP errors after some time (see
@@ -199,28 +261,44 @@ class PluralsightIE(PluralsightBaseIE):
                     random.randint(2, 5), display_id,
                     '%(video_id)s: Waiting for %(timeout)s seconds to avoid throttling')
 
-                if not clip_url:
+                if not viewclip:
                     continue
-                f.update({
-                    'url': clip_url,
-                    'ext': ext,
-                    'format_id': format_id,
-                })
-                formats.append(f)
+
+                clip_urls = viewclip.get('urls')
+                if not isinstance(clip_urls, list):
+                    continue
+
+                for clip_url_data in clip_urls:
+                    clip_url = clip_url_data.get('url')
+                    if not clip_url:
+                        continue
+                    cdn = clip_url_data.get('cdn')
+                    clip_f = f.copy()
+                    clip_f.update({
+                        'url': clip_url,
+                        'ext': ext,
+                        'format_id': '%s-%s' % (format_id, cdn) if cdn else format_id,
+                        'quality': quality_key(quality),
+                        'source_preference': int_or_none(clip_url_data.get('rank')),
+                    })
+                    formats.append(clip_f)
+
         self._sort_formats(formats)
 
-        # TODO: captions
-        # http://www.pluralsight.com/training/Player/ViewClip + cap = true
-        # or
-        # http://www.pluralsight.com/training/Player/Captions
-        # { a = author, cn = clip_id, lc = end, m = name }
+        duration = int_or_none(
+            clip.get('duration')) or parse_duration(clip.get('formattedDuration'))
+
+        # TODO: other languages?
+        subtitles = self.extract_subtitles(
+            author, clip_id, 'en', name, duration, display_id)
 
         return {
-            'id': clip['clipName'],
-            'title': '%s - %s' % (module['title'], clip['title']),
-            'duration': int_or_none(clip.get('duration')) or parse_duration(clip.get('formattedDuration')),
+            'id': clip.get('clipName') or clip['name'],
+            'title': title,
+            'duration': duration,
             'creator': author,
-            'formats': formats
+            'formats': formats,
+            'subtitles': subtitles,
         }
 
 
@@ -263,13 +341,18 @@ class PluralsightCourseIE(PluralsightBaseIE):
             course_id, 'Downloading course data JSON')
 
         entries = []
-        for module in course_data:
+        for num, module in enumerate(course_data, 1):
             for clip in module.get('clips', []):
                 player_parameters = clip.get('playerParameters')
                 if not player_parameters:
                     continue
-                entries.append(self.url_result(
-                    '%s/training/player?%s' % (self._API_BASE, player_parameters),
-                    'Pluralsight'))
+                entries.append({
+                    '_type': 'url_transparent',
+                    'url': '%s/training/player?%s' % (self._API_BASE, player_parameters),
+                    'ie_key': PluralsightIE.ie_key(),
+                    'chapter': module.get('title'),
+                    'chapter_number': num,
+                    'chapter_id': module.get('moduleRef'),
+                })
 
         return self.playlist_result(entries, course_id, title, description)

@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 import re
 import urllib
 from lib import captcha_lib
+from lib import helpers
 from urlresolver import common
 from urlresolver.resolver import UrlResolver, ResolverError
 import xbmc
@@ -35,41 +36,24 @@ class UploadXResolver(UrlResolver):
 
     def get_media_url(self, host, media_id):
         web_url = self.get_url(host, media_id)
-        html = self.net.http_GET(web_url).content
+        headers = {'User-Agent': common.FF_USER_AGENT, 'Referer': web_url}
+        html = self.net.http_GET(web_url, headers=headers).content
         tries = 0
         while tries < MAX_TRIES:
-            data = {}
-            r = re.findall(r'type="hidden"\s+name="(.+?)"\s+value="(.*?)"', html)
-            for name, value in r:
-                data[name] = value
-            data['method_free'] = 'Free Download+>>'
+            data = helpers.get_hidden(html, index=0)
+            data['method_free'] = urllib.quote_plus('Free Download >>')
             data.update(captcha_lib.do_captcha(html))
-            headers = {
-                'Referer': web_url
-            }
             common.log_utils.log_debug(data)
             html = self.net.http_POST(web_url, data, headers=headers).content
-            if tries > 0:
-                xbmc.sleep(6000)
 
             if 'File Download Link Generated' in html:
-                r = re.search('href="([^"]+)[^>]+id="downloadbtn"', html)
+                r = re.search('href="([^"]+)[^>]>Download<', html, re.I)
                 if r:
-                    return r.group(1) + '|' + urllib.urlencode({'User-Agent': common.IE_USER_AGENT})
+                    return r.group(1) + helpers.append_headers({'User-Agent': common.IE_USER_AGENT})
 
             tries = tries + 1
 
         raise ResolverError('Unable to locate link')
 
     def get_url(self, host, media_id):
-        return 'http://uploadx.org/%s' % media_id
-
-    def get_host_and_id(self, url):
-        r = re.search(self.pattern, url)
-        if r:
-            return r.groups()
-        else:
-            return False
-
-    def valid_url(self, url, host):
-        return re.search(self.pattern, url) or self.name in host
+        return 'https://uploadx.org/%s' % media_id

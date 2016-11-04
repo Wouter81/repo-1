@@ -1,4 +1,4 @@
-# encoding: utf-8
+# coding: utf-8
 from __future__ import unicode_literals
 
 from .common import InfoExtractor
@@ -65,7 +65,7 @@ class PatreonIE(InfoExtractor):
 
         request = sanitized_Request(
             'https://www.patreon.com/processLogin',
-            compat_urllib_parse.urlencode(login_form).encode('utf-8')
+            compat_urllib_parse_urlencode(login_form).encode('utf-8')
         )
         login_page = self._download_webpage(request, None, note='Logging in as %s' % username)
 
