@@ -259,7 +259,7 @@
 
 <addon id="plugin.video.vuurwerk"
        name="Vuurwerk TV"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="Eagle Repository">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -270,7 +270,8 @@
     <import addon="script.module.requests" />
     <import addon="script.module.httplib2" />
     <import addon="script.module.youtube.dl" optional="true"/>
-    <import addon="plugin.video.youtube" version="5.1.20.4"/>
+    <import addon="plugin.video.youtube" version="5.2.2"/>
+    <import addon="plugin.video.vimeo" version="4.1.4"/>
     <import addon="script.module.urlresolver" optional="true"/>
     <import addon="script.module.simplejson" />
     <import addon="script.common.plugin.cache" version="2.5.5"/>

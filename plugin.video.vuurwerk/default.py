@@ -28,7 +28,7 @@ import SimpleDownloader as downloader
 import time
 import requests
 from lib.utils import *
-import utils
+import utils, freakpyromaniacs, vuurwerkcrew, vuurwerkbieb, countdown, youtube
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -53,7 +53,7 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
        return response
    https_response = http_response
 
-VuurwerkBase = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/Vuurwerk%20XML/index.xml'    
+VuurwerkBase = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/Vuurwerk%20XML/index.txt'    
 
 addon = xbmcaddon.Addon('plugin.video.vuurwerk')
 addon_version = addon.getAddonInfo('version')
@@ -119,20 +119,53 @@ def makeRequest(url, headers=None):
                 
 def VuurwerkIndex():
     addon_log("VuurwerkIndex")
-    getData(base64.b64decode('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0R1dGNoTXVzaWMvRHV0Y2hNdXNpYy9tYXN0ZXIvVnV1cndlcmslMjBYTUwvaW5kZXgueG1s'),'')
-    addDir('Vuurwerkdatabase (Coming Soon)','',71,'' , fanart,'','','','')
-    addDir('Youtube kanalen (Coming Soon)','',71,'' , fanart,'','','','')
-    addDir('Oud & Nieuw Sfeer (Coming Soon)','',71,'' , fanart,'','','','')
-    addDir('Oud & Nieuw Countdown (Coming Soon)','',71,'' , fanart,'','','','')
+    getData(VuurwerkBase,'')
+    addDir('Vuurwerkdatabases','',72,icon , fanart,'','','','')
+    addDir('Video\'s','',121,icon , fanart,'','','','')
+    addDir('Productvideo\'s zoeken','',74,icon,fanart,'','','','')
+    addDir('Oud & Nieuw Countdown','',73,icon , fanart,'','','','')
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+def DatabaseIndex():
+    addon_log("DatabaseIndex")
+    addDir('Productvideo\'s zoeken','',74,icon,fanart,'','','','')
+    addDir('Freakpyromaniacs','',100,'https://pbs.twimg.com/profile_images/1602372109/FPM_film_logo_begin.jpg' , fanart,'','','','')
+    addDir('Vuurwerkcrew','',105,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg' , fanart,'','','','')
+    addDir('Vuurwerkbieb','',109,'https://yt3.ggpht.com/-tdnz2pV2-RY/AAAAAAAAAAI/AAAAAAAAAAA/wg6JxcmDIp4/s900-c-k-no-mo-rj-c0xffffff/photo.jpg' , fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
+def CountdownIndex():
+    addon_log("CountdownIndex")
+    addDir('Vuurwerk Verkoopdagen (29-12-2016 00:00)','',119,icon , fanart,'','','','')
+    addDir('Vuurwerk Afsteken (31-12-2016 18:00)','',118,icon , fanart,'','','','')
+    addDir('Nieuwjaar (01-01-2017 00:00)','',120,icon , fanart,'','','','')
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-def ONELIST(page):
-    print page
-    tvoranje.List('http://www.tvoranje.nl/?p=84&p2=1',page, True)
-    npage = page + 1
-    utils.addDir('[COLOR hotpink]Volgende Pagina ('+ str(npage) +')[/COLOR]','',5,'',npage)
-    xbmcplugin.endOfDirectory(utils.addon_handle)
+def VuurwerkSearch():
+    searchUrl = 'plugin://plugin.video.youtube/search/?q='
+    naam = utils._get_keyboard(heading="Artikelnaam:")
+    if (not naam): return False, 0
+    importeur = utils._get_keyboard(heading="Importeur/Merk:")
+    if (not importeur): return False, 0
+    naam = naam.replace(' ','+')
+    title = urllib.quote_plus(naam) + ' ' + urllib.quote_plus(importeur)
+    searchUrl = searchUrl + title
+    xbmc.executebuiltin('Container.Update("%s")' % searchUrl)
+    
+
+def playLiveResolver(url, name):
+    dp = xbmcgui.DialogProgress()
+    dp.create("Jericho","Please wait")  
+    import liveresolver
+    resolved = liveresolver.resolve(url) 
+    if resolved:
+        #if 'p2pcast' in resolved:
+        #    resolved = 'plugin://plugin.video.f4mTester/?streamtype=HLS&amp;url=' + urllib.quote_plus(resolved)
+        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png",thumbnailImage="DefaultVideo.png")
+        liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        xbmc.Player().play(resolved, liz)  
+    else:
+        xbmc.executebuiltin("XBMC.Notification(Jericho,No playable link found. - ,5000)")  
     
     
 def Privacy_Policy():
@@ -2545,6 +2578,7 @@ fanart=FANART
 playlist=None
 fav_mode=None
 regexs=None
+page=None
 
 try:
     url=urllib.unquote_plus(params["url"]).decode('utf-8')
@@ -2567,6 +2601,10 @@ try:
 except:
     pass
 try:
+    page=int(params["page"])
+except:
+    pass    
+try:
     playlist=eval(urllib.unquote_plus(params["playlist"]).replace('||',','))
 except:
     pass
@@ -2587,6 +2625,8 @@ addon_log("Name: "+str(name))
 if mode==None:
     addon_log("Index")
     VuurwerkIndex()    
+    
+
 
 elif mode==1:
     addon_log("getData")
@@ -2737,8 +2777,51 @@ elif mode==53:
     addon_log("Requesting JSON-RPC Items")
     pluginquerybyJSON(url)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+elif mode==60:
+    playLiveResolver(url, name)
 
 elif mode==71:
     VuurwerkIndex()
-    
+
+elif mode==72:
+    addon_log("DatabaseIndex")
+    DatabaseIndex()
+
+elif mode==73:
+    addon_log("CountdownIndex")
+    CountdownIndex()
+
+elif mode==74:
+    VuurwerkSearch()
+
+elif mode == 100: freakpyromaniacs.Main()
+elif mode == 101: freakpyromaniacs.List(url)
+elif mode == 102: freakpyromaniacs.Listproducten(url, page)
+elif mode == 103: freakpyromaniacs.Search(url)  
+elif mode == 104: freakpyromaniacs.Productpage(url)
+elif mode == 105: vuurwerkcrew.Main()
+elif mode == 106: vuurwerkcrew.List(url)
+elif mode == 107: vuurwerkcrew.Listproducten(url)
+elif mode == 108: vuurwerkcrew.Productpage(url)
+elif mode == 109: vuurwerkbieb.Main()
+elif mode == 110: vuurwerkbieb.Listimporteur(url)
+elif mode == 111: vuurwerkbieb.Importeurmenu(name, url)
+elif mode == 112: vuurwerkbieb.Listcollectieimporteur(url)
+elif mode == 113: vuurwerkbieb.Collectiemenu(name, url)
+elif mode == 114: vuurwerkbieb.ListSoortVuurwerk(url)
+elif mode == 115: vuurwerkbieb.Productlist(url)
+elif mode == 116: vuurwerkbieb.Productpagina(url)
+elif mode == 117: vuurwerkbieb.Search(url)
+elif mode == 118: countdown.Afsteekcountdown()
+elif mode == 119: countdown.Countdownverkoopdagen()
+elif mode == 120: countdown.CountdownNieuwjaar()
+elif mode == 121: youtube.Main()
+elif mode == 122: youtube.Importeurs()
+elif mode == 123: youtube.Sites()
+elif mode == 124: youtube.Overige()
+elif mode == 125: youtube.MainYouTube()
+elif mode == 126: youtube.Vuurwerkcrew(url)
+elif mode == 127: youtube.vuurwerkcrewvideopage(url)
 elif mode == 300: utils.playyt(url, name)
+elif mode == 999: vuurwerkbieb.ProductlistNext(url, page)

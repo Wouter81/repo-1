@@ -8,7 +8,7 @@ import gzip
 
 __scriptname__ = "DutchMusic"
 __author__ = "DutchMusic"
-__scriptid__ = "plugin.video.DutchMusic"
+__scriptid__ = "plugin.video.vuurwerk"
 __credits__ = "DutchMusic"
 __version__ = "1.0.7b"
 
@@ -110,6 +110,7 @@ def postHtml(url, form_data={}, headers={}, compression=True):
     req = urllib2.Request(url)
     if form_data:
         form_data = urllib.urlencode(form_data)
+        form_data = form_data.replace('%2B','+')
         req = urllib2.Request(url, form_data)
     req.add_header('User-Agent', _user_agent)
     for k, v in headers.items():
@@ -117,7 +118,13 @@ def postHtml(url, form_data={}, headers={}, compression=True):
     if compression:
         req.add_header('Accept-Encoding', 'gzip')
     response = urllib2.urlopen(req)
-    data = response.read()
+    if response.info().get('Content-Encoding') == 'gzip':
+        buf = StringIO( response.read())
+        f = gzip.GzipFile(fileobj=buf)
+        data = f.read()
+        f.close()
+    else:
+        data = response.read()   
     cj.save(cookiePath)
     response.close()
     return data
@@ -148,8 +155,17 @@ def cleantext(text):
     text = text.replace('&#039;','`')
     text = text.replace('&amp;','&')
     text = text.replace('&ntilde;','ñ')
+    text = text.replace('&euro;','€')
+    text = text.replace('&#8364;','€')
+    text = text.replace('&#8207;','')
+    text = text.replace('&#8364;','€')
+    text = text.replace('&#8221;','”')
     return text
 
+def striphtml(data):
+    p = re.compile(r'<.*?>', 
+    re.DOTALL | re.IGNORECASE)
+    return p.sub('', data)
 
 def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add', fanart=None):
     if fav == 'add': favtext = "Add to"
@@ -180,8 +196,10 @@ def addDownLink(name, url, mode, iconimage, desc, stream=None, fav='add', fanart
     else:
         liz.setInfo(type="Video", infoLabels={"Title": name, "plot": desc, "plotoutline": desc})
     if not fanart:
-        fanart = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG'
+        fanart = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/fanart.jpg'
     liz.setArt({'fanart': fanart})
+    video_streaminfo = {'codec': 'h264'}
+    liz.addStreamInfo('video', video_streaminfo)    
     liz.addContextMenuItems([('[COLOR lime]Download Video[/COLOR]', 'xbmc.RunPlugin('+dwnld+')'),
     ('[COLOR lime]' + favtext + ' favorites[/COLOR]', 'xbmc.RunPlugin('+favorite+')')])
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=False)
@@ -209,7 +227,7 @@ def addDir(name, url, mode, iconimage, page=None, channel=None, section=None, ke
     liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setArt({'thumb': iconimage, 'icon': iconimage})
     if not fanart:
-        fanart = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.DutchMusic/fanart.JPG'
+        fanart = 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/fanart.jpg'
     liz.setArt({'fanart': fanart})
     liz.setInfo(type="Video", infoLabels={"Title": name})
     ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=Folder)
