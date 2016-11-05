@@ -1,6 +1,6 @@
 '''
     Ultimate IPTV
-    Copyright (C) 2016 Patrick Dijkkamp
+    Copyright (C) 2016 mortael
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@
 
 
 __scriptname__ = "Ultimate IPTV"
-__author__ = "Patrick Dijkkamp"
+__author__ = "mortael"
 __scriptid__ = "plugin.video.uiptv"
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 import urllib,urllib2,re, gzip, socket
 import xbmc,xbmcplugin,xbmcgui,xbmcaddon,sys,time, os
@@ -79,17 +79,20 @@ def getHtml(url, referer=None, hdr=None, data=None):
     response.close()
     return data
 
-def addLink(name, url, iconimage):
+
+def addPlayLink(name, url, mode, iconimage):
+    u = (sys.argv[0] +
+         "?url=" + urllib.quote_plus(url) +
+         "&mode=" + str(mode) +
+         "&name=" + urllib.quote_plus(name))
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
     liz.setArt({'thumb': iconimage, 'icon': iconimage})
+    #liz.setProperty('IsPlayable', 'true')
     liz.setInfo(type="Video", infoLabels={"Title": name})
-    if '.ts' in url:
-        contextMenuItems = []
-        f4m = 'plugin://plugin.video.f4mTester/?streamtype=TSDOWNLOADER&amp;url=' + url + '&amp;name=' + name
-        contextMenuItems.append(('Play with f4mTester', 'xbmc.RunPlugin('+f4m+')'))
-        liz.addContextMenuItems(contextMenuItems, replaceItems=False)      
-    ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=liz, isFolder=False)
+    video_streaminfo = {'codec': 'h264'}
+    liz.addStreamInfo('video', video_streaminfo)
+    ok = xbmcplugin.addDirectoryItem(handle=addon_handle, url=u, listitem=liz, isFolder=False)
     return ok
     
 
@@ -112,7 +115,7 @@ def addDir(name, url, mode, iconimage, Folder=True):
 
 
 def INDEX():
-    MAIN('http://iptvsatlinks.blogspot.nl/search?max-results=40')
+    MAIN('http://iptvsatlinks.blogspot.com/search?max-results=40')
 
 
 def MAIN(url):
@@ -155,10 +158,37 @@ def IPTV(url):
 
 
 def parsem3u(html):
+    txtfilter = addon.getSetting('txtfilter').lower()
     match = re.compile('#.+,(.+?)\n(.+?)\n').findall(html)
     for name, url in match:
         url = url.replace('\r','')
-        addLink(name, url, uiptvicon)
+        if len(txtfilter) > 0:
+            if txtfilter not in name.lower():
+                continue
+        addPlayLink(name, url, 3, uiptvicon)
+
+
+def PLAY(url, title):
+    playmode = int(addon.getSetting('playmode'))
+    iconimage = xbmc.getInfoImage("ListItem.Thumb")
+    
+    if playmode == 0:
+        if '.ts' in url:
+            stype = 'TSDOWNLOADER'
+        elif '.m3u' in url:
+            stype = 'HLS'
+        else:
+            return
+        from F4mProxy import f4mProxyHelper
+        f4mp=f4mProxyHelper()
+        f4mp.playF4mLink(url,name,proxy=None,use_proxy_for_chunks=False, maxbitrate=0, simpleDownloader=False, auth=None, streamtype=stype,setResolved=False,swf=None , callbackpath="",callbackparam="", iconImage=iconimage)
+        return
+    
+    elif playmode == 1:
+        listitem = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
+        listitem.setInfo('video', {'Title': name})
+        listitem.setProperty("IsPlayable","true")
+        xbmc.Player().play(url, listitem)    
 
 
 def getParams():
@@ -200,5 +230,6 @@ if mode is None: INDEX()
 elif mode == 0: MAIN(url)
 elif mode == 1: PAGE(url)
 elif mode == 2: IPTV(url)
+elif mode == 3: PLAY(url, name)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
