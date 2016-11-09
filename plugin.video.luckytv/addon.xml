@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.luckytv"
+       name="LuckyTV"
+       version="1.0.0"
+       provider-name="The Eagle Repository">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.simplejson" version="3.3.0"/>
+    <import addon="script.module.elementtree" version="1.2.8"/>
+
+
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+	<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+	<summary lang="en">LuckyTV</summary>
+    <description lang="en">LuckyTV</description>
+    <platform>all</platform>
+  </extension>
+</addon>
