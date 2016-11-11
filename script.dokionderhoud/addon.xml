@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.dokionderhoud"
        name="[COLOR lime]D[/COLOR]OKI Onderhoud"
-       version="0.0.5"
+       version="0.0.6"
        provider-name="DOKI Onderhoud">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="plugin.video.youtube" />
     <import addon="script.module.addon.common" />
-    <import addon="script.module.metahandler" />
-    <import addon="repository.SportsDevilDutch" />	
+    <import addon="script.module.metahandler" />	
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>executable</provides>

@@ -37,19 +37,19 @@ class cacheEntry:
 
 def mainMenu():
     xbmc.executebuiltin("Container.SetViewMode(500)")
-    addItem('[B][COLOR lime]C[/COLOR]ache Legen[/B]','url', 1,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]T[/COLOR]humbnails Verwijderen[/B]', 'url', 2,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]P[/COLOR]ackages Verwijderen[/B]', 'url', 3,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]V[/COLOR]erwijder addons.db[/B]', 'url', 8,os.path.join(mediaPath, "thumbs.png"))	
-    addItem('[B][COLOR lime]Z[/COLOR]ero Cache[/B]',base+'0cache.xml', 4,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]C[/COLOR]heck Zero Cache[/B]', 'url', 5,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]V[/COLOR]erwijder Zero Cache[/B]', 'url', 6,os.path.join(mediaPath, "thumbs.png"))	
-    addItem('[B][COLOR lime]K[/COLOR]odi Versie[/B]', 'url', 7,os.path.join(mediaPath, "thumbs.png"))	
-    addItem('[B][COLOR lime]F[/COLOR]abrieksInstellingen[/B]', 'url', 9,os.path.join(mediaPath, "thumbs.png"))	
+    addItem('[B][COLOR lime]C[/COLOR]ache Legen[/B]','url', 1,os.path.join(mediaPath, "1.png"))
+    addItem('[B][COLOR lime]T[/COLOR]humbnails Verwijderen[/B]', 'url', 2,os.path.join(mediaPath, "2.png"))
+    addItem('[B][COLOR lime]P[/COLOR]ackages Verwijderen[/B]', 'url', 3,os.path.join(mediaPath, "3.png"))
+    addItem('[B][COLOR lime]V[/COLOR]erwijder addons.db[/B]', 'url', 8,os.path.join(mediaPath, "4.png"))	
+    #addItem('[B][COLOR lime]Z[/COLOR]ero Cache[/B]',base+'0cache.xml', 4,os.path.join(mediaPath, "thumbs.png"))
+    #addItem('[B][COLOR lime]C[/COLOR]heck Zero Cache[/B]', 'url', 5,os.path.join(mediaPath, "thumbs.png"))
+    #addItem('[B][COLOR lime]V[/COLOR]erwijder Zero Cache[/B]', 'url', 6,os.path.join(mediaPath, "thumbs.png"))	
+    addItem('[B][COLOR lime]K[/COLOR]odi Versie[/B]', 'url', 7,os.path.join(mediaPath, "5.png"))	
+    addItem('[B][COLOR lime]F[/COLOR]abrieksInstellingen[/B]', 'url', 9,os.path.join(mediaPath, "6.png"))	
     #addItem('[B][COLOR lime]C[/COLOR]ontact[/B]','url',13,os.path.join(mediaPath, "thumbs.png"))
-    addItem('[B][COLOR lime]D[/COLOR]OKI Installer[/B]', 'url', 10,os.path.join(mediaPath, "thumbs.png"))
+    addItem('[B][COLOR lime]D[/COLOR]OKI Installer[/B]', 'url', 10,os.path.join(mediaPath, "7.png"))
     #addItem('[B][COLOR lime]D[/COLOR]OKI Fix[/B]', 'url', 12,os.path.join(mediaPath, "thumbs.png"))	
-    addItem('[B][COLOR lime]D[/COLOR]OKI Nieuws Flits[/B]', 'url', 11,os.path.join(mediaPath, "thumbs.png"))					    
+    addItem('[B][COLOR lime]D[/COLOR]OKI Nieuws Flits[/B]', 'url', 11,os.path.join(mediaPath, "8.png"))					    
 #######################################################################
 #						Add to menus
 #######################################################################
