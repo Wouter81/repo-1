@@ -107,7 +107,7 @@ class Provider(kodion.AbstractProvider):
             # reset access_token
             access_manager.update_access_token('')
             # we clear the cache, so none cached data of an old account will be displayed.
-            context.get_function_cache().clear()
+            # context.get_function_cache().clear()
             # reset the client
             self._client = None
             pass
@@ -491,9 +491,6 @@ class Provider(kodion.AbstractProvider):
             context._addon.openSettings()
         elif switch == 'mpd':
             xbmcaddon.Addon(id='inputstream.mpd').openSettings()
-        elif switch == 'urlresolver':
-            import urlresolver
-            urlresolver.display_settings()
         else:
             return False
 
