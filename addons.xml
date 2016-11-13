@@ -120,7 +120,7 @@
 
 <addon id="plugin.video.DutchMusic"
        name="DutchMusic"
-       version="1.0.8"
+       version="1.0.9"
        provider-name="DutchMusic">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -164,7 +164,7 @@
 
 <addon id="plugin.video.luckytv"
        name="LuckyTV"
-       version="1.0.0"
+       version="1.0.1"
        provider-name="The Eagle Repository">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -186,7 +186,7 @@
 
 <addon id="plugin.video.musictv"
        name="MusicTV"
-       version="1.0.1"
+       version="1.0.2"
        provider-name="DOKI TV">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

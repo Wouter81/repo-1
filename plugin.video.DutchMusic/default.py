@@ -28,7 +28,7 @@ import SimpleDownloader as downloader
 import time
 import requests
 from lib.utils import *
-import utils, tvoranje, hart, oranjetop30, unitynltop25, radionltop1500, karaoke, youtubezoeken, hollandshitforum, sterren, Artiesten, oranjetop30uitzending, radionlagenda, truckerstop12, sterrennltop20, puurnltop20, nederlandmuziekland, unitynl, DutchMusicTop20
+import utils, tvoranje, hart, oranjetop30, unitynltop25, radionltop1500, karaoke, youtubezoeken, hollandshitforum, sterren, Artiesten, oranjetop30uitzending, radionlagenda, truckerstop12, sterrennltop20, puurnltop20, nederlandmuziekland, unitynl
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -174,11 +174,10 @@ def indexwebsites():
 def indexhitlijsten():
     addon_log("indexhitlijsten")
     xbmc.executebuiltin("Container.SetViewMode(500)")
-    addDir('[B]DutchMusic Top 20[/B]','http://dutchmusic.ml/',275,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/dutchmusic-top20.png' ,  fanart,'','','','')
     addDir('[B]Oranje Top 30[/B]','',70,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/oranje-top30.png' ,  fanart,'','','','')
     #getData(base64.b64decode(SterrenNLTop20Base),'')
     addDir('[B]Sterren NL Top 20[/B]','http://sterren-app.npo.nl/top-20/',264,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/sterren-nl-top20.png' ,  fanart,'','','','')
-    addDir('[B]RADIONL Top 1500[/B]','http://www.radionl.fm/top1500/',240,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radionl-top-1500.png' ,  fanart,'','','','')
+    #addDir('[B]RADIONL Top 1500[/B]','http://www.radionl.fm/top1500/',240,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/radionl-top-1500.png' ,  fanart,'','','','')
     addDir('[B]Unity NL Top 25[/B]','http://www.unity.nu/Programmas/UnityNL',237,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/unity-nl.png' ,  fanart,'','','','')  
     addDir('[B]Puur NL Top 20[/B]','http://puurnl.fm/top20/',268,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/puurnl-top20.png' ,  fanart,'','','','')  
     addDir('[B]Truckers Top 12[/B]','http://www.truckerstop12.com/',263,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/truckers-top20.png' ,  fanart,'','','','')  
@@ -2675,243 +2674,245 @@ if not url is None:
     addon_log("URL: "+str(url.encode('utf-8')))
 addon_log("Name: "+str(name))
 
-if mode==None:
-    addon_log("Index")
-    DMIndex()    
+bad_addons = ['repository.kijkalles.nl', 'repository.ditistv', 'repository.x-odi.nl']
+has_bad_addon = any(xbmc.getCondVisibility('System.HasAddon(%s)' % (addon)) for addon in bad_addons)
+if not has_bad_addon:
+	if mode==None:
+		addon_log("Index")
+		DMIndex()    
 
-elif mode==1:
-    addon_log("getData")
-    getData(url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==1:
+		addon_log("getData")
+		getData(url,fanart)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==2:
-    addon_log("getChannelItems")
-    getChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==2:
+		addon_log("getChannelItems")
+		getChannelItems(name,url,fanart)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==3:
-    addon_log("getSubChannelItems")
-    getSubChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==3:
+		addon_log("getSubChannelItems")
+		getSubChannelItems(name,url,fanart)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==4:
-    addon_log("getFavorites")
-    getFavorites()
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==4:
+		addon_log("getFavorites")
+		getFavorites()
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==5:
-    addon_log("addFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    addFavorite(name,url,iconimage,fanart,fav_mode)
+	elif mode==5:
+		addon_log("addFavorite")
+		try:
+			name = name.split('\\ ')[1]
+		except:
+			pass
+		try:
+			name = name.split('  - ')[0]
+		except:
+			pass
+		addFavorite(name,url,iconimage,fanart,fav_mode)
 
-elif mode==6:
-    addon_log("rmFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    rmFavorite(name)
+	elif mode==6:
+		addon_log("rmFavorite")
+		try:
+			name = name.split('\\ ')[1]
+		except:
+			pass
+		try:
+			name = name.split('  - ')[0]
+		except:
+			pass
+		rmFavorite(name)
 
-elif mode==7:
-    addon_log("addSource")
-    addSource(url)
+	elif mode==7:
+		addon_log("addSource")
+		addSource(url)
 
-elif mode==8:
-    addon_log("rmSource")
-    rmSource(name)
+	elif mode==8:
+		addon_log("rmSource")
+		rmSource(name)
 
-elif mode==9:
-    addon_log("download_file")
-    download_file(name, url)
+	elif mode==9:
+		addon_log("download_file")
+		download_file(name, url)
 
-elif mode==10:
-    addon_log("getCommunitySources")
-    getCommunitySources()
+	elif mode==10:
+		addon_log("getCommunitySources")
+		getCommunitySources()
 
-elif mode==11:
-    addon_log("addSource")
-    addSource(url)
+	elif mode==11:
+		addon_log("addSource")
+		addSource(url)
 
-elif mode==12:
-    addon_log("setResolvedUrl")
-    if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
-        item = xbmcgui.ListItem(path=url)
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-    else:
-        print 'Not setting setResolvedUrl'
-        xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
+	elif mode==12:
+		addon_log("setResolvedUrl")
+		if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
+			item = xbmcgui.ListItem(path=url)
+			xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+		else:
+			print 'Not setting setResolvedUrl'
+			xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
 
 
-elif mode==13:
-    addon_log("play_playlist")
-    play_playlist(name, playlist)
+	elif mode==13:
+		addon_log("play_playlist")
+		play_playlist(name, playlist)
 
-elif mode==14:
-    addon_log("get_xml_database")
-    get_xml_database(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==14:
+		addon_log("get_xml_database")
+		get_xml_database(url)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==15:
-    addon_log("browse_xml_database")
-    get_xml_database(url, True)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==15:
+		addon_log("browse_xml_database")
+		get_xml_database(url, True)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==16:
-    addon_log("browse_community")
-    getCommunitySources(True)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==16:
+		addon_log("browse_community")
+		getCommunitySources(True)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-elif mode==17:
-    addon_log("getRegexParsed")
-    url,setresolved = getRegexParsed(regexs, url)
-    if url:
-        playsetresolved(url,name,iconimage,setresolved)
-    else:
-        xbmc.executebuiltin("XBMC.Notification(DutchMusic,Failed to extract regex. - "+"this"+",4000,"+icon+")")
-elif mode==18:
-    addon_log("youtubedl")
-    try:
-        import youtubedl
-    except Exception:
-        xbmc.executebuiltin("XBMC.Notification(DutchMusic,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
-    stream_url=youtubedl.single_YD(url)
-    playsetresolved(stream_url,name,iconimage)
-elif mode==19:
-    addon_log("Genesiscommonresolvers")
-    playsetresolved (urlsolver(url),name,iconimage,True)    
+	elif mode==17:
+		addon_log("getRegexParsed")
+		url,setresolved = getRegexParsed(regexs, url)
+		if url:
+			playsetresolved(url,name,iconimage,setresolved)
+		else:
+			xbmc.executebuiltin("XBMC.Notification(DutchMusic,Failed to extract regex. - "+"this"+",4000,"+icon+")")
+	elif mode==18:
+		addon_log("youtubedl")
+		try:
+			import youtubedl
+		except Exception:
+			xbmc.executebuiltin("XBMC.Notification(DutchMusic,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
+		stream_url=youtubedl.single_YD(url)
+		playsetresolved(stream_url,name,iconimage)
+	elif mode==19:
+		addon_log("Genesiscommonresolvers")
+		playsetresolved (urlsolver(url),name,iconimage,True)    
 
-elif mode==21:
-    addon_log("download current file using youtube-dl service")
-    ytdl_download('',name,'video')
-elif mode==23:
-    addon_log("get info then download")
-    ytdl_download(url,name,'video') 
-elif mode==24:
-    addon_log("Audio only youtube download")
-    ytdl_download(url,name,'audio')
-elif mode==25:
-    addon_log("YouTube/DMotion")
-    search(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-elif mode==26:
-    addon_log("YouTube/DMotion From Search History")
-    name = name.split(':')
-    search(url,search_term=name[1])
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-elif mode==27:
-    addon_log("Using IMDB id to play in Pulsar")
-    pulsarIMDB=search(url)
-    xbmc.Player().play(pulsarIMDB) 
-elif mode==30:
-    GetSublinks(name,url,iconimage,fanart)
+	elif mode==21:
+		addon_log("download current file using youtube-dl service")
+		ytdl_download('',name,'video')
+	elif mode==23:
+		addon_log("get info then download")
+		ytdl_download(url,name,'video') 
+	elif mode==24:
+		addon_log("Audio only youtube download")
+		ytdl_download(url,name,'audio')
+	elif mode==25:
+		addon_log("YouTube/DMotion")
+		search(url)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==26:
+		addon_log("YouTube/DMotion From Search History")
+		name = name.split(':')
+		search(url,search_term=name[1])
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==27:
+		addon_log("Using IMDB id to play in Pulsar")
+		pulsarIMDB=search(url)
+		xbmc.Player().play(pulsarIMDB) 
+	elif mode==30:
+		GetSublinks(name,url,iconimage,fanart)
+		
+	elif mode==40:
+		SearchChannels()
+		SetViewThumbnail()
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==40:
-    SearchChannels()
-    SetViewThumbnail()
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-    
-elif mode==45:
-    Privacy_Policy()
+	elif mode==45:
+		Privacy_Policy()
         
-elif mode==53:
-    addon_log("Requesting JSON-RPC Items")
-    pluginquerybyJSON(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+	elif mode==53:
+		addon_log("Requesting JSON-RPC Items")
+		pluginquerybyJSON(url)
+		xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==70:
-    addon_log("indexoranjetop30")
-    indexoranjetop30()
+	elif mode==70:
+		addon_log("indexoranjetop30")
+		indexoranjetop30()
 
-elif mode==71:
-    DMIndex()
+	elif mode==71:
+		DMIndex()
     
-elif mode==72:
-    addon_log("indexradiotv")
-    indexradiotv()
+	elif mode==72:
+		addon_log("indexradiotv")
+		indexradiotv()
 
-elif mode==73:
-    addon_log("indexyoutube")
-    indexyoutube()
+	elif mode==73:
+		addon_log("indexyoutube")
+		indexyoutube()
     
-elif mode==74:
-    addon_log("indexwebsites")
-    indexwebsites()
+	elif mode==74:
+		addon_log("indexwebsites")
+		indexwebsites()
     
-elif mode==75:
-    addon_log("indexhitlijsten")
-    indexhitlijsten()
+	elif mode==75:
+		addon_log("indexhitlijsten")
+		indexhitlijsten()
 
-elif mode==76:
-    addon_log("indexkaraoke")
-    indexkaraoke()
+	elif mode==76:
+		addon_log("indexkaraoke")
+		indexkaraoke()
     
-elif mode==78:
-    addon_log("indexdutchmusicplaylist")
-    indexdutchmusicplaylist()
+	elif mode==78:
+		addon_log("indexdutchmusicplaylist")
+		indexdutchmusicplaylist()
     
-elif mode==100:
-    stuurbericht()
+	elif mode==100:
+		stuurbericht()
 
-elif mode == 220: tvoranje.Main()
-elif mode == 221: tvoranje.List(url, page)
-elif mode == 222: tvoranje.Playvid(url, name)
-elif mode == 226: hart.Main()
-elif mode == 227: hart.List(url, page)
-elif mode == 228: hart.Playvid(url, name)
-elif mode == 229: sterren.Main()
-elif mode == 230: sterren.ListNpoGemist2(url)
-elif mode == 231: sterren.ListNpoGemist(url)
-elif mode == 232: sterren.Playvid(url, name)
-elif mode == 233: sterren.ListNpoGemist3(url, page)
-elif mode == 234: oranjetop30.Main()
-elif mode == 235: oranjetop30.List(url, page)
-elif mode == 236: unitynltop25.Main()
-elif mode == 237: unitynltop25.List(url, page)
-elif mode == 238: sterrentop20.Main()
-elif mode == 239: sterrentop20.List(url, page)
-elif mode == 240: radionltop1500.Main()
-elif mode == 241: radionltop1500.List(url, page)
-elif mode == 242: karaoke.Main()
-elif mode == 244: karaoke.Search()
-elif mode == 245: youtubezoeken.Main()
-elif mode == 246: youtubezoeken.Search()
-elif mode == 247: hollandshitforum.Main()
-elif mode == 248: hollandshitforum.List(url, page)
-elif mode == 249: Artiesten.Main()
-elif mode == 250: Artiesten.ListArtist(url)
-elif mode == 251: Artiesten.ListSong(name, url, iconimage)
-elif mode == 252: Artiesten.ListSearch(url)
-elif mode == 253: Artiesten.Search(url)
-elif mode == 254: oranjetop30uitzending.Main()
-elif mode == 255: oranjetop30uitzending.List(url)
-elif mode == 256: oranjetop30uitzending.Playvid(url, name)
-elif mode == 258: radionlagenda.List(url)
-elif mode == 259: radionlagenda.MainTVRADIO()
-elif mode == 260: radionlagenda.MainGeenStream()
-elif mode == 261: radionlagenda.MainRADIO()
-elif mode == 262: truckerstop12.Main()
-elif mode == 263: truckerstop12.List(url)
-elif mode == 264: sterrennltop20.List(url)
-elif mode == 265: sterrennltop20.Playvid(url, name)
-elif mode == 266: sterren.ListSterrenVideos(url)
-elif mode == 267: sterren.PlayvidSterren(url, name)
-elif mode == 268: puurnltop20.List(url)
-elif mode == 269: nederlandmuziekland.Main()
-elif mode == 270: nederlandmuziekland.List(url)
-elif mode == 271: nederlandmuziekland.Playvid(url, name)
-elif mode == 272: unitynl.Main()
-elif mode == 273: unitynl.List(url)
-elif mode == 274: unitynl.Playvid(url, name)
-elif mode == 275: DutchMusicTop20.List(url)
-elif mode == 300: utils.playyt(url, name)
+	elif mode == 220: tvoranje.Main()
+	elif mode == 221: tvoranje.List(url, page)
+	elif mode == 222: tvoranje.Playvid(url, name)
+	elif mode == 226: hart.Main()
+	elif mode == 227: hart.List(url, page)
+	elif mode == 228: hart.Playvid(url, name)
+	elif mode == 229: sterren.Main()
+	elif mode == 230: sterren.ListNpoGemist2(url)
+	elif mode == 231: sterren.ListNpoGemist(url)
+	elif mode == 232: sterren.Playvid(url, name)
+	elif mode == 233: sterren.ListNpoGemist3(url, page)
+	elif mode == 234: oranjetop30.Main()
+	elif mode == 235: oranjetop30.List(url, page)
+	elif mode == 236: unitynltop25.Main()
+	elif mode == 237: unitynltop25.List(url, page)
+	elif mode == 238: sterrentop20.Main()
+	elif mode == 239: sterrentop20.List(url, page)
+	elif mode == 240: radionltop1500.Main()
+	elif mode == 241: radionltop1500.List(url, page)
+	elif mode == 242: karaoke.Main()
+	elif mode == 244: karaoke.Search()
+	elif mode == 245: youtubezoeken.Main()
+	elif mode == 246: youtubezoeken.Search()
+	elif mode == 247: hollandshitforum.Main()
+	elif mode == 248: hollandshitforum.List(url, page)
+	elif mode == 249: Artiesten.Main()
+	elif mode == 250: Artiesten.ListArtist(url)
+	elif mode == 251: Artiesten.ListSong(name, url, iconimage)
+	elif mode == 252: Artiesten.ListSearch(url)
+	elif mode == 253: Artiesten.Search(url)
+	elif mode == 254: oranjetop30uitzending.Main()
+	elif mode == 255: oranjetop30uitzending.List(url)
+	elif mode == 256: oranjetop30uitzending.Playvid(url, name)
+	elif mode == 258: radionlagenda.List(url)
+	elif mode == 259: radionlagenda.MainTVRADIO()
+	elif mode == 260: radionlagenda.MainGeenStream()
+	elif mode == 261: radionlagenda.MainRADIO()
+	elif mode == 262: truckerstop12.Main()
+	elif mode == 263: truckerstop12.List(url)
+	elif mode == 264: sterrennltop20.List(url)
+	elif mode == 265: sterrennltop20.Playvid(url, name)
+	elif mode == 266: sterren.ListSterrenVideos(url)
+	elif mode == 267: sterren.PlayvidSterren(url, name)
+	elif mode == 268: puurnltop20.List(url)
+	elif mode == 269: nederlandmuziekland.Main()
+	elif mode == 270: nederlandmuziekland.List(url)
+	elif mode == 271: nederlandmuziekland.Playvid(url, name)
+	elif mode == 272: unitynl.Main()
+	elif mode == 273: unitynl.List(url)
+	elif mode == 274: unitynl.Playvid(url, name)
+	elif mode == 300: utils.playyt(url, name)

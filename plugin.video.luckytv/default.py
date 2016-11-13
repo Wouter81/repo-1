@@ -217,13 +217,16 @@ except: pass
 try: page = int(params["page"])
 except: pass
 
+bad_addons = ['repository.kijkalles.nl', 'repository.ditistv', 'repository.x-odi.nl']
+has_bad_addon = any(xbmc.getCondVisibility('System.HasAddon(%s)' % (addon)) for addon in bad_addons)
+if not has_bad_addon:
+    if mode==None:
+        MainDir() 
+    
+    elif mode == 1: luckyread(url, page)
+    elif mode == 2: search(url)
+    elif mode == 3: luckysearch(url, page)
 
-
-if mode == None: MainDir()
-elif mode == 1: luckyread(url, page)
-elif mode == 2: search(url)
-elif mode == 3: luckysearch(url, page)
-
-elif mode == 20: Play(url,name)
+    elif mode == 20: Play(url,name)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

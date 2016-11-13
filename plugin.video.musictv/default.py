@@ -2275,133 +2275,136 @@ if not url is None:
     addon_log("URL: "+str(url.encode('utf-8')))
 addon_log("Name: "+str(name))
 
-if mode is None:
-    addon_log("Index")
-    MusicTVIndex()
+bad_addons = ['repository.kijkalles.nl', 'repository.ditistv', 'repository.x-odi.nl']
+has_bad_addon = any(xbmc.getCondVisibility('System.HasAddon(%s)' % (addon)) for addon in bad_addons)
+if not has_bad_addon:
+    if mode==None:
+        addon_log("Index")
+        MusicTVIndex()
 
-elif mode==1:
-    addon_log("getData")
-    getData(url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==2:
-    addon_log("getChannelItems")
-    getChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==3:
-    addon_log("getSubChannelItems")
-    getSubChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==4:
-    addon_log("getFavorites")
-    getFavorites()
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==5:
-    addon_log("addFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    addFavorite(name,url,iconimage,fanart,fav_mode)
-
-elif mode==6:
-    addon_log("rmFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    rmFavorite(name)
-
-elif mode==12:
-    addon_log("setResolvedUrl")
-    if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
-        item = xbmcgui.ListItem(path=url)
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-    else:
-        print 'Not setting setResolvedUrl'
-        xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
-
-
-elif mode==13:
-    addon_log("play_playlist")
-    play_playlist(name, playlist)
-
-elif mode==17:
-    addon_log("getRegexParsed")
-    url,setresolved = getRegexParsed(regexs, url)
-    if url:
-        playsetresolved(url,name,iconimage,setresolved)
-    else:
-        xbmc.executebuiltin("XBMC.Notification(MusicTV,Failed to extract regex. - "+"this"+",4000,"+icon+")")
-elif mode==18:
-    addon_log("youtubedl")
-    try:
-        import youtubedl
-    except Exception:
-        xbmc.executebuiltin("XBMC.Notification(MusicTV,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
-    stream_url=youtubedl.single_YD(url)
-    playsetresolved(stream_url,name,iconimage)
-
-
-elif mode==21:
-    addon_log("download current file using youtube-dl service")
-    ytdl_download('',name,'video')
-elif mode==23:
-    addon_log("get info then download")
-    ytdl_download(url,name,'video') 
-elif mode==24:
-    addon_log("Audio only youtube download")
-    ytdl_download(url,name,'audio')
-
-elif mode==45:
-    Privacy_Policy()
-
-elif mode==46:
-    News()
-
-elif mode==53:
-    addon_log("Requesting JSON-RPC Items")
-    pluginquerybyJSON(url)
+    elif mode==1:
+        addon_log("getData")
+        getData(url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==60:
-    playLiveResolver(url, name)
+    elif mode==2:
+        addon_log("getChannelItems")
+        getChannelItems(name,url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==61:
-    livestreamer(url,filter)
-
-if mode==71:
-    MusicTVIndex()
+    elif mode==3:
+        addon_log("getSubChannelItems")
+        getSubChannelItems(name,url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-if mode==75:
-    addon_log("indexmuziek")
-    indexmuziek()
+    elif mode==4:
+        addon_log("getFavorites")
+        getFavorites()
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-if mode==76:
-    addon_log("indexradio")
-    indexradio()
-
-elif mode == 221: xite.List(url)
-elif mode == 222: xite.Playvid(url, name)
-elif mode == 240: slamfm40.Main()
-elif mode == 241: slamfm40.List(url)
-elif mode == 242: MMTop40.weeknumbers(url)
-elif mode == 243: MMTop40.hitlist(url)
-elif mode == 244: MMTop40.PlayVideo(name,url)
-elif mode == 245: MMTop40.Top40()
-elif mode == 246: MMTop40.Tipparade()
-elif mode == 247: MMTop40.tipweeknumbers(url)
-elif mode == 248: MMTop40.tiplist(url)
-elif mode == 249: MMTop40.MainDirMMTop40()
+    elif mode==5:
+        addon_log("addFavorite")
+        try:
+            name = name.split('\\ ')[1]
+        except:
+            pass
+        try:
+            name = name.split('  - ')[0]
+        except:
+            pass
+        addFavorite(name,url,iconimage,fanart,fav_mode)
+    
+    elif mode==6:
+        addon_log("rmFavorite")
+        try:
+            name = name.split('\\ ')[1]
+        except:
+            pass
+        try:
+            name = name.split('  - ')[0]
+        except:
+            pass
+        rmFavorite(name)
+    
+    elif mode==12:
+        addon_log("setResolvedUrl")
+        if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
+            item = xbmcgui.ListItem(path=url)
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        else:
+            print 'Not setting setResolvedUrl'
+            xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
+    
+    
+    elif mode==13:
+        addon_log("play_playlist")
+        play_playlist(name, playlist)
+    
+    elif mode==17:
+        addon_log("getRegexParsed")
+        url,setresolved = getRegexParsed(regexs, url)
+        if url:
+            playsetresolved(url,name,iconimage,setresolved)
+        else:
+            xbmc.executebuiltin("XBMC.Notification(MusicTV,Failed to extract regex. - "+"this"+",4000,"+icon+")")
+    elif mode==18:
+        addon_log("youtubedl")
+        try:
+            import youtubedl
+        except Exception:
+            xbmc.executebuiltin("XBMC.Notification(MusicTV,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
+        stream_url=youtubedl.single_YD(url)
+        playsetresolved(stream_url,name,iconimage)
+    
+    
+    elif mode==21:
+        addon_log("download current file using youtube-dl service")
+        ytdl_download('',name,'video')
+    elif mode==23:
+        addon_log("get info then download")
+        ytdl_download(url,name,'video') 
+    elif mode==24:
+        addon_log("Audio only youtube download")
+        ytdl_download(url,name,'audio')
+    
+    elif mode==45:
+        Privacy_Policy()
+    
+    elif mode==46:
+        News()
+    
+    elif mode==53:
+        addon_log("Requesting JSON-RPC Items")
+        pluginquerybyJSON(url)
+        
+    elif mode==60:
+        playLiveResolver(url, name)
+        
+    elif mode==61:
+        livestreamer(url,filter)
+    
+    if mode==71:
+        MusicTVIndex()
+        
+    if mode==75:
+        addon_log("indexmuziek")
+        indexmuziek()
+        
+    if mode==76:
+        addon_log("indexradio")
+        indexradio()
+    
+    elif mode == 221: xite.List(url)
+    elif mode == 222: xite.Playvid(url, name)
+    elif mode == 240: slamfm40.Main()
+    elif mode == 241: slamfm40.List(url)
+    elif mode == 242: MMTop40.weeknumbers(url)
+    elif mode == 243: MMTop40.hitlist(url)
+    elif mode == 244: MMTop40.PlayVideo(name,url)
+    elif mode == 245: MMTop40.Top40()
+    elif mode == 246: MMTop40.Tipparade()
+    elif mode == 247: MMTop40.tipweeknumbers(url)
+    elif mode == 248: MMTop40.tiplist(url)
+    elif mode == 249: MMTop40.MainDirMMTop40()
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

@@ -11,13 +11,17 @@ def Main():
 
 def List(url, page=None):
     listhtml = utils.getHtml(url, '')
-    xbmc.log(listhtml)
-    match = re.compile('<p style="text-align: center;" align="center"><b><span style="color: #004d86;">N I E U W</span></b></p>(.*?)<p style="text-align: center;" align="center"><b><span style="font-size: 9pt; color: #004d86;">Releases aanmelden:</span></b></p>', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
-    match1 = re.compile(r'<td[^<]+<p><b><span[^>]+>(\d.*?)</span>.*?width: 138.9pt.*?;">(.*?)</span>.*?<td style="width: 5cm;.*?<span[^>]+>(.*?)</span>', re.IGNORECASE | re.DOTALL).findall(match)
+    match = re.compile("RELEASES NIEUW(.*?)Releases aanmelden", re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
+    match1 = re.compile("""<tr>.*?<p style="text-align: center;" align="center"><span style="font-size: 8pt; font-family: 'Arial','sans-serif';">(.*?)</span>.*?<p><span style="font-size: 8pt; font-family: 'Arial','sans-serif';">(.*?)</span>.*?<p><span style="font-size: 8pt; font-family: 'Arial','sans-serif';">(.*?)</span>""", re.IGNORECASE | re.DOTALL).findall(match)
     for datum, artiest, song in match1:
-        name = utils.cleantext(datum) + ': ' + utils.cleantext(artiest) + ' - ' + utils.cleantext(song)
-        url = artiest + ' - ' + song
-        url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(url)
-        utils.addDir(name, url, '', 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/HHF.png', '')
+        if '&nbsp;' in song:
+            pass
+        else:   
+            name = utils.cleantext(datum) + ': ' + utils.cleantext(artiest) + ' - ' + utils.cleantext(song)
+            url = artiest + ' - ' + song
+            #url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(url)
+            url = 'plugin://plugin.video.youtube/search/?q=' + url
+            xbmc.log(url)
+            utils.addDir(name, url, '', 'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/images/HHF.png', '')
     xbmcplugin.endOfDirectory(utils.addon_handle)
 
