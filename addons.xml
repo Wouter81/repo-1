@@ -545,19 +545,6 @@
 	</extension>
 </addon>
 
-<addon id="repository.dahenchmen" name="DaHenchmen Repo" version="1.0.01" provider-name="dahenchmen.xyz">
-	<extension point="xbmc.addon.repository" name="DaHenchmen Repo">
-		<info compressed="false">http://dahenchmen.xyz/Add-ons/addons.xml</info>
-		<checksum>http://dahenchmen.xyz/Add-ons/addons.xml.md5</checksum>
-		<datadir zip="true">http://dahenchmen.xyz/Add-ons</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>The Henchmen Repo</summary>
-		<description>Download and install addons from DaHenchmen Repo</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.Dixie-Deans-XBMC-Repo"
 	name="Dixie-Deans-XBMC-Repo"
 	version="1.1.2"
@@ -571,19 +558,6 @@
 	<extension point="xbmc.addon.metadata">
 		<summary>Install My Addons</summary>
 		<description>Download and install addons from DixieDean... For updates and information visit www.on-tapp.tv</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.docshadrach" name="Doc Shadrach's Add-ons" version="1.0" provider-name="Doc Shadrach">
-	<extension point="xbmc.addon.repository" name="Doc Shadrach's Add-ons Repo 1.0">
-		<info compressed="false">http://github.com/XBMCSpot/docshadrach.repository/raw/master/addons.xml</info>
-		<checksum>http://github.com/XBMCSpot/docshadrach.repository/raw/master/addons.xml.md5</checksum>
-		<datadir zip="true">http://github.com/XBMCSpot/docshadrach.repository/raw/master/zips</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Instala add-ons desde el repositorio de Doc Shadrach</summary>
-		<description>Visita el spot B75OYRJ de la app Spotbros para enterarte de las novedades.</description>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -633,25 +607,6 @@
 	</extension>
 </addon>
 
-<addon id="repository.entertainmentrepo" name="The Entertainment Repository" version="1.5" provider-name="Mr Entertainment">
-	<extension point="xbmc.addon.repository" name="Entertainment Addons Repository">
-        <dir>
-	      <info compressed="false">https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/addons.xml</info>
-	      <checksum>https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/addons.xml.md5</checksum>
-	      <datadir zip="true">https://raw.githubusercontent.com/MrEntertainment/backupREPO/master/zips</datadir>
-        </dir>
-        <info compressed="false">https://raw.githubusercontent.com/TheYid/My-Repo/master/addons.xml</info>
-        <checksum>https://raw.githubusercontent.com/TheYid/My-Repo/master/addons.xml.md5</checksum>
-        <datadir zip="true">https://raw.githubusercontent.com/TheYid/My-Repo/master/zips</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary></summary>
-		<description>Download and install addons by Mr Entertainment</description>
-		<disclaimer>By using this, you take reponsibility for anything that happens. Some parts of this addon may not be legal in your country - please check with your local laws before installing. I take no responsibility for any problems this plugin might in any way shape or form. This is project is for a LEARNING EXPERIANCE.</disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.exodus" version="1.0.1" name="Exodus repository" provider-name="Exodus">
 	<extension point="xbmc.addon.repository" name="Exodus repository">
 		<dir>
@@ -687,24 +642,6 @@
 	</extension>
 </addon>
 
-<addon id="repository.MatsBuilds" name="Goliaths Add-ons repository" version="1.0.7" provider-name="Goliath">
-	<extension point="xbmc.addon.repository" name="Goliaths Repository">
-	<dir>
-		<info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
-		<checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
-	</dir>
-		<info compressed="false">http://www.matsbuilds.uk/addons/addon.xml</info>
-		<checksum>http://simtech.net16.net/Goliathrepo/addons.xml.md5</checksum>
-		<datadir zip="true">http://www.matsbuilds.uk/addons/zips/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Install Add-ons from Goliath</summary>
-		<description>Download and install Add-ons from Goliaths repository</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.HalowTV" name="  [COLOR lime][B]HALOW [/COLOR][COLOR white]Repository[/B][/COLOR]" version="3.0.0" provider-name="HalowRepo">
 	<extension point="xbmc.addon.repository" name="  [COLOR lime][B]Halow[/COLOR][COLOR white]Repository[/B][/COLOR]">
         <info compressed="false">https://raw.githubusercontent.com/HalowTV/HalowTV/master/zips/addons.xml</info>
@@ -714,24 +651,6 @@
 	<extension point="xbmc.addon.metadata">
 		<summary>Install my Addons</summary>
 		<description>Download and install addons from Halow Repo</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.jsergio" name="jsergio repo" version="1.0.2" provider-name="jsergio">
-	<extension point="xbmc.addon.repository" name="jsergio repo">
-        <dir>
-	        <info compressed="false">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml</info>
-	        <checksum>https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/addons.xml.md5</checksum>
-	        <datadir zip="true">https://offshoregit.com/tvaresolvers/tva-common-repository/raw/master/zips/</datadir>
-	    </dir>
-        <info compressed="false">https://offshoregit.com/jsergio123/addons.xml</info>
-        <checksum>https://offshoregit.com/jsergio123/addons.xml.md5</checksum>
-        <datadir zip="true">https://offshoregit.com/jsergio123/zips/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Repo for jsergio Add-ons</summary>
-		<description>Repo for jsergio Add-ons</description>
 		<platform>all</platform>
 	</extension>
 </addon>
@@ -753,19 +672,6 @@
     </extension>
 </addon>
 
-<addon id="repository.Kinkin" name="Kinkins REPO" version="1.4" provider-name="Kinkin">
-	<extension point="xbmc.addon.repository" name="Kinkin Addon Repository">
-		<info compressed="false">https://offshoregit.com/kinkin-xbmc-repository/addons.xml</info>
-		<checksum>https://offshoregit.com/kinkin-xbmc-repository/addons.xml.md5</checksum>
-		<datadir zip="true">https://offshoregit.com/kinkin-xbmc-repository/zips</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Install Kinkins Addons</summary>
-		<description>Install addons by Kinkin</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.mdrepo" name="Mucky Ducks Repo" version="1.0.2" provider-name="Mucky Duck">
 	<extension point="xbmc.addon.repository" name="Mucky Ducks Repo">
 		<info compressed="false">https://raw.githubusercontent.com/mucky-duck/mdrepo/master/addons.xml</info>
@@ -778,36 +684,6 @@
 		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
 		<platform>all</platform>
 	</extension>
-</addon>
-
-<addon id="repository.merlin" name="Merlin Repository" version="1.0.1" provider-name="Merlin By Ryan">
-        <requires>
-            <import addon="xbmc.addon" version="12.0.0"/>
-        </requires>
-		<extension point="xbmc.addon.repository" name="Merlin Repository">
-			<info compressed="false">http://mwiz.co.uk/merlinrepo/addons.xml</info>
-			<checksum>http://mwiz.co.uk/merlinrepo/addons.xml.md5</checksum>
-			<datadir zip="true">http://mwiz.co.uk/merlinrepo/addons/</datadir>
-		</extension>
-		<extension point="xbmc.addon.metadata">
-			<summary>Host Of Add-Ons And Repositories</summary>
-			<description>Primary Function To Provide Updates To Merlin Builds! Any Other Add-Ons Or Repositories Within Are Provided At My Choice And Discretion, Will Provide Add-Ons And Repositories That Are Publicly Available, Permission Not Required To Do So! Hope You Find This Repository Useful, Enjoy!</description>
-			<platform>all</platform>
-		</extension>
-</addon>
-
-<addon id="repository.meta" name="MetaTeam Repository" version="1.0.0" provider-name="MetaTeam">
-        <extension point="xbmc.addon.repository" name="MetaTeam Repository">
-                <info compressed="false">http://raw.github.com/metate/meta4kodi/master/addons.xml</info>
-                <checksum>http://raw.github.com/metate/meta4kodi/master/addons.xml.md5</checksum>
-                <datadir zip="true">http://raw.github.com/metate/meta4kodi/master/zip</datadir>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-                <summary>MetaTeam Repository</summary>
-                <description>Addons by MetaTeam.</description>
-                <disclaimer></disclaimer>
-                <platform>all</platform>
-        </extension>
 </addon>
 
 <addon id="repository.metalkettle" name="MetalKettles Addon Repository" version="1.7.1" provider-name="MetalKettle">
@@ -884,19 +760,6 @@
 	</extension>
 </addon>
 
-<addon id="repository.rayw1986" name="RayW1986 Repo" version="2.1.1" provider-name="RayW1986">
-	<extension point="xbmc.addon.repository" name="RayW1986 Repository">
-		<info compressed="false">https://offshoregit.com/rayw1986/rayw1986-repo/addons.xml</info>
-		<checksum>https://offshoregit.com/rayw1986/rayw1986-repo/addons.xml.md5</checksum>
-		<datadir zip="true">https://offshoregit.com/rayw1986/rayw1986-repo/zips</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>RayW1986's Repository</summary>
-		<description>Download and install add-ons from RayW1986's Repository.</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.robwebset" name="robwebset's Repository" version="1.0.0" provider-name="robwebset">
     <extension point="xbmc.addon.repository" name="robwebset's Repository">
         <info compressed="false">http://raw.github.com/robwebset/repository.robwebset/master/addons.xml</info>
@@ -916,16 +779,20 @@
     </extension>
 </addon>
 
-<addon id="repository.schismtv.official" name="[COLOR orange][B]SchisM TV[/B][/COLOR] Builds Repository" version="1.0" provider-name="SchisM">
-    <extension point="xbmc.addon.repository" name="schism tv repository">
-        <info compressed="false">http://github.com/schismtv/officialrepo/raw/master/addons.xml</info>
-        <checksum>http://github.com/schismtv/officialrepo/raw/master/addons.xml.md5</checksum>
-        <datadir zip="true">http://github.com/schismtv/officialrepo/raw/master/zips/</datadir>
+<addon id="repository.schismtvaddons" name="SchisM TV Addons Repository" version="1.3.0" provider-name="SchisM">
+    <extension point="xbmc.addon.repository" name="SchisM TV Addons Repository">
+        <dir>
+            <info compressed="false">http://kodiflix.srve.io/repo/addons.xml</info>
+			<checksum>http://kodiflix.srve.io/repo/addons.xml.md5</checksum>
+			<datadir zip="true">http://kodiflix.srve.io/repo/zips/</datadir>
+        </dir>
+        <info compressed="false">http://schism-tv.net/addons/addons.xml</info>
+        <checksum>http://schism-tv.net/addons/addons.xml.md5</checksum>
+        <datadir zip="true">http://schism-tv.net/addons/zips/</datadir>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>This is used FOR BUILDS ONLY</summary>
-        <description>BUILDS ONLY FROM SCHISM TV - THIS REPO CONTAINS UPDATES FOR THE SCHISM TV BUILDS
-        </description>
+        <summary>SchisM TV official repo</summary>
+        <description>This is my repo... I can do whatever I like with it...</description>
         <platform>all</platform>
     </extension>
 </addon>
@@ -964,24 +831,6 @@
             <summary>Dutch SportsDevil Repository</summary>
 			<description>This is a special Dutch version of SportsDevil. If you don't want this, do NOT download this repo.</description>
             <platform>all</platform>
-    </extension>
-</addon>
-
-<addon id="repository.spoyser"
-        name="spoysers XBMC Add-ons"
-        version="1.0.6"
-        provider-name="spoyser">
-    <extension point="xbmc.addon.repository"
-        name="spoysers XBMC Add-ons">
-        <info compressed="false">https://raw.github.com/spoyser/spoyser-repo/master/addons.xml</info>
-        <checksum>https://raw.github.com/spoyser/spoyser-repo/master/addons.xml.md5</checksum>
-        <datadir zip="true">https://raw.github.com/spoyser/spoyser-repo/master/zips/</datadir>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Install XBMC add-ons from the official spoyser repository</summary>
-        <description>Install XBMC add-ons from spoysers official repository</description>
-        <disclaimer></disclaimer>
-        <platform>all</platform>
     </extension>
 </addon>
 
@@ -1221,6 +1070,20 @@
 	</extension>
 </addon>
 
+<addon id="repository.xbmcadult" name="XBMC-Adult Addons" version="1.0.6" provider-name="xbmc-adult">
+	<extension point="xbmc.addon.repository" name="XBMC Adult Addons">
+		<info compressed="false">http://raw.github.com/xbmc-adult/xbmc-adult/ghmaster/addons.xml</info>
+		<checksum>http://raw.github.com/xbmc-adult/xbmc-adult/ghmaster/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/xbmc-adult/xbmc-adult/ghmaster</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>XBMC Addons for Adults Only</summary>
+		<description>This repository contains addons that are for adults only. You may only view the contents of this repository if you are at least 18 years of age, or at least the age of majority in the jurisdiction where you reside or from which you access this content.</description>
+		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="repository.xbmchub" name="TVADDONS.ag Addon Repository" version="1.0.6" provider-name="tvaddons.ag">
 	<extension point="xbmc.addon.repository" name="TVADDONS.ag Addon Repository">
 	<dir>
@@ -1279,6 +1142,19 @@
 		<forum>https://www.fb.com/groups/XvBMCnederland/</forum>
 		<website>https://www.fb.com/groups/XvBMCnederland/</website>
 		<source>https://archive.org/download/repository.xvbmc/</source>
+	</extension>
+</addon>
+
+<addon id="repository.ytplugin" name="Youtube Addon Repo" version="1.0" provider-name="Jeffrey Frasure">
+	<extension point="xbmc.addon.repository" name="Youtube Addon Repository">
+		<info compressed="false">https://github.com/jdf76/repository/raw/master/addons.xml</info>
+		<checksum>https://github.com/jdf76/repository/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://github.com/jdf76/repository/raw/master/zips</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Install Kodis Youtube Addons</summary>
+                <description>Download and install addons from the Kodi Youtube group. This plugin is not official from Google.</description>
+		<platform>all</platform>
 	</extension>
 </addon>
 
