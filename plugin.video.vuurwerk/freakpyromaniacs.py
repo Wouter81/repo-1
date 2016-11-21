@@ -2,6 +2,7 @@ import urllib, urllib2, re, cookielib, os, sys, socket
 import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 
 import utils, sqlite3
+import YDStreamExtractor 
 
 
 #100: freakpyromaniacs.Main()
@@ -81,6 +82,8 @@ def Listproducten(url, page=None):
 
    
 def Productpage(url):
+    dp = xbmcgui.DialogProgress()
+    dp.create("Vuurwerk TV","Laden van de productinformatie en video's.")
     listhtml = utils.getHtml2(url)
     image = re.compile('<img itemprop="image" src="(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
     match = re.compile('<td height="15" width="130".*?<b>(.*?)</b>.*?<td height="15" width="430".*?>(.*?)</td>', re.IGNORECASE | re.DOTALL).findall(listhtml)
@@ -97,23 +100,34 @@ def Productpage(url):
     utils.addDir('','',104,image, Folder=False)    
     videototaal = re.compile('<td width="100%" align="left" colspan="2">(.*?)</td>', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
     try:
-        src = re.compile('src="(.*?) width', re.IGNORECASE | re.DOTALL).findall(videototaal)
-        for videopage in src:
-            if 'vimeo' in videopage:
-                vimeo = re.compile('http://player.vimeo.com/video/(.*?)"', re.IGNORECASE | re.DOTALL).findall(videopage)[0]
-                vimeo = 'plugin://plugin.video.vimeo/play/?video_id=' + vimeo
-                utils.addDownLink('Klik hier voor een video van Freakpyromaniacs', vimeo, 300, image, '')
-            else:
-                youtube = re.compile(r"http://www.youtube.com/embed/(.*?)\?autoplay", re.IGNORECASE | re.DOTALL).findall(videopage)[0]
-                youtube = 'plugin://plugin.video.youtube/play/?video_id=' + youtube
-                #utils.addDir('Klik hier voor een video van Freakpyromaniacs', youtube, 300, image)
-                utils.addDownLink('Klik hier voor een video van Freakpyromaniacs', youtube, 300, image, '')
-    except: pass
+        vimeo = re.compile('http://player.vimeo.com/video/(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
+        vimeo = 'http://player.vimeo.com/video/' + vimeo
+        stream = YDStreamExtractor.getVideoInfo(vimeo)
+        if stream:
+            url = stream.streamURL()
+            title = stream.selectedStream()['title']
+            title = title.encode('utf-8')
+            icon = stream.selectedStream()['thumbnail']
+            utils.addDir(title,url,300,icon)
+    except:
+        pass
+    #try:
+    youtube = re.compile(r"http://www.youtube.com/embed/(.*?)\?autoplay", re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
+    youtube = 'http://www.youtube.com/embed/' + youtube + '\?autoplay'
+    stream = YDStreamExtractor.getVideoInfo(youtube)
+    if stream:
+        url = stream.streamURL()
+        title = stream.selectedStream()['title']
+        title = title.encode('utf-8')
+        icon = stream.selectedStream()['thumbnail']
+        utils.addDir(title,url,300,icon)
+    #except: pass
     youtubezoeken = re.compile('Importeur</b>.*?brand">(.*?)</span>.*?Artikelnaam</b>.*?" >(.*?)</td>', re.IGNORECASE | re.DOTALL).findall(listhtml)
     for importeur, artikelnaam in youtubezoeken:
         name = artikelnaam + ' ' + importeur
         url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(name)
         utils.addDir('Bekijk meer video\'s', url, '', image, '')
+    dp.close()
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 def SearchList(keyword):

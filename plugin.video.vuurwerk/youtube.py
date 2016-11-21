@@ -4,12 +4,6 @@ import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 import utils, sqlite3
 import YDStreamExtractor 
 
-def Main():
-    utils.addDir('Video\'s','http://forum.vuurwerkcrew.nl/forumdisplay.php?19-Video-s',126,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png')
-    utils.addDir('Vuurwerkshow\'s','http://forum.vuurwerkcrew.nl/forumdisplay.php?485-Show-je-vuurwerkshow!',126,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png')
-    utils.addDir('YouTube/Vimeo Kanalen','',125,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png')
-    xbmcplugin.endOfDirectory(utils.addon_handle)
-
 def MainYouTube():
     utils.addDir('Kanalen van merken/importeurs(productvideo\'s)','',122,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png')
     utils.addDir('Kanalen van bekende sites (productvideo\'s)','',123,'https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png')
@@ -67,6 +61,16 @@ def Overige():
     utils.addDir('Eindje-Pyro','plugin://plugin.video.youtube/channel/UC87Ra0dmyahLt8AZoj3Nr_Q/','','https://yt3.ggpht.com/-gq5CEBueu3w/AAAAAAAAAAI/AAAAAAAAAAA/7jmb0jBkVo4/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
     utils.addDir('Originallover','plugin://plugin.video.youtube/user/Originallover/','','https://yt3.ggpht.com/-jtfdpwt0-8U/AAAAAAAAAAI/AAAAAAAAAAA/I830nLhz6rY/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
     utils.addDir('Pyrodise','plugin://plugin.video.youtube/channel/UCTw5Ny9VmRQnDb4obDS0Idg/','','https://yt3.ggpht.com/-9zjgLVV86WM/AAAAAAAAAAI/AAAAAAAAAAA/hr1fR7i9nMU/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('wwwPIROWEBit','plugin://plugin.video.youtube/user/wwwPIROWEBit/','','https://yt3.ggpht.com/-FDAXDNCYKOo/AAAAAAAAAAI/AAAAAAAAAAA/ukUIM9YiZXg/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('Pirofan pirotecnia','plugin://plugin.video.youtube/user/PirofanWeb1/','','https://yt3.ggpht.com/-maK3kuoy1jk/AAAAAAAAAAI/AAAAAAAAAAA/jLDvvfbkYJk/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('PIROART','plugin://plugin.video.youtube/user/pyroinfo/','','https://yt3.ggpht.com/-i4wkfeNwEc4/AAAAAAAAAAI/AAAAAAAAAAA/6BVAk758FiU/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('apirotecnia','plugin://plugin.video.youtube/user/apirotecnia/','','https://i.ytimg.com/i/JfuL60Mtus7YhudU7c6k8Q/mq1.jpg?v=53143662')
+    utils.addDir('1PYRO8 - Fireworks from around the world!','plugin://plugin.video.youtube/user/1PYRO8/','','https://yt3.ggpht.com/-HNvXykL__-c/AAAAAAAAAAI/AAAAAAAAAAA/iw_21swRtW8/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('Startecnia Fireworks','plugin://plugin.video.youtube/user/Startecnia/','','https://yt3.ggpht.com/-a_mfICoZD9M/AAAAAAAAAAI/AAAAAAAAAAA/QzzEdS4WYbA/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('vivirlapirotecnia','plugin://plugin.video.youtube/user/vivirlapirotecnia/','','https://yt3.ggpht.com/-LSArzo3UQb4/AAAAAAAAAAI/AAAAAAAAAAA/8irqpMW3P5w/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('Pyromovies HD','plugin://plugin.video.youtube/channel/UCh9gTv9eE80rVx3G02jDkjQ/','','https://yt3.ggpht.com/-vfcCnKe8Its/AAAAAAAAAAI/AAAAAAAAAAA/qwe8CQXhjIM/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('vuurvent','plugin://plugin.video.youtube/user/vuurvent/','','https://yt3.ggpht.com/-fV-edoXn-kM/AAAAAAAAAAI/AAAAAAAAAAA/q9OCx7-oSGY/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
+    utils.addDir('Re Verser','plugin://plugin.video.youtube/user/ReVerSeR2014/','','https://yt3.ggpht.com/-2zvfTTt96ww/AAAAAAAAAAI/AAAAAAAAAAA/xlMhzsoDf10/s100-c-k-no-mo-rj-c0xffffff/photo.jpg')
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 def Vuurwerkcrew(url):
@@ -97,11 +101,11 @@ def vuurwerkcrewvideopage(url):
     listhtml = utils.getHtml(url, url)
     match = re.compile('iframe.*?src=".*?youtube.com(.*?)".*?</iframe>', re.IGNORECASE | re.DOTALL).findall(listhtml)
     dp = xbmcgui.DialogProgress()
+    count = 0
     dp.create("Vuurwerk TV","Een ogenblik geduld.")      
     if match:
         for videopage in match:
             videopage = 'http://www.youtube.com' + videopage
-            xbmc.log(videopage)
             stream = YDStreamExtractor.getVideoInfo(videopage)
             if stream:
                 url = stream.streamURL()
@@ -117,7 +121,6 @@ def vuurwerkcrewvideopage(url):
     match = re.compile('<embed width=".*?vimeo.com.*?id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
     if match:
         for videopage in match:
-            xbmc.log(videopage)
             videopage = 'https://vimeo.com/' + videopage
             stream = YDStreamExtractor.getVideoInfo(videopage)
             if stream:
@@ -132,7 +135,6 @@ def vuurwerkcrewvideopage(url):
     match = re.compile('<a href="(.*?)" title="View this video at YouTube in a new window or tab" target="_blank">YouTube Video</a>', re.IGNORECASE).findall(listhtml)
     if match:
         for videopage in match:
-            xbmc.log(videopage)
             stream = YDStreamExtractor.getVideoInfo(videopage)
             if stream:
                 url = stream.streamURL()
@@ -160,5 +162,7 @@ def vuurwerkcrewvideopage(url):
             utils.addDir(nexttitle,nextpage,127,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg')
     except:
         pass
+    count = count + 5
+    dp.update(count)
     dp.close()
     xbmcplugin.endOfDirectory(utils.addon_handle)

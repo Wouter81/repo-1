@@ -34,7 +34,6 @@ class VeetleGuideDataSource:
         try:
 
             jsonChannels = self.cache.get("channels")
-            
             if jsonChannels is None or len(jsonChannels) == 0:
                 log.notice("Refreshing channel data from: %s" % (URL_VEETLE_GUIDE_LOAD_CHANNELS))
                 response = urllib2.urlopen(URL_VEETLE_GUIDE_LOAD_CHANNELS)
@@ -44,7 +43,6 @@ class VeetleGuideDataSource:
                 log.debug("Using cached channel data")
 
             jsonChannels = json.loads(jsonChannels)
-
             for jsonChannel in jsonChannels:
                 channels.append(parseChannel(jsonChannel))
 
@@ -60,7 +58,6 @@ class VeetleGuideDataSource:
         try:
 
             jsonSchedule = self.cache.get("schedule")
-
             if jsonSchedule is None or len(jsonSchedule) == 0:
                 log.notice("Refreshing schedule data from: %s" %(URL_VEETLE_GUIDE_LOAD_SCHEDULE))
                 response = urllib2.urlopen(URL_VEETLE_GUIDE_LOAD_SCHEDULE)
@@ -90,7 +87,6 @@ class VeetleGuideDataSource:
 
 
 def parseChannel(jsonChannel):
-
     channel = VeetleData.VeetleChannel()
     channel.channelId = jsonChannel['channelId']
     channel.title = jsonChannel['title']
@@ -103,7 +99,9 @@ def parseChannel(jsonChannel):
     try:channel.bitRate = jsonChannel['bitRate']
     except:channel.bitRate = jsonChannel['bitrate']
     try:channel.logoUrl = jsonChannel['logoUrl']
-    except:channel.logoUrl = ''
+    except:channel.logoUrl = jsonChannel['logo']['lg']
+    try:channel.viewers=str(jsonChannel['currentNumViewers'])
+    except: channel.viewers = None
 
     if 'currentItem' in jsonChannel:
 
@@ -123,3 +121,5 @@ def parseScheduleItem(jsonScheduleItem):
     scheduleItem.channelId = jsonScheduleItem['channelId']
 
     return scheduleItem
+
+

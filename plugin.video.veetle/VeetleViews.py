@@ -1,7 +1,7 @@
 import Logger
 import VeetleData
 import xbmc, xbmcaddon, xbmcplugin, xbmcgui
-import base64
+import base64,urllib2
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.veetle')
 __language__ = __settings__.getLocalizedString
@@ -33,7 +33,9 @@ class VeetleViews:
 
     def createChannelListItem(self, channel, scheduleItems):
 
-        channelDisplayTitle = channel.title
+        if channel.viewers == None: extra=''
+        else: extra=' / %s %s'  % (channel.viewers,str(__language__(40016)))
+        channelDisplayTitle = '[B]%s[/B] (%s kbps%s)' % (channel.title,channel.bitRate/1000,extra)
 
         if channel.currentItem:
             channelDisplayTitle += ' ([COLOR=blue]%s[/COLOR])' %channel.currentItem.title
@@ -153,6 +155,10 @@ class VeetleViews:
 
         #Play a stream with the given channel id
         channelId = queryUrl[len(URL_VIEW_CHANNEL):].strip()
+        if len(channelId)==32: #embed id
+            try: channelId=self.abrir_url('http://fightnightaddons.esy.es/tools/veet.php?id=%s' % (channelId)).replace(' ','')
+            except: pass
+        
         channelStreamUrl = self.dataSource.loadChannelStreamUrl(channelId)
         try:
             VIDb64 = base64.encodestring(channelStreamUrl).replace('\n', '')
@@ -212,3 +218,22 @@ class VeetleViews:
             return
 
         self.renderHome(queryUrl)
+
+    def abrir_url(self,url,erro=True):
+        print "A fazer request normal de: " + url
+        try:
+            req = urllib2.Request(url)
+            req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36')
+            response = urllib2.urlopen(req)
+            link=response.read()
+            response.close()
+            return link
+        except urllib2.HTTPError, e:
+            if erro==True:
+                dialog.ok('Veetle',str(urllib2.HTTPError(e.url, e.code, __language__(30000), e.hdrs, e.fp)))
+                sys.exit(0)
+        except urllib2.URLError, e:
+            if erro==True:
+                dialog.ok('Veetle',__language__(30000))
+                sys.exit(0)
+

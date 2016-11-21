@@ -2,6 +2,7 @@ import urllib, urllib2, re, cookielib, os, sys, socket
 import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 
 import utils, sqlite3
+import YDStreamExtractor 
 
 
 def Main():
@@ -97,6 +98,8 @@ def ProductlistNext(url, page=None):
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 def Productpagina(url):
+    dp = xbmcgui.DialogProgress()
+    dp.create("Vuurwerk TV","Laden van de productinformatie en video's.")
     listhtml = utils.getHtml2(url)
     image = re.compile('<div class="image">.*?href="(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
     match = re.compile('<div class="attr.*?">(.*?)</div>.*?<div class="spec.*?">(.*?)</div>', re.IGNORECASE | re.DOTALL).findall(listhtml)
@@ -126,10 +129,17 @@ def Productpagina(url):
             utils.addDir('[B]' + eerste + ': [/B]' + tweede,'',116,image)
     utils.addDir('','',116,image)
     try:
-        youtube = re.compile(r'href="http://www\.youtube\.com/embed/(.*?)\?autoplay', re.IGNORECASE | re.DOTALL).findall(listhtml)
+        matchyoutube = re.compile('class="omvideos">(.*?)<!--einde #omcontent-->', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
+        youtube = re.compile(r'href="http://www\.youtube\.com(.*?)"', re.IGNORECASE | re.DOTALL).findall(matchyoutube)
         for youtube in youtube:
-            youtube = 'plugin://plugin.video.youtube/play/?video_id=' + youtube
-            utils.addDownLink('Klik hier voor een video van Vuurwerkbieb', youtube, 300, image, '')
+            youtube = 'http://www.youtube.com' + youtube
+            stream = YDStreamExtractor.getVideoInfo(youtube)
+            if stream:
+                url = stream.streamURL()
+                title = stream.selectedStream()['title']
+                title = title.encode('utf-8')
+                icon = stream.selectedStream()['thumbnail']
+                utils.addDir(title,url,300,icon)
     except:
         pass
     youtubezoeken = re.compile('div class="attr">Artikelnaam:</div>.*?<div class="spec">(.*?)</div>.*?div class="attr">Merk:</div>.*?<div class="spec">(.*?)</div>', re.IGNORECASE | re.DOTALL).findall(listhtml)
@@ -139,6 +149,7 @@ def Productpagina(url):
         name = artikelnaam + ' ' + importeur
         url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(name)
         utils.addDir('Bekijk meer video\'s', url, '', image, '')
+    dp.close()
     xbmcplugin.endOfDirectory(utils.addon_handle)
         
     

@@ -28,7 +28,7 @@ import SimpleDownloader as downloader
 import time
 import requests
 from lib.utils import *
-import utils, freakpyromaniacs, vuurwerkcrew, vuurwerkbieb, countdown, youtube
+import utils, freakpyromaniacs, vuurwerkcrew, vuurwerkbieb, countdown, youtube, aftellen, vuurwerkfilmpjes
 
 xbmcplugin.setContent(utils.addon_handle, 'movies')
 addon = xbmcaddon.Addon(id=utils.__scriptid__)
@@ -123,13 +123,14 @@ def VuurwerkIndex():
     addDir('Vuurwerkdatabases','',72,icon , fanart,'','','','')
     addDir('Video\'s','',121,icon , fanart,'','','','')
     addDir('Productvideo\'s zoeken','',74,icon,fanart,'','','','')
+    #addDir('Aftellen naar...','',128,icon,fanart,'','','','')
     addDir('Oud & Nieuw Countdown','',73,icon , fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
 def DatabaseIndex():
     addon_log("DatabaseIndex")
     addDir('Productvideo\'s zoeken','',74,icon,fanart,'','','','')
-    addDir('Freakpyromaniacs','',100,'https://pbs.twimg.com/profile_images/1602372109/FPM_film_logo_begin.jpg' , fanart,'','','','')
+    #addDir('Freakpyromaniacs','',100,'https://pbs.twimg.com/profile_images/1602372109/FPM_film_logo_begin.jpg' , fanart,'','','','')
     addDir('Vuurwerkcrew','',105,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg' , fanart,'','','','')
     addDir('Vuurwerkbieb','',109,'https://yt3.ggpht.com/-tdnz2pV2-RY/AAAAAAAAAAI/AAAAAAAAAAA/wg6JxcmDIp4/s900-c-k-no-mo-rj-c0xffffff/photo.jpg' , fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -139,6 +140,15 @@ def CountdownIndex():
     addDir('Vuurwerk Verkoopdagen (29-12-2016 00:00)','',119,icon , fanart,'','','','')
     addDir('Vuurwerk Afsteken (31-12-2016 18:00)','',118,icon , fanart,'','','','')
     addDir('Nieuwjaar (01-01-2017 00:00)','',120,icon , fanart,'','','','')
+    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+def IndexVideos():
+    addon_log("IndexVideos")
+    addDir('Vuurwerkfilmpjes.nl','',130,icon , fanart,'','','','')
+    addDir('Vuurwerkcrew - Videotopic\'s','http://forum.vuurwerkcrew.nl/forumdisplay.php?19-Video-s',126,icon , fanart,'','','','')
+    addDir('Vuurwerkcrew - Aftellen naar...','',128,icon , fanart,'','','','')
+    addDir('Vuurwerkcrew - Vuurwerkshow\'s','http://forum.vuurwerkcrew.nl/forumdisplay.php?485-Show-je-vuurwerkshow!',126,icon , fanart,'','','','')
+    addDir('YouTube/Vimeo Kanalen','',125,icon , fanart,'','','','')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def VuurwerkSearch():
@@ -2622,206 +2632,229 @@ if not url is None:
     addon_log("URL: "+str(url.encode('utf-8')))
 addon_log("Name: "+str(name))
 
-if mode==None:
-    addon_log("Index")
-    VuurwerkIndex()    
+bad_addons = ['repository.kijkalles.nl', 'repository.ditistv', 'repository.x-odi.nl']
+has_bad_addon = any(xbmc.getCondVisibility('System.HasAddon(%s)' % (addon)) for addon in bad_addons)
+if not has_bad_addon:
+    if mode==None:
+        addon_log("Index")
+        VuurwerkIndex()    
     
-
-
-elif mode==1:
-    addon_log("getData")
-    getData(url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==2:
-    addon_log("getChannelItems")
-    getChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==3:
-    addon_log("getSubChannelItems")
-    getSubChannelItems(name,url,fanart)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==4:
-    addon_log("getFavorites")
-    getFavorites()
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==5:
-    addon_log("addFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    addFavorite(name,url,iconimage,fanart,fav_mode)
-
-elif mode==6:
-    addon_log("rmFavorite")
-    try:
-        name = name.split('\\ ')[1]
-    except:
-        pass
-    try:
-        name = name.split('  - ')[0]
-    except:
-        pass
-    rmFavorite(name)
-
-elif mode==7:
-    addon_log("addSource")
-    addSource(url)
-
-elif mode==8:
-    addon_log("rmSource")
-    rmSource(name)
-
-elif mode==9:
-    addon_log("download_file")
-    download_file(name, url)
-
-elif mode==10:
-    addon_log("getCommunitySources")
-    getCommunitySources()
-
-elif mode==11:
-    addon_log("addSource")
-    addSource(url)
-
-elif mode==12:
-    addon_log("setResolvedUrl")
-    if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
-        item = xbmcgui.ListItem(path=url)
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-    else:
-        print 'Not setting setResolvedUrl'
-        xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
-
-
-elif mode==13:
-    addon_log("play_playlist")
-    play_playlist(name, playlist)
-
-elif mode==14:
-    addon_log("get_xml_database")
-    get_xml_database(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==15:
-    addon_log("browse_xml_database")
-    get_xml_database(url, True)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==16:
-    addon_log("browse_community")
-    getCommunitySources(True)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-
-elif mode==17:
-    addon_log("getRegexParsed")
-    url,setresolved = getRegexParsed(regexs, url)
-    if url:
-        playsetresolved(url,name,iconimage,setresolved)
-    else:
-        xbmc.executebuiltin("XBMC.Notification(Vuurwerk,Failed to extract regex. - "+"this"+",4000,"+icon+")")
-elif mode==18:
-    addon_log("youtubedl")
-    try:
-        import youtubedl
-    except Exception:
-        xbmc.executebuiltin("XBMC.Notification(Vuurwerk,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
-    stream_url=youtubedl.single_YD(url)
-    playsetresolved(stream_url,name,iconimage)
-elif mode==19:
-    addon_log("Genesiscommonresolvers")
-    playsetresolved (urlsolver(url),name,iconimage,True)    
-
-elif mode==21:
-    addon_log("download current file using youtube-dl service")
-    ytdl_download('',name,'video')
-elif mode==23:
-    addon_log("get info then download")
-    ytdl_download(url,name,'video') 
-elif mode==24:
-    addon_log("Audio only youtube download")
-    ytdl_download(url,name,'audio')
-elif mode==25:
-    addon_log("YouTube/DMotion")
-    search(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-elif mode==26:
-    addon_log("YouTube/DMotion From Search History")
-    name = name.split(':')
-    search(url,search_term=name[1])
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
-elif mode==27:
-    addon_log("Using IMDB id to play in Pulsar")
-    pulsarIMDB=search(url)
-    xbmc.Player().play(pulsarIMDB) 
-elif mode==30:
-    GetSublinks(name,url,iconimage,fanart)
+    elif mode==1:
+        addon_log("getData")
+        getData(url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==40:
-    SearchChannels()
-    SetViewThumbnail()
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    elif mode==2:
+        addon_log("getChannelItems")
+        getChannelItems(name,url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
     
-elif mode==45:
-    Privacy_Policy()
+    elif mode==3:
+        addon_log("getSubChannelItems")
+        getSubChannelItems(name,url,fanart)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+    elif mode==4:
+        addon_log("getFavorites")
+        getFavorites()
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+    elif mode==5:
+        addon_log("addFavorite")
+        try:
+            name = name.split('\\ ')[1]
+        except:
+            pass
+        try:
+            name = name.split('  - ')[0]
+        except:
+            pass
+        addFavorite(name,url,iconimage,fanart,fav_mode)
+    
+    elif mode==6:
+        addon_log("rmFavorite")
+        try:
+            name = name.split('\\ ')[1]
+        except:
+            pass
+        try:
+            name = name.split('  - ')[0]
+        except:
+            pass
+        rmFavorite(name)
+    
+    elif mode==7:
+        addon_log("addSource")
+        addSource(url)
+    
+    elif mode==8:
+        addon_log("rmSource")
+        rmSource(name)
+    
+    elif mode==9:
+        addon_log("download_file")
+        download_file(name, url)
+    
+    elif mode==10:
+        addon_log("getCommunitySources")
+        getCommunitySources()
+    
+    elif mode==11:
+        addon_log("addSource")
+        addSource(url)
+    
+    elif mode==12:
+        addon_log("setResolvedUrl")
+        if not url.startswith("plugin://plugin") or not any(x in url for x in g_ignoreSetResolved):#not url.startswith("plugin://plugin.video.f4mTester") :
+            item = xbmcgui.ListItem(path=url)
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        else:
+            print 'Not setting setResolvedUrl'
+            xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
+    
+    
+    elif mode==13:
+        addon_log("play_playlist")
+        play_playlist(name, playlist)
+    
+    elif mode==14:
+        addon_log("get_xml_database")
+        get_xml_database(url)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+    elif mode==15:
+        addon_log("browse_xml_database")
+        get_xml_database(url, True)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+    elif mode==16:
+        addon_log("browse_community")
+        getCommunitySources(True)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    
+    elif mode==17:
+        addon_log("getRegexParsed")
+        url,setresolved = getRegexParsed(regexs, url)
+        if url:
+            playsetresolved(url,name,iconimage,setresolved)
+        else:
+            xbmc.executebuiltin("XBMC.Notification(Vuurwerk,Failed to extract regex. - "+"this"+",4000,"+icon+")")
+    elif mode==18:
+        addon_log("youtubedl")
+        try:
+            import youtubedl
+        except Exception:
+            xbmc.executebuiltin("XBMC.Notification(Vuurwerk,Please [COLOR yellow]install Youtube-dl[/COLOR] module ,10000,"")")
+        stream_url=youtubedl.single_YD(url)
+        playsetresolved(stream_url,name,iconimage)
+    elif mode==19:
+        addon_log("Genesiscommonresolvers")
+        playsetresolved (urlsolver(url),name,iconimage,True)    
+    
+    elif mode==21:
+        addon_log("download current file using youtube-dl service")
+        ytdl_download('',name,'video')
+    elif mode==23:
+        addon_log("get info then download")
+        ytdl_download(url,name,'video') 
+    elif mode==24:
+        addon_log("Audio only youtube download")
+        ytdl_download(url,name,'audio')
+    elif mode==25:
+        addon_log("YouTube/DMotion")
+        search(url)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    elif mode==26:
+        addon_log("YouTube/DMotion From Search History")
+        name = name.split(':')
+        search(url,search_term=name[1])
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    elif mode==27:
+        addon_log("Using IMDB id to play in Pulsar")
+        pulsarIMDB=search(url)
+        xbmc.Player().play(pulsarIMDB) 
+    elif mode==30:
+        GetSublinks(name,url,iconimage,fanart)
         
-elif mode==53:
-    addon_log("Requesting JSON-RPC Items")
-    pluginquerybyJSON(url)
-    xbmcplugin.endOfDirectory(int(sys.argv[1]))
+    elif mode==40:
+        SearchChannels()
+        SetViewThumbnail()
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        
+    elif mode==45:
+        Privacy_Policy()
+            
+    elif mode==53:
+        addon_log("Requesting JSON-RPC Items")
+        pluginquerybyJSON(url)
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
+        
+    elif mode==60:
+        playLiveResolver(url, name)
     
-elif mode==60:
-    playLiveResolver(url, name)
-
-elif mode==71:
-    VuurwerkIndex()
-
-elif mode==72:
-    addon_log("DatabaseIndex")
-    DatabaseIndex()
-
-elif mode==73:
-    addon_log("CountdownIndex")
-    CountdownIndex()
-
-elif mode==74:
-    VuurwerkSearch()
-
-elif mode == 100: freakpyromaniacs.Main()
-elif mode == 101: freakpyromaniacs.List(url)
-elif mode == 102: freakpyromaniacs.Listproducten(url, page)
-elif mode == 103: freakpyromaniacs.Search(url)  
-elif mode == 104: freakpyromaniacs.Productpage(url)
-elif mode == 105: vuurwerkcrew.Main()
-elif mode == 106: vuurwerkcrew.List(url)
-elif mode == 107: vuurwerkcrew.Listproducten(url)
-elif mode == 108: vuurwerkcrew.Productpage(url)
-elif mode == 109: vuurwerkbieb.Main()
-elif mode == 110: vuurwerkbieb.Listimporteur(url)
-elif mode == 111: vuurwerkbieb.Importeurmenu(name, url)
-elif mode == 112: vuurwerkbieb.Listcollectieimporteur(url)
-elif mode == 113: vuurwerkbieb.Collectiemenu(name, url)
-elif mode == 114: vuurwerkbieb.ListSoortVuurwerk(url)
-elif mode == 115: vuurwerkbieb.Productlist(url)
-elif mode == 116: vuurwerkbieb.Productpagina(url)
-elif mode == 117: vuurwerkbieb.Search(url)
-elif mode == 118: countdown.Afsteekcountdown()
-elif mode == 119: countdown.Countdownverkoopdagen()
-elif mode == 120: countdown.CountdownNieuwjaar()
-elif mode == 121: youtube.Main()
-elif mode == 122: youtube.Importeurs()
-elif mode == 123: youtube.Sites()
-elif mode == 124: youtube.Overige()
-elif mode == 125: youtube.MainYouTube()
-elif mode == 126: youtube.Vuurwerkcrew(url)
-elif mode == 127: youtube.vuurwerkcrewvideopage(url)
-elif mode == 300: utils.playyt(url, name)
-elif mode == 999: vuurwerkbieb.ProductlistNext(url, page)
+    elif mode==71:
+        VuurwerkIndex()
+    
+    elif mode==72:
+        addon_log("DatabaseIndex")
+        DatabaseIndex()
+    
+    elif mode==73:
+        addon_log("CountdownIndex")
+        CountdownIndex()
+    
+    elif mode==74:
+        VuurwerkSearch()
+    
+    elif mode == 100: freakpyromaniacs.Main()
+    elif mode == 101: freakpyromaniacs.List(url)
+    elif mode == 102: freakpyromaniacs.Listproducten(url, page)
+    elif mode == 103: freakpyromaniacs.Search(url)  
+    elif mode == 104: freakpyromaniacs.Productpage(url)
+    elif mode == 105: vuurwerkcrew.Main()
+    elif mode == 106: vuurwerkcrew.List(url)
+    elif mode == 107: vuurwerkcrew.Listproducten(url)
+    elif mode == 108: vuurwerkcrew.Productpage(url)
+    elif mode == 109: vuurwerkbieb.Main()
+    elif mode == 110: vuurwerkbieb.Listimporteur(url)
+    elif mode == 111: vuurwerkbieb.Importeurmenu(name, url)
+    elif mode == 112: vuurwerkbieb.Listcollectieimporteur(url)
+    elif mode == 113: vuurwerkbieb.Collectiemenu(name, url)
+    elif mode == 114: vuurwerkbieb.ListSoortVuurwerk(url)
+    elif mode == 115: vuurwerkbieb.Productlist(url)
+    elif mode == 116: vuurwerkbieb.Productpagina(url)
+    elif mode == 117: vuurwerkbieb.Search(url)
+    elif mode == 118: countdown.Afsteekcountdown()
+    elif mode == 119: countdown.Countdownverkoopdagen()
+    elif mode == 120: countdown.CountdownNieuwjaar()
+    #elif mode == 121: youtube.Main()
+    elif mode==121:
+        addon_log("IndexVideos")
+        IndexVideos()
+    elif mode == 122: youtube.Importeurs()
+    elif mode == 123: youtube.Sites()
+    elif mode == 124: youtube.Overige()
+    elif mode == 125: youtube.MainYouTube()
+    elif mode == 126: youtube.Vuurwerkcrew(url)
+    elif mode == 127: youtube.vuurwerkcrewvideopage(url)
+    elif mode == 128: aftellen.Main()
+    elif mode == 129: aftellen.filmpjes(url)
+    elif mode == 130: vuurwerkfilmpjes.Main()
+    elif mode == 131: vuurwerkfilmpjes.Nieuw(url)
+    elif mode == 132: vuurwerkfilmpjes.Vuurwerkshows()
+    elif mode == 133: vuurwerkfilmpjes.Knalvuurwerk()
+    elif mode == 134: vuurwerkfilmpjes.Siervuurwerk()
+    elif mode == 135: vuurwerkfilmpjes.Merken1()
+    elif mode == 136: vuurwerkfilmpjes.Merken2()
+    elif mode == 137: vuurwerkfilmpjes.Lesli(url)
+    elif mode == 138: vuurwerkfilmpjes.Vuurwerkmania(url)
+    elif mode == 139: vuurwerkfilmpjes.Vuurwerkvisie(url)
+    elif mode == 140: vuurwerkfilmpjes.Wolff(url)
+    elif mode == 141: vuurwerkfilmpjes.Zena(url)
+    elif mode == 142: vuurwerkfilmpjes.Overige()
+    elif mode == 143: vuurwerkfilmpjes.Videos(url)
+    elif mode == 144: vuurwerkfilmpjes.Playvid(url, name)
+    elif mode == 145: vuurwerkfilmpjes.Search(url)
+    elif mode == 146: vuurwerkfilmpjes.Zoekresultaat(url)
+    elif mode == 300: utils.playyt(url, name)
+    elif mode == 999: vuurwerkbieb.ProductlistNext(url, page)
