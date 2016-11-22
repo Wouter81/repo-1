@@ -174,7 +174,7 @@ def Videos(url):
     
 def Playvid(url, name):
     dp = xbmcgui.DialogProgress()
-    dp.create("DutchMusic","Een ogenblik geduld.") 
+    dp.create("Vuurwerk TV","Een ogenblik geduld.") 
     listhtml = utils.getHtml(url,url)
     matchtotaal = re.compile('<div class="player.*?">(.*?)</div>', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
     if 'www.youtube.com' in matchtotaal:

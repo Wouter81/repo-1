@@ -96,95 +96,57 @@ def Productpage(url):
         else:
             utils.addDir(name, '', 105, img, Folder=False)
     utils.addDir('','',105,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg', Folder=False)     
-    try:
-        youtube1 = re.compile('iframe.*?src=".*?youtube.com(.*?)".*?</iframe>', re.IGNORECASE | re.DOTALL).findall(listhtml)
-        for videopage in youtube1:
-            videopage = 'http://www.youtube.com' + videopage
-            stream = YDStreamExtractor.getVideoInfo(videopage)
-            if stream:
-                url = stream.streamURL()
-                title = stream.selectedStream()['title']
-                title = title.encode('utf-8')
-                icon = stream.selectedStream()['thumbnail']
-                utils.addDir(title,url,300,icon)
-    except: pass
-    
-    try:
-        youtube2 = re.compile('<a href="(.*?)" title="View this video at YouTube in a new window or tab" target="_blank">YouTube Video</a>', re.IGNORECASE).findall(listhtml)
-        for videopage in youtube2:
-            stream = YDStreamExtractor.getVideoInfo(videopage)
-            if stream:
-                url = stream.streamURL()
-                title = stream.selectedStream()['title']
-                title = title.encode('utf-8')
-                icon = stream.selectedStream()['thumbnail']
-                utils.addDir(title,url,300,icon)    
-    except:
-        pass
-    
-    try:
-        vimeo = re.compile('<embed width=".*?vimeo.com.*?id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
-        for videopage in vimeo:
-            videopage = 'https://vimeo.com/' + videopage
-            stream = YDStreamExtractor.getVideoInfo(videopage)
-            if stream:
-                url = stream.streamURL()
-                title = stream.selectedStream()['title']
-                title = title.encode('utf-8')
-                icon = stream.selectedStream()['thumbnail']
-                utils.addDir(title,url,300,icon)
-    except:
-        pass   
-                
-    lurl = re.compile("""<span class="first_last"><a href="([^"]+)" title="Laatste pagina""", re.IGNORECASE | re.DOTALL).findall(listhtml) 
-    if lurl:
-        laatstepagina = utils.getHtml('http://forum.vuurwerkcrew.nl/' + lurl[0], '')
-        try:
-            youtube1 = re.compile('iframe.*?src=".*?youtube.com(.*?)".*?</iframe>', re.IGNORECASE | re.DOTALL).findall(laatstepagina)
-            for videopage in youtube1:
-                videopage = 'http://www.youtube.com' + videopage
-                stream = YDStreamExtractor.getVideoInfo(videopage)
-                if stream:
-                    url = stream.streamURL()
-                    title = stream.selectedStream()['title']
-                    title = title.encode('utf-8')
-                    icon = stream.selectedStream()['thumbnail']
-                    utils.addDir(title,url,300,icon)
-        except: pass
+    utils.addDir('[B]Video\'s: [/B]','',105,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg', Folder=False)     
+
+    gevondenlinks = []
         
+    youtube1 = re.compile('<iframe.*?src=".*?youtube.com(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
+    if youtube1:
+        for i in youtube1:
+            gevondenlinks.append('http://www.youtube.com' + i)
+
+    youtube2 = re.compile('<a href="(.*?)".*?title="View this.*?YouTube Video', re.IGNORECASE).findall(listhtml)
+    if youtube2:
+        for i in youtube2:
+            gevondenlinks.append(i)
+
+    vimeo = re.compile(r'value="//vimeo.com/moogaloop.swf\?clip_id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
+    if vimeo:
+        for i in vimeo:
+            gevondenlinks.append('http://www.vimeo.com/' + i)        
+
+
+    if gevondenlinks:
+        gevondenlinks = set(gevondenlinks)
+        for link in gevondenlinks:
+            stream = YDStreamExtractor.getVideoInfo(link)
+            if stream:
+                url = stream.streamURL()
+                title = stream.selectedStream()['title']
+                title = title.encode('utf-8')
+                icon = stream.selectedStream()['thumbnail']
+                utils.addDir(title,url,300,icon)
+    else:
+        utils.addDir('[B]Er zijn geen video\'s beschikbaar op deze pagina. Probeer een andere pagina.[/B]','','','http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg', Folder=False)
+        
+    try:
+        nextptotaal = re.compile('<div id="pagination_top" class="pagination_top"(.*?)<ul class="popupbody popuphover">', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
         try:
-            youtube2 = re.compile('<a href="(.*?)" title="View this video at YouTube in a new window or tab" target="_blank">YouTube Video</a>', re.IGNORECASE).findall(laatstepagina)
-            for videopage in youtube2:
-                stream = YDStreamExtractor.getVideoInfo(videopage)
-                if stream:
-                    url = stream.streamURL()
-                    title = stream.selectedStream()['title']
-                    title = title.encode('utf-8')
-                    icon = stream.selectedStream()['thumbnail']
-                    utils.addDir(title,url,300,icon)    
+            nextp = re.compile('span class="prev_next"><a rel="next" href="(.*?)" title="(.*?)">', re.IGNORECASE | re.DOTALL).findall(nextptotaal)
+            for nextpage, nexttitle in nextp:
+                nextpage = 'http://forum.vuurwerkcrew.nl/' + nextpage
+                utils.addDir(nexttitle,nextpage,127,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg')
         except:
             pass
-        
+
         try:
-            vimeo = re.compile('<embed width=".*?vimeo.com.*?id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(laatstepagina)
-            for videopage in vimeo:
-                videopage = 'https://vimeo.com/' + videopage
-                stream = YDStreamExtractor.getVideoInfo(videopage)
-                if stream:
-                    url = stream.streamURL()
-                    title = stream.selectedStream()['title']
-                    title = title.encode('utf-8')
-                    icon = stream.selectedStream()['thumbnail']
-                    utils.addDir(title,url,300,icon)
+            lastp = re.compile('<span class="first_last"><a href="(.*?)" title="(.*?)">', re.IGNORECASE).findall(nextptotaal)
+            for nextpage, nexttitle in lastp:
+                nextpage = 'http://forum.vuurwerkcrew.nl/' + nextpage
+                utils.addDir(nexttitle,nextpage,127,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg')
         except:
-            pass   
-    
-    try:
-        youtubezoeken = re.compile('<li class="navbit"><a href="forumdisplay.*?">.*?</a>./li>.*?href="forumdisplay.*?">(.*?)</a>.*?href="forumdisplay.*?">(.*?)</a>', re.IGNORECASE | re.DOTALL).findall(listhtml)
-        for importeur, artikelnaam in youtubezoeken:
-            name = artikelnaam + ' ' + importeur
-            url = 'plugin://plugin.video.youtube/search/?q=' + urllib.quote_plus(name)
-            utils.addDir('Bekijk meer video\'s', url, '', img, '')
-    except: pass
+            pass
+    except:
+        pass    
     dp.close()
     xbmcplugin.endOfDirectory(utils.addon_handle)

@@ -98,52 +98,45 @@ def Vuurwerkcrew(url):
     xbmcplugin.endOfDirectory(utils.addon_handle)
     
 def vuurwerkcrewvideopage(url):
-    listhtml = utils.getHtml(url, url)
-    match = re.compile('iframe.*?src=".*?youtube.com(.*?)".*?</iframe>', re.IGNORECASE | re.DOTALL).findall(listhtml)
     dp = xbmcgui.DialogProgress()
     count = 0
-    dp.create("Vuurwerk TV","Een ogenblik geduld.")      
-    if match:
-        for videopage in match:
-            videopage = 'http://www.youtube.com' + videopage
-            stream = YDStreamExtractor.getVideoInfo(videopage)
-            if stream:
-                url = stream.streamURL()
-                title = stream.selectedStream()['title']
-                title = title.encode('utf-8')
-                icon = stream.selectedStream()['thumbnail']
-                utils.addDir(title,url,300,icon)
-    else:
-        pass
-        #utils.addDir('Op deze pagina is geen video gevonden.','','','https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png', Folder=False)
-        #utils.addDir('Probeer de volgende pagina of een andere link.','','','https://raw.githubusercontent.com/DutchMusic/DutchMusic/master/plugin.video.vuurwerk/icon.png', Folder=False)
+    dp.create("Vuurwerk TV","Een ogenblik geduld.") 
+    listhtml = utils.getHtml(url, url)
+    gevondenlinks = []
+        
+    youtube1 = re.compile('<iframe.*?src=".*?youtube.com(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
+    if youtube1:
+        for i in youtube1:
+            gevondenlinks.append('http://www.youtube.com' + i)
 
-    match = re.compile('<embed width=".*?vimeo.com.*?id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
-    if match:
-        for videopage in match:
-            videopage = 'https://vimeo.com/' + videopage
-            stream = YDStreamExtractor.getVideoInfo(videopage)
+    youtube2 = re.compile('<a href="(.*?)".*?title="View this.*?YouTube Video', re.IGNORECASE).findall(listhtml)
+    if youtube2:
+        for i in youtube2:
+            gevondenlinks.append(i)
+
+    vimeo = re.compile(r'value="//vimeo.com/moogaloop.swf\?clip_id=(.*?)"', re.IGNORECASE | re.DOTALL).findall(listhtml)
+    if vimeo:
+        for i in vimeo:
+            gevondenlinks.append('http://www.vimeo.com/' + i)        
+
+
+    xbmc.log(str(len(gevondenlinks)))      
+    if gevondenlinks:
+        gevondenlinks = set(gevondenlinks)
+        count2 = 100 / len(gevondenlinks)
+        for link in gevondenlinks:
+            stream = YDStreamExtractor.getVideoInfo(link)
             if stream:
                 url = stream.streamURL()
                 title = stream.selectedStream()['title']
                 title = title.encode('utf-8')
                 icon = stream.selectedStream()['thumbnail']
                 utils.addDir(title,url,300,icon)
+                count = count + 5
+                count = count + count2
+                dp.update(count)
     else:
-        pass
-    
-    match = re.compile('<a href="(.*?)" title="View this video at YouTube in a new window or tab" target="_blank">YouTube Video</a>', re.IGNORECASE).findall(listhtml)
-    if match:
-        for videopage in match:
-            stream = YDStreamExtractor.getVideoInfo(videopage)
-            if stream:
-                url = stream.streamURL()
-                title = stream.selectedStream()['title']
-                title = title.encode('utf-8')
-                icon = stream.selectedStream()['thumbnail']
-                utils.addDir(title,url,300,icon)
-    else:
-        pass 
+        utils.addDir('[B]Er zijn geen video\'s beschikbaar op deze pagina. Probeer een andere pagina.[/B]','','','http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg', Folder=False)
     
 
     nextptotaal = re.compile('<div id="pagination_top" class="pagination_top"(.*?)<ul class="popupbody popuphover">', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
@@ -162,7 +155,5 @@ def vuurwerkcrewvideopage(url):
             utils.addDir(nexttitle,nextpage,127,'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg')
     except:
         pass
-    count = count + 5
-    dp.update(count)
     dp.close()
     xbmcplugin.endOfDirectory(utils.addon_handle)
