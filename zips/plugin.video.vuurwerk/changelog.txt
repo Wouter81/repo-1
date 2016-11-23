@@ -1,3 +1,5 @@
+[B]V1.0.4[/B]
+- Fix voor Vuurwerkcrew afbeeldingen
 [B]V1.0.3[/B]
 - Kleine veranderingen
 [B]V1.0.2[/B]

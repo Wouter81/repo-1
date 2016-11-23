@@ -289,7 +289,7 @@
 
 <addon id="plugin.video.vuurwerk"
        name="Vuurwerk TV"
-       version="1.0.3"
+       version="1.0.4"
        provider-name="Eagle Repository">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>

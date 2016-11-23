@@ -79,7 +79,15 @@ def Productpage(url):
     listhtml = utils.getHtml(url,'http://forum.vuurwerkcrew.nl/')
     try:
         postimage = re.compile('<div id="post_message_.*?">(.*?)<div class="after_content">', re.IGNORECASE | re.DOTALL).findall(listhtml)[0]
-        img = re.compile('img src="(.*?)"', re.IGNORECASE | re.DOTALL).findall(postimage)[0]
+        if 'http://forum.vuurwerkcrew.nl/attachment.php' in postimage:
+            img = re.compile('<a href="(.*?)"', re.IGNORECASE | re.DOTALL).findall(postimage)[0]
+            img = img.replace('&amp;','&')
+        elif 'Bijgevoegde afbeelding(e)' in postimage:
+            img = re.compile(r'Bijgevoegde afbeelding\(e\).*?href="(.*?)"', re.IGNORECASE | re.DOTALL).findall(postimage)[0]
+            img = img.replace('&amp;','&')
+            img = 'http://forum.vuurwerkcrew.nl/' + img
+        else:
+            img = re.compile('img src="(.*?)"', re.IGNORECASE | re.DOTALL).findall(postimage)[0]
     except:
         img = 'http://www.vuurwerkcrew.nl/skins/vwc/images/logo.jpg'
     match = re.compile('DarkRed">(.*?)<br />', re.IGNORECASE | re.DOTALL).findall(listhtml)
