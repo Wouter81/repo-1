@@ -1,7 +1,0 @@
-<settings>
-    <category label="General">
-        <setting id="playmode" type="enum" label="30002" lvalues="30003|30004" default="0" />
-        <setting type="sep" />
-        <setting label="30005" type="text" id="txtfilter" />
-    </category>
-</settings>
