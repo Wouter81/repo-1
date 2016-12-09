@@ -12,9 +12,9 @@ import unicodedata
 
 __addon__      = xbmcaddon.Addon()
 __version__    = __addon__.getAddonInfo('version') # Module version
-__scriptname__ = "XBMC Subtitles"
+__scriptname__ = "XBMC Subtitles Unofficial"
 
-BASE_URL_XMLRPC = u"https://api.opensubtitles.org/xml-rpc"
+BASE_URL_XMLRPC = u"http://api.opensubtitles.org/xml-rpc"
 
 class OSDBServer:
   def __init__( self, *args, **kwargs ):
