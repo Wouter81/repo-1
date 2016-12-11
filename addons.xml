@@ -99,6 +99,35 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.dokikerst"
+       name="DOKI Kerst"
+       version="1.0.1"
+       provider-name="DOKI">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.t0mm0.common" version="2.1.1"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="1.9.5"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" version="5.1.20.4"/>
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+    <import addon="script.common.plugin.cache" version="2.5.5"/>
+	<import addon="script.module.metahandler" version="2.9.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">De DOKI Kerst add-on!</summary>
+    <description lang="en">De DOKI Kerst add-on!</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.DOKITube"
 	name="[COLOR lime]D[/COLOR]OKI [COLOR lime]T[/COLOR]UBE"
 	version="1.0.0"
@@ -243,26 +272,6 @@
     <description lang="en">Met Nederlandse video's van NL Films en NL Series van youtube</description>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="plugin.video.uiptv"
-       name="Ultimate IPTV"
-       version="1.0.5"
-       provider-name="Whitecream">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.video.F4mProxy" version="2.5.7" />
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <license>GPL 2.0</license>
-        <summary lang="en">Ultimate IPTV</summary>
-        <description lang="en">Access the IPTV lists from a blog. Daily new links.</description>
-    </extension>
 </addon>
 
 <addon id="plugin.video.veetle" version="0.3.3" name="Veetle" provider-name="fightnight (creator: t0mm0)">
