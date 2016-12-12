@@ -193,6 +193,37 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.jollychocka"
+       name="JollyChocka"
+       version="1.0"
+       provider-name="Chocka Kodi">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.t0mm0.common" version="2.0.0"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.beautifulsoup4" />
+    <import addon="script.module.simple.downloader" version="0.9.4"/>
+    <import addon="script.module.requests" />
+    <import addon="script.module.httplib2" />
+    <import addon="script.module.youtube.dl" optional="true"/>
+    <import addon="plugin.video.youtube" version="3.0.0"/>
+    <import addon="script.module.urlresolver" optional="true"/>
+    <import addon="script.module.simplejson" />
+    <import addon="script.common.plugin.cache" version="2.5.2"/>
+    <import addon="script.module.metahandler" version="2.5.1"/>
+
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Merry Christmas</summary>
+    <description lang="en">Chocka Kodi Production</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.luckytv"
        name="LuckyTV"
        version="1.0.1"
@@ -272,6 +303,26 @@
     <description lang="en">Met Nederlandse video's van NL Films en NL Series van youtube</description>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.uiptv"
+       name="Ultimate IPTV"
+       version="1.0.5"
+       provider-name="Whitecream">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.video.F4mProxy" version="2.5.7" />
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>GPL 2.0</license>
+        <summary lang="en">Ultimate IPTV</summary>
+        <description lang="en">Access the IPTV lists from a blog. Daily new links.</description>
+    </extension>
 </addon>
 
 <addon id="plugin.video.veetle" version="0.3.3" name="Veetle" provider-name="fightnight (creator: t0mm0)">
